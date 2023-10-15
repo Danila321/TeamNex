@@ -19,14 +19,13 @@ import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
-    ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        backButton = findViewById(R.id.backButton);
+        ImageButton backButton = findViewById(R.id.backButton);
         ImageView imageView = findViewById(R.id.ProfileImageView);
         Button imageChoose = findViewById(R.id.ImageAccountAction);
         Button imageDelete = findViewById(R.id.ImageAccountDelete);

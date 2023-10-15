@@ -21,7 +21,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    ImageButton backToLogin;
     private EditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
     Button buttonRegister;
     ProgressBar progressBar;
@@ -31,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        backToLogin = findViewById(R.id.backButton);
+        ImageButton backToLogin = findViewById(R.id.backButton);
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);

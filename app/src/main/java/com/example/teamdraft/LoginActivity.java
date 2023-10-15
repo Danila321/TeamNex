@@ -54,10 +54,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*forgotPassword.setOnClickListener(v -> {
+        forgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
-        });*/
+        });
 
         registerButton.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
