@@ -9,12 +9,12 @@
             android:icon="@drawable/main"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/notifications"
-            android:title="@string/menu_notifications" />
-        <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:title="@string/menu_settings" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/feedback"
+            android:title="@string/menu_feedback" />
     </group>
 </menu>

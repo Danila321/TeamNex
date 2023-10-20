@@ -4,29 +4,54 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.teamdraft.R;
 import com.example.teamdraft.databinding.FragmentHomeBinding;
+import com.example.teamdraft.ui.home.ui.FragmentBoards;
+import com.example.teamdraft.ui.home.ui.FragmentGroups;
+import com.example.teamdraft.ui.home.ui.FragmentNotifications;
+import com.example.teamdraft.ui.home.ui.FragmentArchive;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        loadFragment(new FragmentBoards());
+        BottomNavigationView bottomNavigationView = root.findViewById(R.id.nav_view2);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.navigation_board) {
+                loadFragment(new FragmentBoards());
+                return true;
+            } else if (itemId == R.id.navigation_groups) {
+                loadFragment(new FragmentGroups());
+                return true;
+            } else if (itemId == R.id.navigation_notifications) {
+                loadFragment(new FragmentNotifications());
+                return true;
+            } else if (itemId == R.id.navigation_ele) {
+                loadFragment(new FragmentArchive());
+                return true;
+            }
+            return false;
+        });
+
         return root;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
