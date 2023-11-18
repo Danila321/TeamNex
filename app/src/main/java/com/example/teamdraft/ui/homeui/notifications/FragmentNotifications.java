@@ -1,4 +1,4 @@
-package com.example.teamdraft.ui.home.ui;
+package com.example.teamdraft.ui.homeui.notifications;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import com.example.teamdraft.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentBoards#newInstance} factory method to
+ * Use the {@link FragmentNotifications#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentBoards extends Fragment {
+public class FragmentNotifications extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class FragmentBoards extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentBoards() {
+    public FragmentNotifications() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class FragmentBoards extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_1.
+     * @return A new instance of fragment Fragment_3.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentBoards newInstance(String param1, String param2) {
-        FragmentBoards fragment = new FragmentBoards();
+    public static FragmentNotifications newInstance(String param1, String param2) {
+        FragmentNotifications fragment = new FragmentNotifications();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class FragmentBoards extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.home_fragment_boards, container, false);
+        return inflater.inflate(R.layout.home_fragment_notifications, container, false);
     }
 }

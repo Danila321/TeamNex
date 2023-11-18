@@ -1,4 +1,4 @@
-package com.example.teamdraft.ui.home.ui;
+package com.example.teamdraft.ui.homeui.groups;
 
 import android.os.Bundle;
 

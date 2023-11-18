@@ -11,10 +11,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.teamdraft.R;
 import com.example.teamdraft.databinding.FragmentHomeBinding;
-import com.example.teamdraft.ui.home.ui.FragmentBoards;
-import com.example.teamdraft.ui.home.ui.FragmentGroups;
-import com.example.teamdraft.ui.home.ui.FragmentNotifications;
-import com.example.teamdraft.ui.home.ui.FragmentArchive;
+import com.example.teamdraft.ui.homeui.boards.FragmentBoards;
+import com.example.teamdraft.ui.homeui.groups.FragmentGroups;
+import com.example.teamdraft.ui.homeui.notifications.FragmentNotifications;
+import com.example.teamdraft.ui.homeui.archive.FragmentArchive;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeFragment extends Fragment {

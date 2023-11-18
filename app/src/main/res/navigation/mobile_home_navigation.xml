@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_board"
-        android:name="com.example.teamdraft.ui.home.ui.FragmentBoards"
+        android:name="com.example.teamdraft.ui.homeui.boards.FragmentBoards"
         android:label="Доски"
         tools:layout="@layout/home_fragment_boards" />
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="com.example.teamdraft.ui.home.ui.FragmentGroups"
+        android:name="com.example.teamdraft.ui.homeui.groups.FragmentGroups"
         android:label="Группы"
         tools:layout="@layout/home_fragment_groups" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.teamdraft.ui.home.ui.FragmentNotifications"
+        android:name="com.example.teamdraft.ui.homeui.notifications.FragmentNotifications"
         android:label="Уведомления"
         tools:layout="@layout/home_fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_ele"
-        android:name="com.example.teamdraft.ui.home.ui.FragmentArchive"
+        android:name="com.example.teamdraft.ui.homeui.archive.FragmentArchive"
         android:label="Архив"
         tools:layout="@layout/home_fragment_archive" />
 </navigation>

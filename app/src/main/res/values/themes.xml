@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#FFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="actionOverflowButtonStyle">@style/ThreeDotColor</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -20,7 +21,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.TeamDraft.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/custom_chip</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="rippleColor">@color/whiteAlpha</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/black</item>
+    </style>
+
+    <style name="ThreeDotColor" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="tint">@color/black</item>
+    </style>
+
+    <style name="Theme.TeamDraft.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
 
     <style name="Theme.TeamDraft.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

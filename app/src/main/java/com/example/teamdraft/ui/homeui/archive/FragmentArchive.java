@@ -1,4 +1,4 @@
-package com.example.teamdraft.ui.home.ui;
+package com.example.teamdraft.ui.homeui.archive;
 
 import android.os.Bundle;
 
