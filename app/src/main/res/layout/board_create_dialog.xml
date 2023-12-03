@@ -7,7 +7,7 @@
     android:maxWidth="324dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/BoardDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/boardNameEdit"
+        android:id="@+id/BoardDialogEditText"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginStart="12dp"
@@ -32,15 +32,15 @@
         android:ems="10"
         android:fontFamily="sans-serif-light"
         android:hint="Введите название"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/BoardDialogTitle" />
 
     <Button
-        android:id="@+id/dialogCreateBoard"
+        android:id="@+id/BoardDIalogButton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -53,5 +53,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boardNameEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/BoardDialogEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

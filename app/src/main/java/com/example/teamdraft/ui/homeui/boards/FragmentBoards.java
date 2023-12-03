@@ -46,13 +46,18 @@ public class FragmentBoards extends Fragment {
         ListView listView = view.findViewById(R.id.listViewBoards);
         Button create = view.findViewById(R.id.buttonCreate);
 
+        connect.setOnClickListener(view12 -> {
+            CreateConnectBoardDialog dialog = CreateConnectBoardDialog.newInstance(1);
+            dialog.show(getChildFragmentManager(), "connectBoard");
+        });
+
         //Загружаем данные всех досок и выводим на экран
         loadBoardsData();
         adapter = new ItemBoardsAdapter(requireContext(), items);
         listView.setAdapter(adapter);
 
         create.setOnClickListener(view1 -> {
-            CreateBoardDialog dialog = new CreateBoardDialog();
+            CreateConnectBoardDialog dialog = CreateConnectBoardDialog.newInstance(0);
             dialog.show(getChildFragmentManager(), "createBoard");
         });
 
@@ -66,28 +71,32 @@ public class FragmentBoards extends Fragment {
             return;
         }
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userBoardsReference = database.getReference("users").child(currentUser.getUid()).child("boards");
-        userBoardsReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                items.clear();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
-                    // Добавляем доску в список
-                    Board board = boardSnapshot.getValue(Board.class);
-                    if (board != null) {
-                        items.add(board);
+        mDatabase.child("boards")
+                .orderByChild("users/" + userId)
+                .equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        items.clear();
+
+                        for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
+                            // Добавляем доску в список
+                            Board board = boardSnapshot.getValue(Board.class);
+                            if (board != null) {
+                                items.add(board);
+                            }
+                        }
+
+                        adapter.notifyDataSetChanged();
                     }
-                }
 
-                adapter.notifyDataSetChanged();
-            }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                    }
+                });
     }
 }
