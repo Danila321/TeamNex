@@ -29,9 +29,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class CreateConnectBoardDialog extends DialogFragment {
@@ -89,7 +90,8 @@ public class CreateConnectBoardDialog extends DialogFragment {
                 if (editText.getText().length() == 0) {
                     editText.setError("Введите название");
                 } else {
-                    createBoard(editText.getText().toString(), generateBoardCode());
+                    @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                    createBoard(editText.getText().toString(), date, generateBoardCode());
                     dismiss();
                 }
             });
@@ -145,11 +147,11 @@ public class CreateConnectBoardDialog extends DialogFragment {
         }
     }
 
-    private void createBoard(String boardName, String boardCode) {
+    private void createBoard(String boardName, String boardDate, String boardCode) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Создание узла доски с информацией о доске
-        Board board = new Board(boardName, boardCode);
+        Board board = new Board(boardName, boardDate, boardCode);
         mDatabase.child("boards").child(boardName).setValue(board);
 
         // Добавление создателя доски к списку пользователей
