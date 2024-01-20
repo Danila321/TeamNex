@@ -18,6 +18,11 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UpdateProfile extends AppCompatActivity {
     private EditText editTextName;
@@ -70,9 +75,24 @@ public class UpdateProfile extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
             firebaseUser.updateProfile(profileUpdates);
-            Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
-            finish();
-            progressBar.setVisibility(View.INVISIBLE);
+            String userId = firebaseUser.getUid();
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("name", name);
+            usersRef.setValue(userData)
+                    .addOnCompleteListener(databaseTask -> {
+                        if (databaseTask.isSuccessful()) {
+                            Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+                            finish();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        } else {
+                            // Ошибка сохранения данных в базе данных
+                            Exception databaseException = databaseTask.getException();
+                            if (databaseException != null) {
+                                databaseException.printStackTrace();
+                            }
+                        }
+                    });
         }
     }
 }

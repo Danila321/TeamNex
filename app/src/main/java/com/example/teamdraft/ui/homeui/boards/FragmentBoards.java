@@ -76,17 +76,20 @@ public class FragmentBoards extends Fragment {
 
         mDatabase.child("boards")
                 .orderByChild("users/" + userId)
-                .equalTo(true)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         items.clear();
 
                         for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
-                            // Добавляем доску в список
-                            Board board = boardSnapshot.getValue(Board.class);
-                            if (board != null) {
-                                items.add(board);
+                            //Получаем роль юзера
+                            String userRole = boardSnapshot.child("users").child(userId).getValue(String.class);
+                            if (userRole != null && (userRole.equals("owner") || userRole.equals("admin") || userRole.equals("user"))) {
+                                // Добавляем доску в список
+                                Board board = boardSnapshot.getValue(Board.class);
+                                if (board != null) {
+                                    items.add(board);
+                                }
                             }
                         }
 

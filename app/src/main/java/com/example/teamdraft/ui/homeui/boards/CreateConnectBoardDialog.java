@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -90,8 +92,18 @@ public class CreateConnectBoardDialog extends DialogFragment {
                 if (editText.getText().length() == 0) {
                     editText.setError("Введите название");
                 } else {
+                    //Получаем текущие дату и время
                     @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                    createBoard(editText.getText().toString(), date, generateBoardCode());
+                    //Выгружаем из хранилища дефолтный фон для доски
+                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("default_board_images/background_1.jpg");
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        //Создаем доску
+                        createBoard(editText.getText().toString(), uri.toString(), date, date, generateBoardCode());
+                    }).addOnFailureListener(exception -> {
+                        //Обработка ошибки
+                        Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
+                    });
+
                     dismiss();
                 }
             });
@@ -125,7 +137,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
                             // Проверяем, не подключен ли уже текущий пользователь
                             if (!boardSnapshot.child("users").hasChild(currentUser.getUid())) {
                                 // Добавляем пользователя к списку пользователей доски
-                                mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue(true);
+                                mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user");
 
                                 Toast.makeText(dialogView.getContext(), "Вы успешно подключились к доске", Toast.LENGTH_SHORT).show();
                             } else {
@@ -147,16 +159,16 @@ public class CreateConnectBoardDialog extends DialogFragment {
         }
     }
 
-    private void createBoard(String boardName, String boardDate, String boardCode) {
+    private void createBoard(String boardName, String imageUrl, String boardDate, String boardEditDate, String boardCode) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Создание узла доски с информацией о доске
-        Board board = new Board(boardName, boardDate, boardCode);
+        Board board = new Board(boardName, imageUrl, boardDate, boardEditDate, boardCode);
         mDatabase.child("boards").child(boardName).setValue(board);
 
         // Добавление создателя доски к списку пользователей
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child("boards").child(boardName).child("users").child(userId).setValue(true);
+        mDatabase.child("boards").child(boardName).child("users").child(userId).setValue("owner");
     }
 
     private String generateBoardCode() {

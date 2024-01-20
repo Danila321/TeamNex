@@ -11,10 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.teamdraft.R;
+import com.example.teamdraft.ui.homeui.workSpace.BoardSettingsActivity;
 import com.example.teamdraft.ui.homeui.workSpace.WorkSpaceActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,18 +42,27 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         Board board = getItem(position);
 
         ConstraintLayout boardItem = convertView.findViewById(R.id.boardItem);
+        ImageView boardImage = convertView.findViewById(R.id.boardImageView);
         TextView nameTextView = convertView.findViewById(R.id.boardItemName);
         TextView dateTextView = convertView.findViewById(R.id.boardDate);
+        ImageButton boardSettings = convertView.findViewById(R.id.boardSettingsButton);
+
+        if (board != null) {
+            Picasso.get().load(board.getImageUri()).into(boardImage);
+            nameTextView.setText(board.getName());
+            dateTextView.setText(getPassedTime(board.getEditDate()));
+        }
 
         boardItem.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WorkSpaceActivity.class);
             context.startActivity(intent);
         });
 
-        if (board != null) {
-            nameTextView.setText(board.getName());
-            dateTextView.setText(getPassedTime(board.getDate()));
-        }
+        boardSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), BoardSettingsActivity.class);
+            intent.putExtra("boardName", board.getName());
+            context.startActivity(intent);
+        });
 
         return convertView;
     }

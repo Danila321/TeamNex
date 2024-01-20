@@ -1,5 +1,6 @@
 package com.example.teamdraft;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,12 +13,19 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -74,10 +82,27 @@ public class RegisterActivity extends AppCompatActivity {
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                         firebaseUser.updateProfile(profileChangeRequest);
-                        //Отправляем юзеру письмо
-                        firebaseUser.sendEmailVerification();
-                        //Показываем диалоговое окно и выходим при нажатии на кнопку
-                        showDialog();
+
+                        // Сохраняем имя пользователя в базу данных
+                        String userId = firebaseUser.getUid();
+                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+                        Map<String, Object> userData = new HashMap<>();
+                        userData.put("name", name);
+                        usersRef.setValue(userData)
+                                .addOnCompleteListener(databaseTask -> {
+                                    if (databaseTask.isSuccessful()) {
+                                        //Отправляем юзеру письмо
+                                        firebaseUser.sendEmailVerification();
+                                        //Показываем диалоговое окно и выходим при нажатии на кнопку
+                                        showDialog();
+                                    } else {
+                                        // Ошибка сохранения данных в БД
+                                        Exception databaseException = databaseTask.getException();
+                                        if (databaseException != null) {
+                                            databaseException.printStackTrace();
+                                        }
+                                    }
+                                });
                     } else {
                         try {
                             throw task.getException();

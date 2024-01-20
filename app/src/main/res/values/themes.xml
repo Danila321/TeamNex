@@ -39,5 +39,10 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
+    <style name="roundedTopCorners">
+        <item name="cornerSizeTopLeft">17dp</item>
+        <item name="cornerSizeBottomLeft">17dp</item>
+    </style>
+
     <style name="Theme.TeamDraft.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
