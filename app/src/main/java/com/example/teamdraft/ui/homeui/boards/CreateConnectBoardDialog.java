@@ -34,8 +34,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 public class CreateConnectBoardDialog extends DialogFragment {
     View dialogView;
@@ -98,7 +100,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("default_board_images/background_1.jpg");
                     storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         //Создаем доску
-                        createBoard(editText.getText().toString(), uri.toString(), date, date, generateBoardCode());
+                        createBoard(editText.getText().toString(), uri.toString(), date, date);
                     }).addOnFailureListener(exception -> {
                         //Обработка ошибки
                         Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
@@ -159,22 +161,41 @@ public class CreateConnectBoardDialog extends DialogFragment {
         }
     }
 
-    private void createBoard(String boardName, String imageUrl, String boardDate, String boardEditDate, String boardCode) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private void createBoard(String boardName, String imageUrl, String boardDate, String boardEditDate) {
+        FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("code").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //Получаем коды всех досок
+                ArrayList<String> codes = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    codes.add(dataSnapshot.getValue(Board.class).getCode());
+                }
 
-        // Создание узла доски с информацией о доске
-        Board board = new Board(boardName, imageUrl, boardDate, boardEditDate, boardCode);
-        mDatabase.child("boards").child(boardName).setValue(board);
+                //Проверяем код на уникальность
+                int boardCode;
+                do {
+                    boardCode = 10000000 + new Random().nextInt(90000000);
+                } while (codes.contains(String.valueOf(boardCode)));
+                System.out.println(codes);
 
-        // Добавление создателя доски к списку пользователей
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase.child("boards").child(boardName).child("users").child(userId).setValue("owner");
-    }
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-    private String generateBoardCode() {
-        Random random = new Random();
-        int randomNumber = 10000000 + random.nextInt(90000000);
+                //Создаем ID доски
+                String ID = UUID.randomUUID().toString();
 
-        return String.valueOf(randomNumber);
+                // Создание узла доски с информацией о доске
+                Board board = new Board(ID, boardName, imageUrl, boardDate, boardEditDate, String.valueOf(boardCode));
+                mDatabase.child("boards").child(ID).setValue(board);
+
+                // Добавление создателя доски к списку пользователей
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                mDatabase.child("boards").child(ID).child("users").child(userId).setValue("owner");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

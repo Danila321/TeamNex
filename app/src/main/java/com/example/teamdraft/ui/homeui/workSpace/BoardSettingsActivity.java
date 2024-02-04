@@ -5,7 +5,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.example.teamdraft.GetUserRole;
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.homeui.boards.Board;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,61 +29,53 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class BoardSettingsActivity extends AppCompatActivity {
+public class BoardSettingsActivity extends AppCompatActivity implements OnDeleteBoard, OnEditNameBoard {
     boolean starState = false;
-    ImageView boardImage;
-    String boardName;
-    TextView boardNameText, boardOwner, boardCreateDate, boardEditDate;
+    ImageView boardImageView;
+    String boardIdData, boardNameData;
+    TextView boardNameText, boardOwnerText, boardCreateDateText, boardEditDateText;
     private Uri selectedImageUri;
-    private StorageReference storageReference;
-    private DatabaseReference databaseReference;
-    private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_settings);
 
-        boardImage = findViewById(R.id.boardImage);
-        boardNameText = findViewById(R.id.SettingsBoardName);
-        ImageView star = findViewById(R.id.boardStar);
-        boardOwner = findViewById(R.id.SettingsOwner);
-        boardCreateDate = findViewById(R.id.SettingsCreateDate);
-        boardEditDate = findViewById(R.id.SettingsEditDate);
-
-        star.setOnClickListener(view -> {
-            star.setImageDrawable(null);
-            if (starState) {
-                star.setBackgroundResource(R.drawable.star);
-            } else {
-                star.setBackgroundResource(R.drawable.star_blue);
-            }
-            starState = !starState;
-        });
+        ImageButton backButton = findViewById(R.id.backButtonSettings);
+        backButton.setOnClickListener(view -> finish());
 
         Bundle data = getIntent().getExtras();
         if (data != null) {
-            boardName = data.getString("boardName");
-            GetUserRole.getUserRole(boardName, this::roleManager);
-            getData(boardName);
+            boardImageView = findViewById(R.id.boardImage);
+            boardNameText = findViewById(R.id.SettingsBoardName);
+            boardOwnerText = findViewById(R.id.SettingsOwner);
+            boardCreateDateText = findViewById(R.id.SettingsCreateDate);
+            boardEditDateText = findViewById(R.id.SettingsEditDate);
+
+            starBoard();
+
+            boardIdData = data.getString("boardId");
+            getData(boardIdData);
+            GetUserRole.getUserRole(boardIdData, this::roleManager);
         }
     }
 
-    void getData(String boardName) {
+    void getData(String boardId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mDatabase.child("boards")
-                .child(boardName)
+                .child(boardId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             Board board = dataSnapshot.getValue(Board.class);
                             if (board != null) {
-                                Picasso.get().load(board.getImageUri()).into(boardImage);
+                                Picasso.get().load(board.getImageUri()).into(boardImageView);
+                                boardNameData = board.getName();
                                 boardNameText.setText(board.getName());
-                                boardCreateDate.setText(board.getDate());
-                                boardEditDate.setText(board.getEditDate());
+                                boardCreateDateText.setText(board.getDate());
+                                boardEditDateText.setText(board.getEditDate());
 
                                 // Получаем UID создателя доски
                                 String creatorUserId = null;
@@ -106,7 +96,7 @@ public class BoardSettingsActivity extends AppCompatActivity {
                                                 String userName = userSnapshot.child("name").getValue(String.class);
 
                                                 if (userName != null) {
-                                                    boardOwner.setText(userName);
+                                                    boardOwnerText.setText(userName);
                                                 }
                                             }
                                         }
@@ -133,25 +123,38 @@ public class BoardSettingsActivity extends AppCompatActivity {
         TextView boardImageText = findViewById(R.id.boardImageText);
         ImageButton editBoardName = findViewById(R.id.editBoardName);
         ConstraintLayout deleteBoard = findViewById(R.id.deleteBoard);
-        //Выключаем все дополнительные элементы
-        boardImageText.setVisibility(View.GONE);
-        editBoardName.setVisibility(View.INVISIBLE);
-        deleteBoard.setVisibility(View.INVISIBLE);
-
-        storageReference = FirebaseStorage.getInstance().getReference("board_images");
-        databaseReference = FirebaseDatabase.getInstance().getReference("boards");
 
         switch (role) {
             case "owner":
+                //Включаем возможность изменения изображения
                 boardImageText.setVisibility(View.VISIBLE);
-                editBoardName.setVisibility(View.VISIBLE);
-                deleteBoard.setVisibility(View.VISIBLE);
-
                 boardImageLayout.setOnClickListener(view -> openImagePicker());
+
+                //Включаем возможность изменения названия
+                editBoardName.setVisibility(View.VISIBLE);
+                editBoardName.setOnClickListener(view -> {
+                    EditBoardNameDialog dialog = EditBoardNameDialog.newInstance(boardIdData, boardNameData);
+                    dialog.show(getSupportFragmentManager(), "editName");
+                });
+
+                //Включаем возможность удаления
+                deleteBoard.setVisibility(View.VISIBLE);
+                deleteBoard.setOnClickListener(view -> {
+                    DeleteBoardDialog dialog = DeleteBoardDialog.newInstance(boardIdData);
+                    dialog.show(getSupportFragmentManager(), "deleteBoard");
+                });
                 break;
             case "admin":
+                //Включаем возможность изменения изображения
                 boardImageText.setVisibility(View.VISIBLE);
+                boardImageLayout.setOnClickListener(view -> openImagePicker());
+
+                //Включаем возможность изменения названия
                 editBoardName.setVisibility(View.VISIBLE);
+                editBoardName.setOnClickListener(view -> {
+                    EditBoardNameDialog dialog = EditBoardNameDialog.newInstance(boardIdData, boardNameData);
+                    dialog.show(getSupportFragmentManager(), "editName");
+                });
                 break;
             case "user":
                 break;
@@ -165,19 +168,6 @@ public class BoardSettingsActivity extends AppCompatActivity {
         activityResultLauncher.launch(Intent.createChooser(intent, "Выберите изображение"));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            boardImage.setImageURI(selectedImageUri);
-
-            // Загружаем изображение в Firebase Storage
-            uploadImage();
-        }
-    }
-
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -187,7 +177,7 @@ public class BoardSettingsActivity extends AppCompatActivity {
                         // There are no request codes
                         Intent data = result.getData();
                         selectedImageUri = data.getData();
-                        boardImage.setImageURI(selectedImageUri);
+                        boardImageView.setImageURI(selectedImageUri);
 
                         // Загружаем изображение в Firebase Storage
                         uploadImage();
@@ -197,7 +187,7 @@ public class BoardSettingsActivity extends AppCompatActivity {
 
     private void uploadImage() {
         if (selectedImageUri != null) {
-            StorageReference imageRef = storageReference.child(boardName)
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference("board_images").child(boardIdData)
                     .child(System.currentTimeMillis() + "_board_image.jpg");
 
             imageRef.putFile(selectedImageUri)
@@ -205,12 +195,37 @@ public class BoardSettingsActivity extends AppCompatActivity {
                         // Получаем URL загруженного изображения
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             // Сохраняем URL в базе данных
-                            databaseReference.child(boardName).child("imageUri").setValue(uri.toString());
+                            FirebaseDatabase.getInstance().getReference("boards").child(boardIdData).child("imageUri").setValue(uri.toString());
                         });
                     })
                     .addOnFailureListener(e -> {
                         // Обработка ошибок при загрузке изображения
                     });
         }
+    }
+
+    void starBoard() {
+        ImageView star = findViewById(R.id.boardStar);
+        star.setOnClickListener(view -> {
+            star.setImageDrawable(null);
+            if (starState) {
+                star.setBackgroundResource(R.drawable.star);
+            } else {
+                star.setBackgroundResource(R.drawable.star_blue);
+            }
+            starState = !starState;
+        });
+    }
+
+    @Override
+    public void onDelete() {
+        finish();
+    }
+
+    @Override
+    public void onEdit() {
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
     }
 }

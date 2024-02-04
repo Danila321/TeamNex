@@ -60,7 +60,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
 
         boardSettings.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), BoardSettingsActivity.class);
-            intent.putExtra("boardName", board.getName());
+            intent.putExtra("boardId", board.getId());
             context.startActivity(intent);
         });
 

@@ -1,6 +1,7 @@
 package com.example.teamdraft.ui.homeui.boards;
 
 public class Board {
+    private String id;
     private String name;
     private String imageUri;
     private String date;
@@ -11,12 +12,17 @@ public class Board {
 
     }
 
-    public Board(String name, String imageUri, String date, String editDate, String code) {
+    public Board(String id, String name, String imageUri, String date, String editDate, String code) {
+        this.id = id;
         this.name = name;
         this.imageUri = imageUri;
         this.date = date;
         this.editDate = editDate;
         this.code = code;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
