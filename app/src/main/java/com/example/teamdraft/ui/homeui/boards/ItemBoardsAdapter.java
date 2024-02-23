@@ -55,6 +55,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
 
         boardItem.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WorkSpaceActivity.class);
+            intent.putExtra("boardId", board.getId());
             context.startActivity(intent);
         });
 
