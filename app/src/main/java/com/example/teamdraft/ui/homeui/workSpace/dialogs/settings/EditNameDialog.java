@@ -1,4 +1,4 @@
-package com.example.teamdraft.ui.homeui.workSpace;
+package com.example.teamdraft.ui.homeui.workSpace.dialogs.settings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,24 +19,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class EditBoardNameDialog extends DialogFragment {
-    View dialogView;
-    private String id, name;
-    private OnEditNameBoard onEditNameBoard;
+public class EditNameDialog extends DialogFragment {
+    private String name;
+    private OnEditName onEditName;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onEditNameBoard = (OnEditNameBoard) getActivity();
+        onEditName = (OnEditName) context;
     }
 
-    public static EditBoardNameDialog newInstance(String id, String name) {
-        EditBoardNameDialog dialog = new EditBoardNameDialog();
+    public static EditNameDialog newInstance(String name) {
+        EditNameDialog dialog = new EditNameDialog();
         Bundle args = new Bundle();
-        args.putString("id", id);
         args.putString("name", name);
         dialog.setArguments(args);
         return dialog;
@@ -46,7 +42,6 @@ public class EditBoardNameDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getString("id");
             name = getArguments().getString("name");
         }
     }
@@ -57,7 +52,7 @@ public class EditBoardNameDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.settings_board_editname_dialog, null);
+        View dialogView = inflater.inflate(R.layout.settings_board_editname_dialog, null);
         builder.setView(dialogView);
 
         EditText editName = dialogView.findViewById(R.id.BoardDialogEditName);
@@ -71,15 +66,8 @@ public class EditBoardNameDialog extends DialogFragment {
             if (editName.getText().length() == 0) {
                 editName.setError("Введите название");
             } else {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                reference.child("boards").child(id).child("name").setValue(editName.getText().toString(), ((error, ref) -> {
-                    if (error == null) {
-                        dismiss();
-                        onEditNameBoard.onEdit();
-                    } else {
-
-                    }
-                }));
+                onEditName.onEdit(editName.getText().toString());
+                dismiss();
             }
         });
         return builder.create();

@@ -13,10 +13,11 @@
         android:theme="@style/Theme.TeamDraft"
         tools:targetApi="31">
         <activity
-            android:name=".ui.homeui.workSpace.CardActivity"
-            android:exported="false" />
+            android:name=".ui.homeui.workSpace.cardActivity.CardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.homeui.workSpace.BoardSettingsActivity"
+            android:name=".ui.homeui.workSpace.SettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity

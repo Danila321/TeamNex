@@ -15,6 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.teamdraft.R;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.card.AddCardDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.AddItemDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.DeleteItemDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.EditItemDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,15 +27,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ItemsAdapter extends ArrayAdapter<String> {
+public class ItemsAdapter extends ArrayAdapter<Item> {
     private final Context context;
-    private final String id;
+    private final String boardId;
     FragmentManager fragmentManager;
 
-    public ItemsAdapter(@NonNull Context context, ArrayList<String> items, String id, FragmentManager fragmentManager) {
+    public ItemsAdapter(@NonNull Context context, ArrayList<Item> items, String boardId, FragmentManager fragmentManager) {
         super(context, R.layout.workspace_custom_item, items);
         this.context = context;
-        this.id = id;
+        this.boardId = boardId;
         this.fragmentManager = fragmentManager;
     }
 
@@ -42,48 +46,45 @@ public class ItemsAdapter extends ArrayAdapter<String> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.workspace_custom_item, null);
         }
 
-        String itemName = getItem(position);
+        Item item = getItem(position);
 
         TextView itemNameView = convertView.findViewById(R.id.itemName);
-        itemNameView.setText(itemName);
+        itemNameView.setText(item.getName());
 
         //Настраиваем ListView карточек
         ArrayList<Card> cards = new ArrayList<>();
         ListView listView = convertView.findViewById(R.id.cardsListView);
-        CardsAdapter adapter = new CardsAdapter(context, cards);
+        CardsAdapter adapter = new CardsAdapter(context, cards, fragmentManager, boardId, item.getId());
         listView.setAdapter(adapter);
+        updateCards(item.getId(), adapter, cards);
 
-        //Получаем данные карточек
-        updateCards(itemName, adapter, cards);
-
+        //Кнопка добавления карточки
         Button addCard = convertView.findViewById(R.id.buttonAddCard);
         addCard.setOnClickListener(view -> {
-            AddItemCardDialog dialog = AddItemCardDialog.newInstance(id, itemName);
+            AddCardDialog dialog = AddCardDialog.newInstance(boardId, item.getId());
             dialog.show(fragmentManager, "addCard");
         });
 
+        //Кнопка изменения названия
         ImageButton edit = convertView.findViewById(R.id.imageButtonEditCard);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        edit.setOnClickListener(v -> {
+            EditItemDialog dialog = EditItemDialog.newInstance(boardId, item.getId(), item.getName());
+            dialog.show(fragmentManager, "editItemName");
         });
 
+        //Кнопка удаления
         ImageButton delete = convertView.findViewById(R.id.imageButtonDeleteCard);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        delete.setOnClickListener(v -> {
+            DeleteItemDialog dialog = DeleteItemDialog.newInstance(boardId, item.getId());
+            dialog.show(fragmentManager, "deleteItem");
         });
 
         return convertView;
     }
 
-    private void updateCards(String itemName, CardsAdapter adapter, ArrayList<Card> cards) {
+    private void updateCards(String itemId, CardsAdapter adapter, ArrayList<Card> cards) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("boards").child(id).child("items").child(itemName).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //Добавляем названия карточек в список

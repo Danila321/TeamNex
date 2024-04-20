@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.teamdraft.R;
-import com.example.teamdraft.ui.homeui.workSpace.BoardSettingsActivity;
+import com.example.teamdraft.ui.homeui.workSpace.SettingsActivity;
 import com.example.teamdraft.ui.homeui.workSpace.WorkSpaceActivity;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +60,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         });
 
         boardSettings.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), BoardSettingsActivity.class);
+            Intent intent = new Intent(getContext(), SettingsActivity.class);
             intent.putExtra("boardId", board.getId());
             context.startActivity(intent);
         });

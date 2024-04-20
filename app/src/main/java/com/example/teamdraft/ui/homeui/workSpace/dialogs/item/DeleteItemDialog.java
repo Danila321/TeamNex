@@ -1,5 +1,6 @@
-package com.example.teamdraft.ui.homeui.workSpace;
+package com.example.teamdraft.ui.homeui.workSpace.dialogs.item;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,21 +26,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class DeleteBoardDialog extends DialogFragment {
-    View dialogView;
-    private String id;
-    private OnDeleteBoard onDeleteBoard;
+public class DeleteItemDialog extends DialogFragment {
+    private String boardId, itemId;
+    private OnChange onChange;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onDeleteBoard = (OnDeleteBoard) getActivity();
+        onChange = (OnChange) context;
     }
 
-    public static DeleteBoardDialog newInstance(String id) {
-        DeleteBoardDialog dialog = new DeleteBoardDialog();
+    public static DeleteItemDialog newInstance(String boardId, String itemId) {
+        DeleteItemDialog dialog = new DeleteItemDialog();
         Bundle args = new Bundle();
-        args.putString("id", id);
+        args.putString("boardId", boardId);
+        args.putString("itemId", itemId);
         dialog.setArguments(args);
         return dialog;
     }
@@ -47,18 +49,26 @@ public class DeleteBoardDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getString("id");
+            boardId = getArguments().getString("boardId");
+            itemId = getArguments().getString("itemId");
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.settings_board_delete_dialog, null);
+        View dialogView = inflater.inflate(R.layout.settings_board_delete_dialog, null);
         builder.setView(dialogView);
+
+        TextView title = dialogView.findViewById(R.id.BoardDialogTitle);
+        TextView description = dialogView.findViewById(R.id.dialogDescription);
+
+        title.setText("Удаление пункта");
+        description.setText("Вы уверены что хотите удалить\nпункт? Это действие является\nбезвозвратным!");
 
         Button buttonCancel = dialogView.findViewById(R.id.BoardDialogButtonCancel);
         Button buttonDelete = dialogView.findViewById(R.id.BoardDialogButtonDelete);
@@ -66,12 +76,10 @@ public class DeleteBoardDialog extends DialogFragment {
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonDelete.setOnClickListener(view -> {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-            reference.child("boards").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            reference.child("boards").child(boardId).child("items").child(itemId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     snapshot.getRef().removeValue();
-                    onDeleteBoard.onDelete();
-                    dismiss();
                 }
 
                 @Override
@@ -79,6 +87,8 @@ public class DeleteBoardDialog extends DialogFragment {
 
                 }
             });
+            onChange.onChange();
+            dismiss();
         });
 
         return builder.create();

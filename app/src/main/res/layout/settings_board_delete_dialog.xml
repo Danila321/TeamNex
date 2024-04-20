@@ -35,7 +35,7 @@
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/dialogDescription" />
 
     <Button
         android:id="@+id/BoardDialogButtonCancel"
@@ -51,17 +51,17 @@
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/dialogDescription" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/dialogDescription"
         android:layout_width="292dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="center"
-        android:text="Вы уверены что хотите удалить доску. Это действие действие является безвозвратным!"
+        android:text="Вы уверены что хотите удалить доску? Это действие является безвозвратным!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BoardDialogTitle" />

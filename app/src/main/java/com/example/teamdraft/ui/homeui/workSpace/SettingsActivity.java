@@ -20,6 +20,10 @@ import android.widget.TextView;
 import com.example.teamdraft.GetUserRole;
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.homeui.boards.Board;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.DeleteDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.EditNameDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnDelete;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnEditName;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class BoardSettingsActivity extends AppCompatActivity implements OnDeleteBoard, OnEditNameBoard {
+public class SettingsActivity extends AppCompatActivity implements OnDelete, OnEditName {
     boolean starState = false;
     ImageView boardImageView;
     String boardIdData, boardNameData;
@@ -133,14 +137,14 @@ public class BoardSettingsActivity extends AppCompatActivity implements OnDelete
                 //Включаем возможность изменения названия
                 editBoardName.setVisibility(View.VISIBLE);
                 editBoardName.setOnClickListener(view -> {
-                    EditBoardNameDialog dialog = EditBoardNameDialog.newInstance(boardIdData, boardNameData);
-                    dialog.show(getSupportFragmentManager(), "editName");
+                    EditNameDialog dialog = EditNameDialog.newInstance(boardNameData);
+                    dialog.show(getSupportFragmentManager(), "editBoardName");
                 });
 
                 //Включаем возможность удаления
                 deleteBoard.setVisibility(View.VISIBLE);
                 deleteBoard.setOnClickListener(view -> {
-                    DeleteBoardDialog dialog = DeleteBoardDialog.newInstance(boardIdData);
+                    DeleteDialog dialog = DeleteDialog.newInstance("доски", "доску");
                     dialog.show(getSupportFragmentManager(), "deleteBoard");
                 });
                 break;
@@ -152,8 +156,8 @@ public class BoardSettingsActivity extends AppCompatActivity implements OnDelete
                 //Включаем возможность изменения названия
                 editBoardName.setVisibility(View.VISIBLE);
                 editBoardName.setOnClickListener(view -> {
-                    EditBoardNameDialog dialog = EditBoardNameDialog.newInstance(boardIdData, boardNameData);
-                    dialog.show(getSupportFragmentManager(), "editName");
+                    EditNameDialog dialog = EditNameDialog.newInstance(boardNameData);
+                    dialog.show(getSupportFragmentManager(), "editBoardName");
                 });
                 break;
             case "user":
@@ -219,11 +223,29 @@ public class BoardSettingsActivity extends AppCompatActivity implements OnDelete
 
     @Override
     public void onDelete() {
+        //Обновляем данные в БД
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("boards").child(boardIdData).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //Закрываем Activity
         finish();
     }
 
     @Override
-    public void onEdit() {
+    public void onEdit(String name) {
+        //Обновляем данные в БД
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("boards").child(boardIdData).child("name").setValue(name);
+        //Обновляем Activity
         startActivity(getIntent());
         finish();
         overridePendingTransition(0, 0);

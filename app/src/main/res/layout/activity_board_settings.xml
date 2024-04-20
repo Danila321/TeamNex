@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.homeui.workSpace.BoardSettingsActivity">
+    tools:context=".ui.homeui.workSpace.SettingsActivity">
 
     <ImageButton
         android:id="@+id/backButtonSettings"

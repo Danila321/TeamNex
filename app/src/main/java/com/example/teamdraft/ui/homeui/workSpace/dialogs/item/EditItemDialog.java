@@ -1,7 +1,8 @@
-package com.example.teamdraft.ui.homeui.workSpace;
+package com.example.teamdraft.ui.homeui.workSpace.dialogs.item;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,14 +22,22 @@ import com.example.teamdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AddItemCardDialog extends DialogFragment {
-    private String id, itemName;
+public class EditItemDialog extends DialogFragment {
+    private String boardId, itemId, name;
+    private OnChange onChange;
 
-    public static AddItemCardDialog newInstance(String id, String itemName) {
-        AddItemCardDialog dialog = new AddItemCardDialog();
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onChange = (OnChange) context;
+    }
+
+    public static EditItemDialog newInstance(String boardId, String itemId, String name) {
+        EditItemDialog dialog = new EditItemDialog();
         Bundle args = new Bundle();
-        args.putString("id", id);
-        args.putString("itemName", itemName);
+        args.putString("boardId", boardId);
+        args.putString("itemId", itemId);
+        args.putString("name", name);
         dialog.setArguments(args);
         return dialog;
     }
@@ -38,8 +46,9 @@ public class AddItemCardDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getString("id");
-            itemName = getArguments().getString("itemName");
+            boardId = getArguments().getString("boardId");
+            itemId = getArguments().getString("itemId");
+            name = getArguments().getString("name");
         }
     }
 
@@ -49,37 +58,30 @@ public class AddItemCardDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.board_create_dialog, null);
+        View dialogView = inflater.inflate(R.layout.settings_board_editname_dialog, null);
         builder.setView(dialogView);
 
-        TextView titleText = dialogView.findViewById(R.id.BoardDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.BoardDialogEditText);
-        Button button = dialogView.findViewById(R.id.BoardDIalogButton);
+        EditText editName = dialogView.findViewById(R.id.BoardDialogEditName);
+        Button buttonCancel = dialogView.findViewById(R.id.BoardDialogButtonCancel);
+        Button buttonEdit = dialogView.findViewById(R.id.BoardDialogButtonEdit);
 
-        if (itemName.equals("")){
-            titleText.setText("Новый пункт");
-        } else {
-            titleText.setText("Новая карточка");
-        }
+        editName.setText(name);
 
-        button.setOnClickListener(view -> {
-            if (editText.getText().length() == 0) {
-                editText.setError("Введите название");
+        buttonCancel.setOnClickListener(view -> dismiss());
+        buttonEdit.setOnClickListener(view -> {
+            if (editName.getText().length() == 0) {
+                editName.setError("Введите название");
             } else {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                if (itemName.equals("")){
-                    mDatabase.child("boards").child(id).child("items").child(editText.getText().toString()).setValue("");
-                } else {
-                    Card card = new Card(editText.getText().toString());
-                    mDatabase.child("boards").child(id).child("items").child(itemName).child(editText.getText().toString()).setValue(card);
-                }
+                //Обновляем данные в БД
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference.child("boards").child(boardId).child("items").child(itemId).child("name").setValue(editName.getText().toString());
+                onChange.onChange();
+                dismiss();
             }
         });
-
         return builder.create();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getDialog() != null && getDialog().getWindow() != null) {

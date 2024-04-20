@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.teamdraft.R;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.AddItemDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.OnChange;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,8 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class WorkSpaceActivity extends AppCompatActivity {
-    ArrayList<String> items = new ArrayList<>();
+public class WorkSpaceActivity extends AppCompatActivity implements OnChange {
+    ArrayList<Item> items = new ArrayList<>();
     ItemsAdapter adapter;
     String boardIdData;
 
@@ -43,13 +45,14 @@ public class WorkSpaceActivity extends AppCompatActivity {
         back.setOnClickListener(view -> finish());
 
         settings.setOnClickListener(view -> {
-            Intent intent = new Intent(WorkSpaceActivity.this, BoardSettingsActivity.class);
+            Intent intent = new Intent(WorkSpaceActivity.this, SettingsActivity.class);
             intent.putExtra("boardId", boardIdData);
             startActivity(intent);
         });
 
+        //Кнопка добавления пункта
         add.setOnClickListener(view -> {
-            AddItemCardDialog dialog = AddItemCardDialog.newInstance(boardIdData, "");
+            AddItemDialog dialog = AddItemDialog.newInstance(boardIdData);
             dialog.show(getSupportFragmentManager(), "addItem");
         });
 
@@ -69,8 +72,9 @@ public class WorkSpaceActivity extends AppCompatActivity {
                 items.clear();
 
                 //Добавляем названия пунктов в список
-                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-                    items.add(itemSnapshot.getKey());
+                for (DataSnapshot cardSnapshot : snapshot.getChildren()) {
+                    Item item = cardSnapshot.getValue(Item.class);
+                    items.add(item);
                 }
 
                 //Обновляем ListView
@@ -82,5 +86,10 @@ public class WorkSpaceActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onChange() {
+        updateItems();
     }
 }
