@@ -44,7 +44,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
-    implementation("com.squarпше eup.picasso:picasso:2.8")
+    implementation("com.squareup.picasso:picasso:2.8")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")

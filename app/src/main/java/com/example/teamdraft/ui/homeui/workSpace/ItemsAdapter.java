@@ -56,7 +56,7 @@ public class ItemsAdapter extends ArrayAdapter<Item> {
         ListView listView = convertView.findViewById(R.id.cardsListView);
         CardsAdapter adapter = new CardsAdapter(context, cards, fragmentManager, boardId, item.getId());
         listView.setAdapter(adapter);
-        updateCards(item.getId(), adapter, cards);
+        updateCards(item.getId(), adapter, listView, cards);
 
         //Кнопка добавления карточки
         Button addCard = convertView.findViewById(R.id.buttonAddCard);
@@ -82,7 +82,7 @@ public class ItemsAdapter extends ArrayAdapter<Item> {
         return convertView;
     }
 
-    private void updateCards(String itemId, CardsAdapter adapter, ArrayList<Card> cards) {
+    private void updateCards(String itemId, CardsAdapter adapter, ListView list, ArrayList<Card> cards) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,6 +94,11 @@ public class ItemsAdapter extends ArrayAdapter<Item> {
                 }
 
                 adapter.notifyDataSetChanged();
+
+                int height = adapter.getCount() * 230;
+                ViewGroup.LayoutParams params = list.getLayoutParams();
+                params.height = height;
+                list.setLayoutParams(params);
             }
 
             @Override
