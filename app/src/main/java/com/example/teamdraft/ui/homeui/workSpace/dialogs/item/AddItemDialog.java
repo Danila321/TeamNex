@@ -21,7 +21,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.homeui.workSpace.Item;
-import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnDelete;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -59,12 +58,12 @@ public class AddItemDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.board_create_dialog, null);
+        View dialogView = inflater.inflate(R.layout.dialog_edit_onebutton, null);
         builder.setView(dialogView);
 
-        TextView titleText = dialogView.findViewById(R.id.BoardDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.BoardDialogEditText);
-        Button button = dialogView.findViewById(R.id.BoardDIalogButton);
+        TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
+        EditText editText = dialogView.findViewById(R.id.EditDialogEditText);
+        Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         titleText.setText("Новый пункт");
 

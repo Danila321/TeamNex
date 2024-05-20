@@ -191,8 +191,8 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
 
     private void uploadImage() {
         if (selectedImageUri != null) {
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference("board_images").child(boardIdData)
-                    .child(System.currentTimeMillis() + "_board_image.jpg");
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference("boards").child(boardIdData)
+                    .child(boardIdData + "_board_image");
 
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(taskSnapshot -> {

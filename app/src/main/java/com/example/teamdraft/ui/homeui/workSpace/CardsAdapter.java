@@ -32,7 +32,6 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         this.boardId = boardId;
         this.itemId = itemId;
         this.fragmentManager = fragmentManager;
-
     }
 
     @NonNull
@@ -50,6 +49,9 @@ public class CardsAdapter extends ArrayAdapter<Card> {
             ConstraintLayout cardLayout = convertView.findViewById(R.id.CardLayout);
             cardLayout.setOnClickListener(v -> {
                 Intent intent = new Intent(context, CardActivity.class);
+                intent.putExtra("boardId", boardId);
+                intent.putExtra("itemId", itemId);
+                intent.putExtra("cardId", card.getId());
                 context.startActivity(intent);
             });
 

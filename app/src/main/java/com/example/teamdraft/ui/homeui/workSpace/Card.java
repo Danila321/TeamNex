@@ -3,21 +3,16 @@ package com.example.teamdraft.ui.homeui.workSpace;
 public class Card {
     private String id;
     private String name;
-    private String deadline;
+    private String description;
 
     public Card() {
 
     }
 
-    public Card(String id, String name) {
+    public Card(String id, String name, String description) {
         this.id = id;
+        this.description = description;
         this.name = name;
-    }
-
-    public Card(String id, String name, String deadline) {
-        this.id = id;
-        this.name = name;
-        this.deadline = deadline;
     }
 
     public String getId() {
@@ -28,7 +23,7 @@ public class Card {
         return name;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getDescription() {
+        return description;
     }
 }

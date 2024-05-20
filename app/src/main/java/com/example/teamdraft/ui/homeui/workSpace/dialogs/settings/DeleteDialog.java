@@ -56,17 +56,17 @@ public class DeleteDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.settings_board_delete_dialog, null);
+        View dialogView = inflater.inflate(R.layout.dialog_text, null);
         builder.setView(dialogView);
 
-        TextView title = dialogView.findViewById(R.id.BoardDialogTitle);
-        TextView description = dialogView.findViewById(R.id.dialogDescription);
+        TextView title = dialogView.findViewById(R.id.TextDialogTitle);
+        TextView description = dialogView.findViewById(R.id.TextDialogDescription);
 
         title.setText("Удаление " + titleText);
         description.setText("Вы уверены что хотите удалить\n" + descriptionText + "? Это действие является\nбезвозвратным!");
 
-        Button buttonCancel = dialogView.findViewById(R.id.BoardDialogButtonCancel);
-        Button buttonDelete = dialogView.findViewById(R.id.BoardDialogButtonDelete);
+        Button buttonCancel = dialogView.findViewById(R.id.TextDialogButtonCancel);
+        Button buttonDelete = dialogView.findViewById(R.id.TextDialogButtonDelete);
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonDelete.setOnClickListener(view -> {

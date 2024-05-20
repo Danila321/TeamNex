@@ -52,12 +52,12 @@ public class AddCardDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.board_create_dialog, null);
+        View dialogView = inflater.inflate(R.layout.dialog_edit_onebutton, null);
         builder.setView(dialogView);
 
-        TextView titleText = dialogView.findViewById(R.id.BoardDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.BoardDialogEditText);
-        Button button = dialogView.findViewById(R.id.BoardDIalogButton);
+        TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
+        EditText editText = dialogView.findViewById(R.id.EditDialogEditText);
+        Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         titleText.setText("Новая карточка");
 
@@ -67,7 +67,7 @@ public class AddCardDialog extends DialogFragment {
             } else {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String ID = UUID.randomUUID().toString();
-                Card card = new Card(ID, editText.getText().toString());
+                Card card = new Card(ID, editText.getText().toString(), "");
                 mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").child(ID).setValue(card);
                 dismiss();
             }

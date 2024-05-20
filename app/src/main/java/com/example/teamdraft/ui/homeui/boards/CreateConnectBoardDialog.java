@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,12 +68,12 @@ public class CreateConnectBoardDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.board_create_dialog, null);
+        dialogView = inflater.inflate(R.layout.dialog_edit_onebutton, null);
         builder.setView(dialogView);
 
-        TextView titleText = dialogView.findViewById(R.id.BoardDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.BoardDialogEditText);
-        Button button = dialogView.findViewById(R.id.BoardDIalogButton);
+        TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
+        EditText editText = dialogView.findViewById(R.id.EditDialogEditText);
+        Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         if (type == 1) {
             titleText.setText("Подключение");
@@ -96,15 +99,8 @@ public class CreateConnectBoardDialog extends DialogFragment {
                 } else {
                     //Получаем текущие дату и время
                     @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                    //Выгружаем из хранилища дефолтный фон для доски
-                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("default_board_images/background_1.jpg");
-                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        //Создаем доску
-                        createBoard(editText.getText().toString(), uri.toString(), date, date);
-                    }).addOnFailureListener(exception -> {
-                        //Обработка ошибки
-                        Toast.makeText(getContext(), "Произошла ошибка", Toast.LENGTH_SHORT).show();
-                    });
+                    //Создаем доску
+                    createBoard(editText.getText().toString(), date, date);
 
                     dismiss();
                 }
@@ -161,7 +157,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
         }
     }
 
-    private void createBoard(String boardName, String imageUrl, String boardDate, String boardEditDate) {
+    private void createBoard(String boardName, String boardDate, String boardEditDate) {
         FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("code").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -171,25 +167,35 @@ public class CreateConnectBoardDialog extends DialogFragment {
                     codes.add(dataSnapshot.getValue(Board.class).getCode());
                 }
 
-                //Проверяем код на уникальность
-                int boardCode;
-                do {
-                    boardCode = 10000000 + new Random().nextInt(90000000);
-                } while (codes.contains(String.valueOf(boardCode)));
-                System.out.println(codes);
-
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
                 //Создаем ID доски
                 String ID = UUID.randomUUID().toString();
 
-                // Создание узла доски с информацией о доске
-                Board board = new Board(ID, boardName, imageUrl, boardDate, boardEditDate, String.valueOf(boardCode));
-                mDatabase.child("boards").child(ID).setValue(board);
+                //Добавляем дефолтное изображение доски
+                Uri uri = Uri.parse("android.resource://com.example.teamdraft/" + R.drawable.background);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference("boards").child(ID).child(ID + "_board_image");
+                storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
+                    // Получаем URL загруженного изображения
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
+                        // Сохраняем URL в базе данных
+                        FirebaseDatabase.getInstance().getReference("boards").child(ID).child("imageUri").setValue(uri1.toString());
 
-                // Добавление создателя доски к списку пользователей
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                mDatabase.child("boards").child(ID).child("users").child(userId).setValue("owner");
+                        //Создаем уникальный код доски
+                        int boardCode;
+                        do {
+                            boardCode = 10000000 + new Random().nextInt(90000000);
+                        } while (codes.contains(String.valueOf(boardCode)));
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        // Создание узла доски с информацией о доске
+                        Board board = new Board(ID, boardName, uri1.toString(), boardDate, boardEditDate, String.valueOf(boardCode));
+                        mDatabase.child("boards").child(ID).setValue(board);
+
+                        // Добавление создателя доски к списку пользователей
+                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        mDatabase.child("boards").child(ID).child("users").child(userId).setValue("owner");
+                    });
+                });
             }
 
             @Override

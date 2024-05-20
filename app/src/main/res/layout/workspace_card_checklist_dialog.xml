@@ -7,20 +7,33 @@
     android:maxWidth="324dp">
 
     <TextView
-        android:id="@+id/BoardDialogTitle"
+        android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Новая доска"
+        android:text="Новая задача"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/CheckListDialogClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/workspace_button_close"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView14"
+        app:srcCompat="@drawable/close" />
+
     <EditText
-        android:id="@+id/BoardDialogEditText"
+        android:id="@+id/CheckListDialogEditText"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginStart="12dp"
@@ -37,10 +50,10 @@
         android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoardDialogTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <Button
-        android:id="@+id/BoardDIalogButton"
+        android:id="@+id/ChecklistDialogButton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -53,5 +66,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoardDialogEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckListDialogEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

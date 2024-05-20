@@ -1,8 +1,6 @@
 package com.example.teamdraft;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UpdateProfile extends AppCompatActivity {
     private EditText editTextName;
@@ -69,17 +62,15 @@ public class UpdateProfile extends AppCompatActivity {
 
     private void updateData(FirebaseUser firebaseUser) {
         String name = String.valueOf(editTextName.getText());
-        if (name.length() == 0) {
+        if (name.isEmpty()) {
             editTextName.setError("Введите свое имя");
         } else {
             progressBar.setVisibility(View.VISIBLE);
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
             firebaseUser.updateProfile(profileUpdates);
             String userId = firebaseUser.getUid();
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
-            Map<String, Object> userData = new HashMap<>();
-            userData.put("name", name);
-            usersRef.setValue(userData)
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
+            usersRef.setValue(name)
                     .addOnCompleteListener(databaseTask -> {
                         if (databaseTask.isSuccessful()) {
                             Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();

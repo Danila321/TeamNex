@@ -5,12 +5,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +18,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -74,12 +74,15 @@ public class UploadProfileImageActivity extends AppCompatActivity {
         upload.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             if (uriImage != null) {
-                StorageReference fileReference = storageReference.child(authAccount.getCurrentUser().getUid() + "." + getFileExtension(uriImage));
+                StorageReference fileReference = storageReference.child(authAccount.getCurrentUser().getUid());
                 fileReference.putFile(uriImage).addOnSuccessListener(taskSnapshot -> {
                     fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
                         firebaseUser = authAccount.getCurrentUser();
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
                         firebaseUser.updateProfile(profileChangeRequest);
+
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                        mDatabase.child("users").child(authAccount.getCurrentUser().getUid()).child("photo").setValue(uri1.toString());
                     });
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(UploadProfileImageActivity.this, "Изображение успешно загружено!", Toast.LENGTH_SHORT).show();
@@ -87,11 +90,5 @@ public class UploadProfileImageActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> Toast.makeText(UploadProfileImageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

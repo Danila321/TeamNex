@@ -1,20 +1,24 @@
-package com.example.teamdraft.ui.homeui.workSpace.cardActivity;
+package com.example.teamdraft.ui.homeui.workSpace.cardActivity.users;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamdraft.R;
+import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CardUsersAdapter extends RecyclerView.Adapter<CardUsersAdapter.ViewHolder> {
-    private List<String> mData;
+    private ArrayList<User> users;
 
-    public CardUsersAdapter(List<String> data) {
-        mData = data;
+    public CardUsersAdapter(ArrayList<User> data) {
+        users = data;
     }
 
     @Override
@@ -25,21 +29,25 @@ public class CardUsersAdapter extends RecyclerView.Adapter<CardUsersAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String item = mData.get(position);
-        //holder.textView.setText(item);
+        User user = users.get(position);
+        holder.name.setText(user.getName());
+        System.out.println(user.getPhoto());
+        Picasso.get().load(Uri.parse(user.getPhoto())).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return users.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //public TextView textView;
+        public TextView name;
+        public ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            //textView = itemView.findViewById(R.id.textView);
+            name = itemView.findViewById(R.id.textViewUserName);
+            image = itemView.findViewById(R.id.cardUsersImageView);
         }
     }
 }

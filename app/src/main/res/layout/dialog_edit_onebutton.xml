@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
     android:maxWidth="324dp">
 
     <TextView
-        android:id="@+id/BoardDialogTitle"
+        android:id="@+id/EditDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Изменить название"
+        android:text="Новая доска"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/BoardDialogEditName"
+        android:id="@+id/EditDialogEditText"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginStart="12dp"
@@ -38,37 +37,21 @@
         android:paddingEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoardDialogTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogTitle" />
 
     <Button
-        android:id="@+id/BoardDialogButtonCancel"
+        android:id="@+id/EditDialogButton"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:fontFamily="sans-serif-light"
-        android:text="Отмена"
-        android:textAllCaps="false"
-        app:cornerRadius="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoardDialogEditName" />
-
-    <Button
-        android:id="@+id/BoardDialogButtonEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:fontFamily="sans-serif-light"
-        android:text="Изменить"
+        android:text="Создать"
         android:textAllCaps="false"
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BoardDialogEditName" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

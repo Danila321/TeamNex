@@ -58,12 +58,12 @@ public class EditItemDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.settings_board_editname_dialog, null);
+        View dialogView = inflater.inflate(R.layout.dialog_edit_twobutton, null);
         builder.setView(dialogView);
 
-        EditText editName = dialogView.findViewById(R.id.BoardDialogEditName);
-        Button buttonCancel = dialogView.findViewById(R.id.BoardDialogButtonCancel);
-        Button buttonEdit = dialogView.findViewById(R.id.BoardDialogButtonEdit);
+        EditText editName = dialogView.findViewById(R.id.EditDialog2EditText);
+        Button buttonCancel = dialogView.findViewById(R.id.EditDialog2ButtonCancel);
+        Button buttonEdit = dialogView.findViewById(R.id.EditDialog2ButtonEdit);
 
         editName.setText(name);
 
