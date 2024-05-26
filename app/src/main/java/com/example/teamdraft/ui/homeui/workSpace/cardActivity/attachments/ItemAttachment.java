@@ -2,7 +2,8 @@ package com.example.teamdraft.ui.homeui.workSpace.cardActivity.attachments;
 
 public class ItemAttachment {
     private String id;
-    private String image;
+    private String file;
+    private String fileType;
     private String name;
     private String date;
 
@@ -10,9 +11,10 @@ public class ItemAttachment {
 
     }
 
-    public ItemAttachment(String id, String image, String name, String date) {
+    public ItemAttachment(String id, String file, String fileType, String name, String date) {
         this.id = id;
-        this.image = image;
+        this.file = file;
+        this.fileType = fileType;
         this.name = name;
         this.date = date;
     }
@@ -21,8 +23,12 @@ public class ItemAttachment {
         return id;
     }
 
-    public String getImage() {
-        return image;
+    public String getFile() {
+        return file;
+    }
+
+    public String getFileType() {
+        return fileType;
     }
 
     public String getName() {

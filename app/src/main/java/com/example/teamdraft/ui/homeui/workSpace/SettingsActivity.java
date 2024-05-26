@@ -1,5 +1,6 @@
 package com.example.teamdraft.ui.homeui.workSpace;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -9,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,14 +20,16 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.teamdraft.GetUserRole;
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.homeui.boards.Board;
 import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.DeleteDialog;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.DisconnectDialog;
 import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.EditNameDialog;
-import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnDelete;
-import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnEditName;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnChangeBoard;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,20 +39,36 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class SettingsActivity extends AppCompatActivity implements OnDelete, OnEditName {
+public class SettingsActivity extends AppCompatActivity implements OnChangeBoard {
     boolean starState = false;
     ImageView boardImageView;
     String boardIdData, boardNameData;
-    TextView boardNameText, boardOwnerText, boardCreateDateText, boardEditDateText;
+    TextView boardNameText, boardOwnerText, boardCreateDateText, boardEditDateText, boardCodeText;
     private Uri selectedImageUri;
+    boolean dataChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_settings);
 
+        //Настраиваем кнопки выхода
         ImageButton backButton = findViewById(R.id.backButtonSettings);
-        backButton.setOnClickListener(view -> finish());
+        backButton.setOnClickListener(v -> {
+            Intent result = new Intent();
+            result.putExtra("dataChanged", dataChanged);
+            setResult(Activity.RESULT_OK, result);
+            finish();
+        });
+        getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent result = new Intent();
+                result.putExtra("dataChanged", dataChanged);
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            }
+        });
 
         Bundle data = getIntent().getExtras();
         if (data != null) {
@@ -55,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
             boardOwnerText = findViewById(R.id.SettingsOwner);
             boardCreateDateText = findViewById(R.id.SettingsCreateDate);
             boardEditDateText = findViewById(R.id.SettingsEditDate);
+            boardCodeText = findViewById(R.id.SettingsBoardCode);
 
             starBoard();
 
@@ -80,6 +103,16 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
                                 boardNameText.setText(board.getName());
                                 boardCreateDateText.setText(board.getDate());
                                 boardEditDateText.setText(board.getEditDate());
+                                boardCodeText.setText(board.getCode());
+
+                                //Кнопка копирования кода в буфер обмена
+                                ImageButton copyCode = findViewById(R.id.SettingsImageButtonCopyCode);
+                                copyCode.setOnClickListener(v -> {
+                                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                    ClipData clip = ClipData.newPlainText("code", board.getCode());
+                                    clipboard.setPrimaryClip(clip);
+                                    Toast.makeText(SettingsActivity.this, "Код скопирован в буфер обмена", Toast.LENGTH_SHORT).show();
+                                });
 
                                 // Получаем UID создателя доски
                                 String creatorUserId = null;
@@ -126,7 +159,9 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
         ConstraintLayout boardImageLayout = findViewById(R.id.boardImageLayout);
         TextView boardImageText = findViewById(R.id.boardImageText);
         ImageButton editBoardName = findViewById(R.id.editBoardName);
-        ConstraintLayout deleteBoard = findViewById(R.id.deleteBoard);
+        ConstraintLayout actionLayout = findViewById(R.id.SettingsActionLayout);
+        ImageView actionImage = findViewById(R.id.SettingsActionImage);
+        TextView actionText = findViewById(R.id.SettingsActionText);
 
         switch (role) {
             case "owner":
@@ -142,8 +177,8 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
                 });
 
                 //Включаем возможность удаления
-                deleteBoard.setVisibility(View.VISIBLE);
-                deleteBoard.setOnClickListener(view -> {
+                actionLayout.setVisibility(View.VISIBLE);
+                actionLayout.setOnClickListener(view -> {
                     DeleteDialog dialog = DeleteDialog.newInstance("доски", "доску");
                     dialog.show(getSupportFragmentManager(), "deleteBoard");
                 });
@@ -159,8 +194,25 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
                     EditNameDialog dialog = EditNameDialog.newInstance(boardNameData);
                     dialog.show(getSupportFragmentManager(), "editBoardName");
                 });
+
+                //Включаем возможность отключения
+                actionLayout.setVisibility(View.VISIBLE);
+                Picasso.get().load(R.drawable.disconnect).into(actionImage);
+                actionText.setText("Отключиться от доски");
+                actionLayout.setOnClickListener(view -> {
+                    DisconnectDialog dialog = new DisconnectDialog();
+                    dialog.show(getSupportFragmentManager(), "disconnect");
+                });
                 break;
             case "user":
+                //Включаем возможность отключения
+                actionLayout.setVisibility(View.VISIBLE);
+                Picasso.get().load(R.drawable.disconnect).into(actionImage);
+                actionText.setText("Отключиться от доски");
+                actionLayout.setOnClickListener(view -> {
+                    DisconnectDialog dialog = new DisconnectDialog();
+                    dialog.show(getSupportFragmentManager(), "disconnect");
+                });
                 break;
         }
     }
@@ -236,6 +288,31 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
 
             }
         });
+        Intent result = new Intent();
+        result.putExtra("dataChanged", true);
+        setResult(Activity.RESULT_OK, result);
+        //Закрываем Activity
+        finish();
+    }
+
+    @Override
+    public void onDisconnect() {
+        //Обновляем данные в БД
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("boards").child(boardIdData).child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Intent result = new Intent();
+        result.putExtra("dataChanged", true);
+        setResult(Activity.RESULT_OK, result);
         //Закрываем Activity
         finish();
     }
@@ -245,9 +322,9 @@ public class SettingsActivity extends AppCompatActivity implements OnDelete, OnE
         //Обновляем данные в БД
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("boards").child(boardIdData).child("name").setValue(name);
-        //Обновляем Activity
-        startActivity(getIntent());
-        finish();
-        overridePendingTransition(0, 0);
+        //Обновляем данные
+        getData(boardIdData);
+        //Устанавливаем флаг для обновления списка досок
+        dataChanged = true;
     }
 }

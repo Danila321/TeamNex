@@ -3,13 +3,14 @@ package com.example.teamdraft;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     Button buttonLogin;
     TextView forgotPassword, registerButton;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btnLogin);
         forgotPassword = findViewById(R.id.forgotPassword);
-        progressBar = findViewById(R.id.progressBar);
         registerButton = findViewById(R.id.registerButton);
 
         mAuth = FirebaseAuth.getInstance();
@@ -44,12 +43,11 @@ public class LoginActivity extends AppCompatActivity {
             email = String.valueOf(editTextEmail.getText());
             password = String.valueOf(editTextPassword.getText());
 
-            if (email.length() == 0) {
+            if (email.isEmpty()) {
                 editTextEmail.setError("Введите свой email");
-            } else if (password.length() == 0) {
+            } else if (password.isEmpty()) {
                 editTextPassword.setError("Введите пароль");
             } else {
-                progressBar.setVisibility(View.VISIBLE);
                 loginUser(email, password);
             }
         });
@@ -66,9 +64,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
+        //Закрываем клавиатуру
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        //Показываем загрузочный диалог
+        LoadingDialog loadingDialog = new LoadingDialog(this, "Заходим в аккаунт...");
+        loadingDialog.startDialog();
         //Авторизируем юзера
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
+                    loadingDialog.dismissDialog();
                     if (task.isSuccessful()) {
                         //Проверяем, подтвердил ли пользователь почту
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -94,7 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                    progressBar.setVisibility(View.INVISIBLE);
                 });
     }
 

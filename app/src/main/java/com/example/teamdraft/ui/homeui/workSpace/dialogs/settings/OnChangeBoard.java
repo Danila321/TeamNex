@@ -1,5 +1,7 @@
 package com.example.teamdraft.ui.homeui.workSpace.dialogs.settings;
 
-public interface OnEditName {
+public interface OnChangeBoard {
+    void onDelete();
+    void onDisconnect();
     void onEdit(String name);
 }

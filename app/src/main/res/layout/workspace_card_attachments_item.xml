@@ -5,24 +5,170 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/AttachmentItemImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/workspace_item_white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/AttachmentItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Название"
-        app:layout_constraintStart_toEndOf="@+id/AttachmentItemImage"
-        app:layout_constraintTop_toTopOf="@+id/AttachmentItemImage" />
+        <ImageView
+            android:id="@+id/attachmentItemImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/workspace_attachments_image"
+            android:clickable="true"
+            android:clipToOutline="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/attachmentItemImageType"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:alpha="0.8"
+            app:layout_constraintBottom_toBottomOf="@+id/attachmentItemImage"
+            app:layout_constraintEnd_toEndOf="@+id/attachmentItemImage"
+            app:layout_constraintStart_toStartOf="@+id/attachmentItemImage"
+            app:layout_constraintTop_toTopOf="@+id/attachmentItemImage"
+            app:srcCompat="@drawable/picture" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/attachmentItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/workspace_attachment_gray"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/attachmentItemImage"
+            app:layout_constraintEnd_toEndOf="@+id/attachmentItemImage"
+            app:layout_constraintStart_toStartOf="@+id/attachmentItemImage"
+            app:layout_constraintTop_toTopOf="@+id/attachmentItemImage">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/attachmentItemBackgroundType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/attachmentItemImage"
+            app:layout_constraintEnd_toEndOf="@+id/attachmentItemImage"
+            app:layout_constraintStart_toStartOf="@+id/attachmentItemImage"
+            app:layout_constraintTop_toTopOf="@+id/attachmentItemImage" />
+
+        <TextView
+            android:id="@+id/AttachmentItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="Название"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintStart_toEndOf="@+id/attachmentItemImage"
+            app:layout_constraintTop_toTopOf="@+id/attachmentItemImage" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/workspace_item_gray_small"
+            app:layout_constraintStart_toEndOf="@+id/attachmentItemImage"
+            app:layout_constraintTop_toBottomOf="@+id/AttachmentItemName">
+
+            <TextView
+                android:id="@+id/attachmentFileTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="2dp"
+                android:text="TextView"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/workspace_button_date_gray_12dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/attachmentItemImage"
+            app:layout_constraintStart_toEndOf="@+id/attachmentItemImage">
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/download" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
+                android:text="Скачать"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView16"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/workspace_button_date_gray_12dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/edit2" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/workspace_button_date_gray_12dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/remove" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

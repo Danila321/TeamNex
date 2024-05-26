@@ -7,11 +7,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,12 +25,12 @@ import com.example.teamdraft.R;
 
 public class DeleteDialog extends DialogFragment {
     private String titleText, descriptionText;
-    private OnDelete onDelete;
+    private OnChangeBoard onChangeBoard;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onDelete = (OnDelete) context;
+        onChangeBoard = (OnChangeBoard) context;
     }
 
     public static DeleteDialog newInstance(String titleText, String descriptionText) {
@@ -70,7 +72,7 @@ public class DeleteDialog extends DialogFragment {
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonDelete.setOnClickListener(view -> {
-            onDelete.onDelete();
+            onChangeBoard.onDelete();
             dismiss();
         });
 
@@ -78,12 +80,12 @@ public class DeleteDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            getDialog().getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_text_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
-        return null;
     }
 }

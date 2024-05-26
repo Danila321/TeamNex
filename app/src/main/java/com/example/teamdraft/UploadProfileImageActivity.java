@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -25,7 +26,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class UploadProfileImageActivity extends AppCompatActivity {
-    private ProgressBar progressBar;
     private ImageView imageView;
     StorageReference storageReference;
     FirebaseAuth authAccount;
@@ -40,7 +40,6 @@ public class UploadProfileImageActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.backButton);
         Button choose = findViewById(R.id.choose_image_button);
         Button upload = findViewById(R.id.uploadImage);
-        progressBar = findViewById(R.id.ProfileProgressBar);
         imageView = findViewById(R.id.ChooseImageView);
 
         backButton.setOnClickListener(view -> finish());
@@ -72,22 +71,28 @@ public class UploadProfileImageActivity extends AppCompatActivity {
         });
 
         upload.setOnClickListener(v -> {
-            progressBar.setVisibility(View.VISIBLE);
             if (uriImage != null) {
+                //Показываем загрузочный диалог
+                LoadingDialog loadingDialog = new LoadingDialog(this, "Загружаем фото...");
+                loadingDialog.startDialog();
+                //Обновляем данные пользователя
                 StorageReference fileReference = storageReference.child(authAccount.getCurrentUser().getUid());
-                fileReference.putFile(uriImage).addOnSuccessListener(taskSnapshot -> {
-                    fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
-                        firebaseUser = authAccount.getCurrentUser();
-                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
-                        firebaseUser.updateProfile(profileChangeRequest);
-
+                fileReference.putFile(uriImage).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
+                    //Загружаем данные в БД
+                    UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
+                    firebaseUser.updateProfile(profileChangeRequest).addOnSuccessListener(unused -> {
                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                         mDatabase.child("users").child(authAccount.getCurrentUser().getUid()).child("photo").setValue(uri1.toString());
+
+                        loadingDialog.dismissDialog();
+                        Toast.makeText(UploadProfileImageActivity.this, "Изображение успешно загружено!", Toast.LENGTH_SHORT).show();
+
+                        Intent result = new Intent();
+                        result.putExtra("imageChanged", true);
+                        setResult(Activity.RESULT_OK, result);
+                        finish();
                     });
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(UploadProfileImageActivity.this, "Изображение успешно загружено!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }).addOnFailureListener(e -> Toast.makeText(UploadProfileImageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                })).addOnFailureListener(e -> Toast.makeText(UploadProfileImageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
     }

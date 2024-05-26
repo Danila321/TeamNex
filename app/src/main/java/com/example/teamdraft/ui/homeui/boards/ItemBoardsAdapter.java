@@ -1,5 +1,6 @@
 package com.example.teamdraft.ui.homeui.boards;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,10 +28,12 @@ import java.util.Date;
 
 public class ItemBoardsAdapter extends ArrayAdapter<Board> {
     private final Context context;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
-    public ItemBoardsAdapter(@NonNull Context context, ArrayList<Board> items) {
+    public ItemBoardsAdapter(@NonNull Context context, ArrayList<Board> items, ActivityResultLauncher<Intent> activityResultLauncher) {
         super(context, R.layout.boards_custom_item, items);
         this.context = context;
+        this.activityResultLauncher = activityResultLauncher;
     }
 
     @NonNull
@@ -62,7 +65,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         boardSettings.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), SettingsActivity.class);
             intent.putExtra("boardId", board.getId());
-            context.startActivity(intent);
+            activityResultLauncher.launch(intent);
         });
 
         return convertView;

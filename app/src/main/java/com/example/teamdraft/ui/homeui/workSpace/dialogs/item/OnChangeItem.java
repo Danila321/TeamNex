@@ -1,5 +1,5 @@
 package com.example.teamdraft.ui.homeui.workSpace.dialogs.item;
 
-public interface OnChange {
+public interface OnChangeItem {
     void onChange();
 }

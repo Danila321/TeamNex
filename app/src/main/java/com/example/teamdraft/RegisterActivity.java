@@ -3,17 +3,17 @@ package com.example.teamdraft;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -32,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
     Button buttonRegister;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         editTextPasswordAgain = findViewById(R.id.password_again);
         buttonRegister = findViewById(R.id.btn_register);
-        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -69,13 +67,21 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!password.equals(passwordAgain)) {
                 editTextPasswordAgain.setError("Пароли не совпадают");
             } else {
-                progressBar.setVisibility(View.VISIBLE);
                 registerUser(email, password, name);
             }
         });
     }
 
     private void registerUser(String email, String password, String name) {
+        //Закрываем клавиатуру
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        //Показываем загрузочный диалог
+        LoadingDialog loadingDialog = new LoadingDialog(this, "Регистрируем вас...");
+        loadingDialog.startDialog();
         //Добавляем юзера в БД
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -104,6 +110,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (databaseTask.isSuccessful()) {
                                             //Отправляем юзеру письмо
                                             firebaseUser.sendEmailVerification();
+                                            //Выходим из зарегистрированного аккаунта
+                                            mAuth.signOut();
+                                            //Закрываем загрузочный диалог
+                                            loadingDialog.dismissDialog();
                                             //Показываем диалоговое окно и выходим при нажатии на кнопку
                                             showDialog();
                                         } else {
@@ -129,7 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                    progressBar.setVisibility(View.INVISIBLE);
                 });
     }
 
@@ -138,6 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         builder.setTitle("Вы успешно зарегистрировались!");
         builder.setMessage("На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке");
         builder.setPositiveButton("Хорошо", (dialog, which) -> finish());
+        builder.setCancelable(false);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

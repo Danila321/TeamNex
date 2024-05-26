@@ -2,15 +2,19 @@ package com.example.teamdraft;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -20,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class UpdateProfile extends AppCompatActivity {
     private EditText editTextName;
     Button buttonUpdate;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,6 @@ public class UpdateProfile extends AppCompatActivity {
         EditText editTextPasswordAgain = findViewById(R.id.password_again);
         editTextName = findViewById(R.id.name);
         buttonUpdate = findViewById(R.id.btn_register);
-        progressBar = findViewById(R.id.progressBar);
 
         backButton.setOnClickListener(view -> finish());
 
@@ -48,16 +50,10 @@ public class UpdateProfile extends AppCompatActivity {
         buttonUpdate.setText("Обновить");
 
         if (firebaseUser != null) {
-            showData(firebaseUser);
+            editTextName.setText(firebaseUser.getDisplayName());
         }
 
         buttonUpdate.setOnClickListener(v -> updateData(firebaseUser));
-    }
-
-    private void showData(FirebaseUser firebaseUser) {
-        progressBar.setVisibility(View.VISIBLE);
-        editTextName.setText(firebaseUser.getDisplayName());
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void updateData(FirebaseUser firebaseUser) {
@@ -65,25 +61,30 @@ public class UpdateProfile extends AppCompatActivity {
         if (name.isEmpty()) {
             editTextName.setError("Введите свое имя");
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+            //Закрываем клавиатуру
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+            //Показываем загрузочный диалог
+            LoadingDialog loadingDialog = new LoadingDialog(this, "Обновляем данные...");
+            loadingDialog.startDialog();
+            //Обновляем данные пользователя
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
-            firebaseUser.updateProfile(profileUpdates);
-            String userId = firebaseUser.getUid();
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name");
-            usersRef.setValue(name)
-                    .addOnCompleteListener(databaseTask -> {
-                        if (databaseTask.isSuccessful()) {
-                            Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
-                            finish();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        } else {
-                            // Ошибка сохранения данных в базе данных
-                            Exception databaseException = databaseTask.getException();
-                            if (databaseException != null) {
-                                databaseException.printStackTrace();
-                            }
-                        }
-                    });
+            firebaseUser.updateProfile(profileUpdates).addOnSuccessListener(unused -> {
+                //Загружаем данные в БД
+                DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).child("name");
+                usersRef.setValue(name);
+
+                loadingDialog.dismissDialog();
+                Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+
+                Intent result = new Intent();
+                result.putExtra("dataChanged", true);
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            });
         }
     }
 }

@@ -1,74 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
-    android:maxWidth="324dp">
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/EditDialog2Title"
+        android:id="@+id/DisconnectDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Изменить название"
+        android:text="Отключение"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/EditDialog2EditText"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="12dp"
+    <TextView
+        android:id="@+id/DisconnectDialogDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/custom_input"
-        android:drawableStart="@drawable/name_custom_icon"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:fontFamily="sans-serif-light"
-        android:hint="Введите название"
-        android:inputType="text"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:layout_marginEnd="24dp"
+        android:text="Вы уверены что хотите отключиться от этой доски?"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditDialog2Title" />
+        app:layout_constraintTop_toBottomOf="@+id/DisconnectDialogTitle" />
 
     <Button
-        android:id="@+id/EditDialog2ButtonCancel"
+        android:id="@+id/DisconnectDialogButtonCancel"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="#BABABA"
         android:fontFamily="sans-serif-light"
         android:text="Отмена"
         android:textAllCaps="false"
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditDialog2EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/DisconnectDialogDescription" />
 
     <Button
-        android:id="@+id/EditDialog2ButtonEdit"
+        android:id="@+id/DisconnectDialogButtonAccept"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/holo_red_light"
         android:fontFamily="sans-serif-light"
-        android:text="Изменить"
+        android:text="Отключиться"
         android:textAllCaps="false"
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditDialog2EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/DisconnectDialogDescription" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,11 @@
 package com.example.teamdraft.ui.homeui.boards;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -23,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentBoards extends Fragment {
+public class FragmentBoards extends Fragment implements OnCreateConnectBoard {
     ArrayList<Board> items = new ArrayList<>();
     ItemBoardsAdapter adapter;
 
@@ -51,9 +55,22 @@ public class FragmentBoards extends Fragment {
             dialog.show(getChildFragmentManager(), "connectBoard");
         });
 
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            if (data.getBooleanExtra("dataChanged", false)) {
+                                loadBoardsData();
+                            }
+                        }
+                    }
+                });
+
         //Загружаем данные всех досок и выводим на экран
         loadBoardsData();
-        adapter = new ItemBoardsAdapter(requireContext(), items);
+        adapter = new ItemBoardsAdapter(requireContext(), items, activityResultLauncher);
         listView.setAdapter(adapter);
 
         create.setOnClickListener(view1 -> {
@@ -101,5 +118,10 @@ public class FragmentBoards extends Fragment {
 
                     }
                 });
+    }
+
+    @Override
+    public void onChange() {
+        loadBoardsData();
     }
 }

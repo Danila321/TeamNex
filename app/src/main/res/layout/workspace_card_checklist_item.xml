@@ -56,9 +56,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/workspace_button_gray_12dp"
+                android:background="@drawable/workspace_button_date_gray_12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/checklistItemUsers"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/checklistItemDateText"
@@ -89,10 +91,12 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/workspace_button_gray_12dp"
+                android:background="@drawable/workspace_button_date_gray_12dp"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/checklistItemUsers"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/calendar" />
 
             <ImageButton
@@ -100,7 +104,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/workspace_button_gray_12dp"
+                android:background="@drawable/workspace_button_date_gray_12dp"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +116,7 @@
                 android:id="@+id/checklistItemDelete"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:background="@drawable/workspace_button_gray_12dp"
+                android:background="@drawable/workspace_button_date_gray_12dp"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"

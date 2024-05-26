@@ -1,5 +1,6 @@
 package com.example.teamdraft;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -55,10 +58,23 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+
         //Настраиваем кнопку открытия аккаунта
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            if (data.getBooleanExtra("imageChanged", false)) {
+                                Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
+                            }
+                        }
+                    }
+                });
         profileSettings.setOnClickListener(view1 -> {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            activityResultLauncher.launch(intent);
         });
     }
 

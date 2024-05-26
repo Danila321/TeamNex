@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -97,27 +96,27 @@ public class ItemChecklistAdapter extends ArrayAdapter<ItemChecklist> {
                 LocalDate date = LocalDate.parse(item.getDate(), inputFormatter);
 
                 if (checkBox.isChecked()) {
-                    dateLayout.setBackgroundResource(R.drawable.workspace_button_green_12dp);
+                    dateLayout.setBackgroundResource(R.drawable.workspace_button_date_green_12dp);
                 } else {
                     if (date.isAfter(LocalDate.now())) {
-                        dateLayout.setBackgroundResource(R.drawable.workspace_button_gray_12dp);
+                        dateLayout.setBackgroundResource(R.drawable.workspace_button_date_gray_12dp);
                     } else if (date.isEqual(LocalDate.now())) {
-                        dateLayout.setBackgroundResource(R.drawable.workspace_button_yellow_12dp);
+                        dateLayout.setBackgroundResource(R.drawable.workspace_button_date_yellow_12dp);
                     } else if (date.isBefore(LocalDate.now())) {
-                        dateLayout.setBackgroundResource(R.drawable.workspace_button_red_12dp);
+                        dateLayout.setBackgroundResource(R.drawable.workspace_button_date_red_12dp);
                     }
                 }
 
                 checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     if (checkBox.isChecked()) {
-                        dateLayout.setBackgroundResource(R.drawable.workspace_button_green_12dp);
+                        dateLayout.setBackgroundResource(R.drawable.workspace_button_date_green_12dp);
                     } else {
                         if (date.isAfter(LocalDate.now())) {
-                            dateLayout.setBackgroundResource(R.drawable.workspace_button_gray_12dp);
+                            dateLayout.setBackgroundResource(R.drawable.workspace_button_date_gray_12dp);
                         } else if (date.isEqual(LocalDate.now())) {
-                            dateLayout.setBackgroundResource(R.drawable.workspace_button_yellow_12dp);
+                            dateLayout.setBackgroundResource(R.drawable.workspace_button_date_yellow_12dp);
                         } else if (date.isBefore(LocalDate.now())) {
-                            dateLayout.setBackgroundResource(R.drawable.workspace_button_red_12dp);
+                            dateLayout.setBackgroundResource(R.drawable.workspace_button_date_red_12dp);
                         }
                     }
                 });

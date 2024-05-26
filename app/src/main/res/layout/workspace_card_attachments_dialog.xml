@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="324dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_rounded"
-    android:maxWidth="324dp">
+    android:background="@drawable/dialog_rounded">
 
     <TextView
         android:id="@+id/textView15"
@@ -59,7 +58,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/workspace_button_gray_12dp"
+        android:background="@drawable/workspace_button_date_gray_12dp"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,10 +76,15 @@
             app:srcCompat="@drawable/document" />
 
         <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
+            android:id="@+id/AttachmentDialogFileName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
             android:fontFamily="sans-serif-condensed-medium"
+            android:gravity="center"
+            android:maxLines="2"
             android:text="Выберите файл"
             app:layout_constraintBottom_toBottomOf="@+id/imageView14"
             app:layout_constraintEnd_toEndOf="parent"

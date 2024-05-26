@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.AddItemDialog;
-import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.OnChange;
+import com.example.teamdraft.ui.homeui.workSpace.dialogs.item.OnChangeItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class WorkSpaceActivity extends AppCompatActivity implements OnChange {
+public class WorkSpaceActivity extends AppCompatActivity implements OnChangeItem {
     ArrayList<Item> items = new ArrayList<>();
     ItemsAdapter adapter;
     String boardIdData;

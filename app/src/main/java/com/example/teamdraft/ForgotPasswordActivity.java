@@ -2,15 +2,15 @@ package com.example.teamdraft;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText editTextEmail;
     Button buttonReset;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +28,34 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         ImageButton backToLogin = findViewById(R.id.backButton);
         editTextEmail = findViewById(R.id.email);
         buttonReset = findViewById(R.id.btn_reset);
-        progressBar = findViewById(R.id.progressBar);
 
         backToLogin.setOnClickListener(view -> finish());
 
         buttonReset.setOnClickListener(v -> {
             String email = String.valueOf(editTextEmail.getText());
 
-            if (email.length() == 0) {
+            if (email.isEmpty()) {
                 editTextEmail.setError("Введите email");
             } else {
-                progressBar.setVisibility(View.VISIBLE);
                 resetPassword(email);
             }
         });
     }
 
     void resetPassword(String email) {
+        //Закрываем клавиатуру
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        //Показываем загрузочный диалог
+        LoadingDialog loadingDialog = new LoadingDialog(this, "Подождите немного...");
+        loadingDialog.startDialog();
+
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         authProfile.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            loadingDialog.dismissDialog();
             if (task.isSuccessful()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPasswordActivity.this);
                 builder.setTitle("Сброс пароля");
@@ -65,7 +73,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Toast.makeText(ForgotPasswordActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-            progressBar.setVisibility(View.INVISIBLE);
         });
     }
 }

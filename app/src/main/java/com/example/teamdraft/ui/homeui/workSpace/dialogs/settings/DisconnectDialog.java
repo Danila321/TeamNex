@@ -1,11 +1,15 @@
 package com.example.teamdraft.ui.homeui.workSpace.dialogs.settings;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +17,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,8 +25,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
 
-public class EditNameDialog extends DialogFragment {
-    private String name;
+public class DisconnectDialog extends DialogFragment {
     private OnChangeBoard onChangeBoard;
 
     @Override
@@ -33,51 +34,25 @@ public class EditNameDialog extends DialogFragment {
         onChangeBoard = (OnChangeBoard) context;
     }
 
-    public static EditNameDialog newInstance(String name) {
-        EditNameDialog dialog = new EditNameDialog();
-        Bundle args = new Bundle();
-        args.putString("name", name);
-        dialog.setArguments(args);
-        return dialog;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            name = getArguments().getString("name");
-        }
-    }
-
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_edit, null);
+        View dialogView = inflater.inflate(R.layout.dialog_disconnect, null);
         builder.setView(dialogView);
 
-        TextView title = dialogView.findViewById(R.id.EditDialogTitle);
-        EditText editName = dialogView.findViewById(R.id.EditDialogEditText);
-        ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
-        Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
-
-        title.setText("Изменить название");
-
-        editName.setText(name);
-
-        buttonEdit.setText("Изменить");
+        Button buttonCancel = dialogView.findViewById(R.id.DisconnectDialogButtonCancel);
+        Button buttonDisconnect = dialogView.findViewById(R.id.DisconnectDialogButtonAccept);
 
         buttonCancel.setOnClickListener(view -> dismiss());
-        buttonEdit.setOnClickListener(view -> {
-            if (editName.getText().length() == 0) {
-                editName.setError("Введите название");
-            } else {
-                onChangeBoard.onEdit(editName.getText().toString());
-                dismiss();
-            }
+        buttonDisconnect.setOnClickListener(view -> {
+            onChangeBoard.onDisconnect();
+            dismiss();
         });
+
         return builder.create();
     }
 
@@ -85,7 +60,7 @@ public class EditNameDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_disconnect_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
             getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }

@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
-import com.example.teamdraft.ui.homeui.workSpace.dialogs.settings.OnDelete;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,18 +62,20 @@ public class EditDescriptionDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_edit_twobutton, null);
+        View dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
 
-        TextView title = dialogView.findViewById(R.id.EditDialog2Title);
-        EditText editName = dialogView.findViewById(R.id.EditDialog2EditText);
-        Button buttonCancel = dialogView.findViewById(R.id.EditDialog2ButtonCancel);
-        Button buttonEdit = dialogView.findViewById(R.id.EditDialog2ButtonEdit);
+        TextView title = dialogView.findViewById(R.id.EditDialogTitle);
+        EditText editName = dialogView.findViewById(R.id.EditDialogEditText);
+        ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
+        Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
 
         title.setText("Изменить описание");
-        editName.setHint("Введите описание");
 
+        editName.setHint("Введите описание");
         editName.setText(name);
+
+        buttonEdit.setText("Изменить");
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {
@@ -94,14 +97,13 @@ public class EditDescriptionDialog extends DialogFragment {
         mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").child(cardId).child("description").setValue(name);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            getDialog().getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
-        return null;
     }
 }

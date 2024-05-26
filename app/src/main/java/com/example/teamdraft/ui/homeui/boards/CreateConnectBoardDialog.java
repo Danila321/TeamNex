@@ -3,17 +3,20 @@ package com.example.teamdraft.ui.homeui.boards;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,8 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.teamdraft.LoadingDialog;
 import com.example.teamdraft.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +37,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +47,13 @@ import java.util.UUID;
 public class CreateConnectBoardDialog extends DialogFragment {
     View dialogView;
     private int type;
+    OnCreateConnectBoard onCreateConnectBoard;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onCreateConnectBoard = (OnCreateConnectBoard) getParentFragment();
+    }
 
     public static CreateConnectBoardDialog newInstance(int type) {
         CreateConnectBoardDialog dialog = new CreateConnectBoardDialog();
@@ -68,7 +77,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_edit_onebutton, null);
+        dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
 
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
@@ -110,17 +119,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
         return builder.create();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            getDialog().getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
-        }
-        return null;
-    }
-
     private void connectToBoard(String boardCode) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -137,6 +135,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
                                 // Добавляем пользователя к списку пользователей доски
                                 mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user");
 
+                                onCreateConnectBoard.onChange();
                                 Toast.makeText(dialogView.getContext(), "Вы успешно подключились к доске", Toast.LENGTH_SHORT).show();
                             } else {
                                 //Пользователь уже подключен к доске
@@ -158,6 +157,9 @@ public class CreateConnectBoardDialog extends DialogFragment {
     }
 
     private void createBoard(String boardName, String boardDate, String boardEditDate) {
+        //Показываем загрузочный диалог
+        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), "Создаем доску...");
+        loadingDialog.startDialog();
         FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("code").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -194,6 +196,10 @@ public class CreateConnectBoardDialog extends DialogFragment {
                         // Добавление создателя доски к списку пользователей
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         mDatabase.child("boards").child(ID).child("users").child(userId).setValue("owner");
+
+                        loadingDialog.dismissDialog();
+
+                        onCreateConnectBoard.onChange();
                     });
                 });
             }
@@ -203,5 +209,15 @@ public class CreateConnectBoardDialog extends DialogFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
     }
 }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="306dp"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
-    android:maxWidth="324dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/TextDialogTitle"
@@ -23,11 +21,11 @@
 
     <TextView
         android:id="@+id/TextDialogDescription"
-        android:layout_width="292dp"
+        android:layout_width="278dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="14dp"
         android:text="Вы уверены что хотите удалить доску? Это действие является безвозвратным!"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,10 +36,10 @@
         android:id="@+id/TextDialogButtonCancel"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="#BABABA"
         android:fontFamily="sans-serif-light"
         android:text="Отмена"
         android:textAllCaps="false"
@@ -54,10 +52,10 @@
         android:id="@+id/TextDialogButtonDelete"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/holo_red_light"
         android:fontFamily="sans-serif-light"
         android:text="Удалить"
         android:textAllCaps="false"

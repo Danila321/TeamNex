@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,14 +55,19 @@ public class EditCardDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_edit_twobutton, null);
+        View dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
 
-        EditText editName = dialogView.findViewById(R.id.EditDialog2EditText);
-        Button buttonCancel = dialogView.findViewById(R.id.EditDialog2ButtonCancel);
-        Button buttonEdit = dialogView.findViewById(R.id.EditDialog2ButtonEdit);
+        TextView title = dialogView.findViewById(R.id.EditDialogTitle);
+        EditText editName = dialogView.findViewById(R.id.EditDialogEditText);
+        ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
+        Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
+
+        title.setText("Изменить название");
 
         editName.setText(name);
+
+        buttonEdit.setText("Изменить");
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {
@@ -76,12 +84,12 @@ public class EditCardDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            getDialog().getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
-        return null;
     }
 }

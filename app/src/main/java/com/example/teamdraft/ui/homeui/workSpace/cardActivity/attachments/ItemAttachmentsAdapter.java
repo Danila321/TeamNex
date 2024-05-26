@@ -1,7 +1,6 @@
 package com.example.teamdraft.ui.homeui.workSpace.cardActivity.attachments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.teamdraft.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
+    Context context;
+
     public ItemAttachmentsAdapter(@NonNull Context context, ArrayList<ItemAttachment> attachments) {
         super(context, R.layout.workspace_card_attachments_item, attachments);
+        this.context = context;
     }
 
     @NonNull
@@ -31,8 +36,34 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
 
         ItemAttachment item = getItem(position);
 
-        ImageView image = convertView.findViewById(R.id.AttachmentItemImage);
-        Picasso.get().load(item.getImage()).into(image);
+        ImageView imageView = convertView.findViewById(R.id.attachmentItemImage);
+        ImageView imageType = convertView.findViewById(R.id.attachmentItemImageType);
+
+        TextView fileTypeTextView = convertView.findViewById(R.id.attachmentFileTypeTextView);
+        String fileUri = item.getFile();
+        String fileType = item.getFileType();
+        if (fileType.equals("png") || fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("webp")) {
+            Picasso.get().load(fileUri).into(imageView);
+            Picasso.get().load(R.drawable.picture).into(imageType);
+            //Показываем тип файла
+            fileTypeTextView.setText("Фото");
+        } else if (fileType.equals("mp4") || fileType.equals("mkv") || fileType.equals("avi")) {
+            Glide.with(context)
+                    .setDefaultRequestOptions(new RequestOptions().frame(0).fitCenter())
+                    .load(fileUri)
+                    .into(imageView);
+            Picasso.get().load(R.drawable.video).into(imageType);
+            //Показываем тип файла
+            fileTypeTextView.setText("Видео");
+        } else {
+            ConstraintLayout grayLayout = convertView.findViewById(R.id.attachmentItemBackground);
+            grayLayout.setVisibility(View.VISIBLE);
+            TextView typeTextView = convertView.findViewById(R.id.attachmentItemBackgroundType);
+            typeTextView.setVisibility(View.VISIBLE);
+            typeTextView.setText(fileType);
+            //Показываем тип файла
+            fileTypeTextView.setText("Файл");
+        }
 
         TextView name = convertView.findViewById(R.id.AttachmentItemName);
         name.setText(item.getName());

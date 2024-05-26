@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,12 +29,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DeleteItemDialog extends DialogFragment {
     private String boardId, itemId;
-    private OnChange onChange;
+    private OnChangeItem onChangeItem;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onChange = (OnChange) context;
+        onChangeItem = (OnChangeItem) context;
     }
 
     public static DeleteItemDialog newInstance(String boardId, String itemId) {
@@ -87,7 +88,7 @@ public class DeleteItemDialog extends DialogFragment {
 
                 }
             });
-            onChange.onChange();
+            onChangeItem.onChange();
             dismiss();
         });
 
@@ -95,12 +96,12 @@ public class DeleteItemDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-            getDialog().getWindow().setGravity(Gravity.CENTER_HORIZONTAL);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_text_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
-        return null;
     }
 }

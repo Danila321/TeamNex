@@ -93,7 +93,7 @@
                     android:layout_height="50dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/workspace_button_gray_12dp"
+                    android:background="@drawable/workspace_button_date_gray_12dp"
                     android:padding="8dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -181,7 +181,7 @@
                     android:layout_marginTop="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/check_list" />
+                    app:srcCompat="@drawable/checklist" />
 
                 <TextView
                     android:id="@+id/textView16"
@@ -283,19 +283,20 @@
                     android:id="@+id/attachmentsList"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="24dp"
                     android:divider="@null"
                     android:dividerHeight="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/imageView9"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
                 <Button
                     android:id="@+id/addAttachment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="18dp"
                     android:backgroundTint="#DADADA"
                     android:fontFamily="sans-serif-condensed-medium"
