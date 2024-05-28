@@ -1,6 +1,7 @@
 package com.example.teamdraft.ui.homeui.workSpace.cardActivity.attachments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,12 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             Picasso.get().load(R.drawable.picture).into(imageType);
             //Показываем тип файла
             fileTypeTextView.setText("Фото");
+            //Настраиваем открытие фотографии
+            imageView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, AttachmentImageView.class);
+                intent.putExtra("fileUri", fileUri);
+                context.startActivity(intent);
+            });
         } else if (fileType.equals("mp4") || fileType.equals("mkv") || fileType.equals("avi")) {
             Glide.with(context)
                     .setDefaultRequestOptions(new RequestOptions().frame(0).fitCenter())
@@ -55,6 +62,12 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             Picasso.get().load(R.drawable.video).into(imageType);
             //Показываем тип файла
             fileTypeTextView.setText("Видео");
+            //Настраиваем открытие видео
+            imageView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, AttachmentVideoView.class);
+                intent.putExtra("fileUri", fileUri);
+                context.startActivity(intent);
+            });
         } else {
             ConstraintLayout grayLayout = convertView.findViewById(R.id.attachmentItemBackground);
             grayLayout.setVisibility(View.VISIBLE);

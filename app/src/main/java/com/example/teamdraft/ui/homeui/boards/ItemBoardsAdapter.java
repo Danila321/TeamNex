@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,11 +29,16 @@ import java.util.Date;
 
 public class ItemBoardsAdapter extends ArrayAdapter<Board> {
     private final Context context;
+    private final ArrayList<Board> data;
+    private ArrayList<Board> filteredData;
+    private final ItemFilter itemFilter = new ItemFilter();
     ActivityResultLauncher<Intent> activityResultLauncher;
 
     public ItemBoardsAdapter(@NonNull Context context, ArrayList<Board> items, ActivityResultLauncher<Intent> activityResultLauncher) {
         super(context, R.layout.boards_custom_item, items);
         this.context = context;
+        this.data = items;
+        this.filteredData = items;
         this.activityResultLauncher = activityResultLauncher;
     }
 
@@ -121,6 +127,57 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
                 default:
                     return difference + words.get(2);
             }
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return filteredData.size();
+    }
+
+    @Override
+    public Board getItem(int position) {
+        return filteredData.get(position);
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return itemFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final ArrayList<Board> list = data;
+
+            int count = list.size();
+            final ArrayList<Board> result = new ArrayList<>(count);
+
+            String filterableString;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i).getName();
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    result.add(list.get(i));
+                }
+            }
+
+            results.values = result;
+            results.count = result.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<Board>) results.values;
+            notifyDataSetChanged();
         }
     }
 

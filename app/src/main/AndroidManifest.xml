@@ -13,6 +13,14 @@
         android:theme="@style/Theme.TeamDraft"
         tools:targetApi="31">
         <activity
+            android:name=".ui.homeui.workSpace.cardActivity.attachments.AttachmentVideoView"
+            android:exported="false"
+            android:theme="@style/Theme.TeamDraft.NoActionBar" />
+        <activity
+            android:name=".ui.homeui.workSpace.cardActivity.attachments.AttachmentImageView"
+            android:exported="false"
+            android:theme="@style/Theme.TeamDraft.NoActionBar" />
+        <activity
             android:name=".ui.homeui.workSpace.cardActivity.CardActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
@@ -24,9 +32,6 @@
             android:name=".ui.homeui.workSpace.WorkSpaceActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
-        <activity
-            android:name=".ui.homeui.boards.ItemBoardsAdapter"
-            android:exported="false" />
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false"
@@ -54,7 +59,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.TeamDraft.NoActionBar">
+            android:theme="@style/Theme.TeamDraft.NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
