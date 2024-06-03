@@ -10,4 +10,5 @@
     <dimen name="dialog_loading_width">250dp</dimen>
     <dimen name="dialog_disconnect_width">320dp</dimen>
     <dimen name="dialog_add_attachment_width">324dp</dimen>
+    <dimen name="dialog_role_width">340dp</dimen>
 </resources>

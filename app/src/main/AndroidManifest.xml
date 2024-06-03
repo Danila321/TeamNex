@@ -13,23 +13,27 @@
         android:theme="@style/Theme.TeamDraft"
         tools:targetApi="31">
         <activity
-            android:name=".ui.homeui.workSpace.cardActivity.attachments.AttachmentVideoView"
+            android:name=".ui.home.workSpace.UsersActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.homeui.workSpace.cardActivity.attachments.AttachmentImageView"
+            android:name=".ui.home.workSpace.cardActivity.attachments.AttachmentVideoView"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.homeui.workSpace.cardActivity.CardActivity"
+            android:name=".ui.home.workSpace.cardActivity.attachments.AttachmentImageView"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.homeui.workSpace.SettingsActivity"
+            android:name=".ui.home.workSpace.cardActivity.CardActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.homeui.workSpace.WorkSpaceActivity"
+            android:name=".ui.home.workSpace.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TeamDraft.NoActionBar" />
+        <activity
+            android:name=".ui.home.workSpace.WorkSpaceActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity

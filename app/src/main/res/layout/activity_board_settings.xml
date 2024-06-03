@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.homeui.workSpace.SettingsActivity">
+    tools:context=".ui.home.workSpace.SettingsActivity">
 
     <ImageButton
         android:id="@+id/backButtonSettings"
@@ -102,16 +102,6 @@
         app:layout_constraintStart_toEndOf="@+id/SettingsBoardName"
         app:layout_constraintTop_toTopOf="@+id/SettingsBoardName"
         app:srcCompat="@drawable/edit2" />
-
-    <ImageView
-        android:id="@+id/boardStar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toEndOf="@+id/boardImageLayout"
-        app:layout_constraintTop_toBottomOf="@+id/SettingsBoardName"
-        app:srcCompat="@drawable/star" />
 
     <View
         android:id="@+id/view"
