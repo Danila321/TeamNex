@@ -72,6 +72,7 @@ public class CardsAdapter extends ArrayAdapter<Card> {
 
             getChecklistData(convertView, card.getId());
             getAttachmentsCount(convertView, card.getId());
+            getUsersCount(convertView, card.getId());
 
             ImageButton editName = convertView.findViewById(R.id.CardEditNameButton);
             editName.setOnClickListener(v -> {
@@ -151,7 +152,6 @@ public class CardsAdapter extends ArrayAdapter<Card> {
     void getAttachmentsCount(View convertView, String cardId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").child(cardId).child("attachments").addListenerForSingleValueEvent(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -160,6 +160,27 @@ public class CardsAdapter extends ArrayAdapter<Card> {
                     attachmentsLayout.setVisibility(View.VISIBLE);
                     TextView attachmentsText = convertView.findViewById(R.id.cardAttachmentsText);
                     attachmentsText.setText(String.valueOf(items));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    void getUsersCount(View convertView, String cardId){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").child(cardId).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    int items = (int) snapshot.getChildrenCount();
+                    ConstraintLayout usersLayout = convertView.findViewById(R.id.cardUsersLayout);
+                    usersLayout.setVisibility(View.VISIBLE);
+                    TextView usersText = convertView.findViewById(R.id.cardUsersText);
+                    usersText.setText(String.valueOf(items));
                 }
             }
 

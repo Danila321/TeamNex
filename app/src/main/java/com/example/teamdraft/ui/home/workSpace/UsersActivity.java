@@ -43,10 +43,11 @@ public class UsersActivity extends AppCompatActivity {
 
     void getData(String boardId) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mDatabase.child("boards").child(boardId).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("boards").child(boardId).child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                users.clear();
+
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey();
                     String role = userSnapshot.getValue(String.class);

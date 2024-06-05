@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,15 +56,23 @@ public class UsersAdapter extends ArrayAdapter<UserRole> {
             dialog.show(fragmentManager, "setUserRole");
         });
 
+        ImageButton delete = convertView.findViewById(R.id.UsersActivityDelete);
+        delete.setOnClickListener(v -> {
+            DeleteUserDialog dialog = DeleteUserDialog.newInstance(boardId, user.getId());
+            dialog.show(fragmentManager, "deleteUser");
+        });
+
         ImageView roleImage = convertView.findViewById(R.id.UsersActivityRoleImage);
         TextView roleText = convertView.findViewById(R.id.UsersActivityRoleText);
         if (role.equals("owner")){
             roleText.setText("Владелец");
             roleText.setTextColor(ContextCompat.getColor(context, R.color.black));
             roleLayout.setElevation(0);
+            roleLayout.setClickable(false);
             roleImage.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
         } else if (role.equals("admin")){
-            roleText.setText("Администратор");
+            roleText.setText("Админ");
         } else {
             roleText.setText("Участник");
         }

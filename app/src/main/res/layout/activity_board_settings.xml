@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:text="Настройки"
+        android:text="@string/board_settings_title"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/backButtonSettings"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="1dp"
-            android:text="Изменить"
+            android:text="@string/board_settings_edit"
             android:textSize="10sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
-        android:text="TextView"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="19sp"
         app:layout_constraintStart_toEndOf="@+id/boardImageLayout"
@@ -120,18 +120,18 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="28dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/textView22"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView22"
         app:srcCompat="@drawable/info" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Информация"
+        android:text="@string/board_settings_info"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -142,16 +142,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Владелец:"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:text="@string/board_settings_info_owner"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/SettingsOwner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="TextView"
+        android:text=""
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -161,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:text="Создано:"
+        android:text="@string/board_settings_info_created"
         app:layout_constraintStart_toStartOf="@+id/SettingsOwner"
         app:layout_constraintTop_toBottomOf="@+id/SettingsOwner" />
 
@@ -170,29 +170,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="TextView"
+        android:text=""
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="Изменено:"
-        app:layout_constraintStart_toStartOf="@+id/SettingsCreateDate"
-        app:layout_constraintTop_toBottomOf="@+id/SettingsCreateDate" />
-
-    <TextView
-        android:id="@+id/SettingsEditDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="TextView"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <View
         android:id="@+id/view1"
@@ -204,7 +185,7 @@
         android:background="#8F8F8F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SettingsEditDate" />
+        app:layout_constraintTop_toBottomOf="@+id/SettingsCreateDate" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -224,7 +205,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Код доступа:"
+            android:text="@string/board_settings_code"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -239,7 +220,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="123456"
+            android:text=""
             android:letterSpacing="0.06"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -285,7 +266,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Удалить доску"
+            android:text="@string/board_settings_delete"
             android:textColor="@android:color/holo_red_dark"
             app:layout_constraintBottom_toBottomOf="@+id/SettingsActionImage"
             app:layout_constraintStart_toEndOf="@+id/SettingsActionImage"

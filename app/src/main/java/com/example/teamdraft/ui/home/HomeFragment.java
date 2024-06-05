@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment implements OnCreateConnectBoard {
         View view = binding.getRoot();
 
         Button connect = view.findViewById(R.id.buttonConnect);
-        ImageButton sort = view.findViewById(R.id.boardsSort);
+        ImageButton refresh = view.findViewById(R.id.boardsRefresh);
         ListView listView = view.findViewById(R.id.listViewBoards);
         Button create = view.findViewById(R.id.buttonCreate);
 
@@ -80,6 +80,8 @@ public class HomeFragment extends Fragment implements OnCreateConnectBoard {
 
             }
         });
+
+        refresh.setOnClickListener(v -> loadBoardsData());
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

@@ -1,15 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TeamDraft</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="menu_home">Главная</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_feedback">Обратная связь</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login_title">Авторизация</string>
+    <string name="login_password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="login_forgot_password">Забыли пароль?</string>
+    <string name="login_text_bottom">Еще нет аккаунта?</string>
+    <string name="login_button_register">Зарегистрироваться</string>
+
+    <string name="reset_title">Восстановление пароля</string>
+    <string name="reset_text">Введите email адрес который вы указывали при регистрации</string>
+    <string name="reset_button">Продолжить</string>
+
+    <string name="register_title">Регистрация</string>
+    <string name="register_name">Имя</string>
+    <string name="register_password">Пароль</string>
+    <string name="register_confirm_password">Повторите пароль</string>
+    <string name="register_button">Зарегистрироваться</string>
+
+    <string name="profile_title">Профиль</string>
+    <string name="profile_image_load">Выбрать</string>
+    <string name="profile_image_delete">Удалить</string>
+    <string name="profile_name">Имя</string>
+    <string name="profile_exit">ВЫЙТИ</string>
+    <string name="profile_delete">УДАЛИТЬ АККАУНТ</string>
+    <string name="profile_button_update">Обновить</string>
+    <string name="profile_photo_title">Фото профиля</string>
+    <string name="profile_photo_button_choose">Выбрать</string>
+    <string name="profile_photo_button_load">Загрузить</string>
+
+    <string name="board_title">Доски</string>
+    <string name="board_button_connect">Подключиться</string>
+    <string name="board_search">Поиск</string>
+    <string name="board_button_create">Создать</string>
+
+    <string name="board_settings_title">Настройки</string>
+    <string name="board_settings_info">Информация</string>
+    <string name="board_settings_info_owner">Владелец:</string>
+    <string name="board_settings_info_created">Создано:</string>
+    <string name="board_settings_code">Код доступа:</string>
+    <string name="board_settings_code_text">Код скопирован в буфер обмена</string>
+    <string name="board_settings_delete">Удалить доску</string>
+    <string name="board_settings_edit">Изменить</string>
+    <string name="board_settings_choose_image">Выберите изображение</string>
 </resources>

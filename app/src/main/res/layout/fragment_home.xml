@@ -13,7 +13,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Доски"
+        android:text="@string/board_title"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="24dp"
         android:backgroundTint="@android:color/holo_blue_light"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Подключиться"
+        android:text="@string/board_button_connect"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="11dp"
@@ -35,14 +35,14 @@
         app:layout_constraintTop_toTopOf="@+id/titleBoards" />
 
     <ImageButton
-        android:id="@+id/boardsSort"
+        android:id="@+id/boardsRefresh"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/corner_black_small"
         android:padding="10dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/list"
+        android:src="@drawable/refresh"
         app:layout_constraintBottom_toBottomOf="@+id/BoardSearchLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/BoardSearchLayout" />
@@ -55,7 +55,7 @@
         android:layout_marginTop="22dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/workspace_item_gray_16dp"
-        app:layout_constraintEnd_toStartOf="@+id/boardsSort"
+        app:layout_constraintEnd_toStartOf="@+id/boardsRefresh"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonConnect">
 
@@ -77,7 +77,7 @@
             android:layout_marginEnd="8dp"
             android:background="@null"
             android:ems="10"
-            android:hint="Поиск"
+            android:hint="@string/board_search"
             android:inputType="text"
             android:textColorHint="#AFAFAF"
             android:textSize="13sp"
@@ -121,7 +121,7 @@
         android:backgroundTint="@android:color/holo_blue_light"
         android:drawableLeft="@drawable/plus_small"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Создать"
+        android:text="@string/board_button_create"
         android:textAllCaps="false"
         android:textSize="17sp"
         app:cornerRadius="15dp"

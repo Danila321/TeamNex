@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -43,11 +42,11 @@ public class UpdateProfile extends AppCompatActivity {
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
-        title.setText("Профиль");
+        title.setText(R.string.profile_title);
         editTextEmail.setVisibility(View.GONE);
         editTextPassword.setVisibility(View.GONE);
         editTextPasswordAgain.setVisibility(View.GONE);
-        buttonUpdate.setText("Обновить");
+        buttonUpdate.setText(R.string.profile_button_update);
 
         if (firebaseUser != null) {
             editTextName.setText(firebaseUser.getDisplayName());

@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
     boolean starState = false;
     ImageView boardImageView;
     String boardIdData, boardNameData;
-    TextView boardNameText, boardOwnerText, boardCreateDateText, boardEditDateText, boardCodeText;
+    TextView boardNameText, boardOwnerText, boardCreateDateText, boardCodeText;
     private Uri selectedImageUri;
     boolean dataChanged = false;
 
@@ -76,7 +76,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
             boardNameText = findViewById(R.id.SettingsBoardName);
             boardOwnerText = findViewById(R.id.SettingsOwner);
             boardCreateDateText = findViewById(R.id.SettingsCreateDate);
-            boardEditDateText = findViewById(R.id.SettingsEditDate);
             boardCodeText = findViewById(R.id.SettingsBoardCode);
 
             boardIdData = data.getString("boardId");
@@ -100,7 +99,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                                 boardNameData = board.getName();
                                 boardNameText.setText(board.getName());
                                 boardCreateDateText.setText(board.getDate());
-                                boardEditDateText.setText(board.getEditDate());
                                 boardCodeText.setText(board.getCode());
 
                                 //Кнопка копирования кода в буфер обмена
@@ -109,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                                     ClipData clip = ClipData.newPlainText("code", board.getCode());
                                     clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(SettingsActivity.this, "Код скопирован в буфер обмена", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SettingsActivity.this, R.string.board_settings_code_text, Toast.LENGTH_SHORT).show();
                                 });
 
                                 // Получаем UID создателя доски
@@ -219,7 +217,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        activityResultLauncher.launch(Intent.createChooser(intent, "Выберите изображение"));
+        activityResultLauncher.launch(Intent.createChooser(intent, getString(R.string.board_settings_choose_image)));
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -266,6 +264,12 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().removeValue();
+
+                Intent result = new Intent();
+                result.putExtra("dataChanged", true);
+                setResult(Activity.RESULT_OK, result);
+                //Закрываем Activity
+                finish();
             }
 
             @Override
@@ -273,11 +277,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
 
             }
         });
-        Intent result = new Intent();
-        result.putExtra("dataChanged", true);
-        setResult(Activity.RESULT_OK, result);
-        //Закрываем Activity
-        finish();
     }
 
     @Override
@@ -288,6 +287,12 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().removeValue();
+
+                Intent result = new Intent();
+                result.putExtra("dataChanged", true);
+                setResult(Activity.RESULT_OK, result);
+                //Закрываем Activity
+                finish();
             }
 
             @Override
@@ -295,11 +300,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
 
             }
         });
-        Intent result = new Intent();
-        result.putExtra("dataChanged", true);
-        setResult(Activity.RESULT_OK, result);
-        //Закрываем Activity
-        finish();
     }
 
     @Override

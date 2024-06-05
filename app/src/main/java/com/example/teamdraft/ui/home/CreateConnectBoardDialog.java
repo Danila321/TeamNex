@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,9 @@ public class CreateConnectBoardDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
+
+        ImageButton close = dialogView.findViewById(R.id.EditDialogClose);
+        close.setOnClickListener(v -> dismiss());
 
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
         EditText editText = dialogView.findViewById(R.id.EditDialogEditText);

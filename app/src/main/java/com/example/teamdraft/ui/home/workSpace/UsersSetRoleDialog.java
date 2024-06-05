@@ -14,6 +14,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.teamdraft.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UsersSetRoleDialog extends DialogFragment {
     private String role, boardId, userId;
@@ -52,10 +57,10 @@ public class UsersSetRoleDialog extends DialogFragment {
         RadioButton radioButtonAdmin = dialogView.findViewById(R.id.radioButtonAdmin);
         RadioButton radioButtonUser = dialogView.findViewById(R.id.radioButtonUser);
 
-        if (role.contains("admin")){
+        if (role.contains("admin")) {
             radioButtonAdmin.setChecked(true);
             constraintLayoutAdmin.setBackgroundResource(R.drawable.corner_green);
-        } else{
+        } else {
             radioButtonUser.setChecked(true);
             constraintLayoutUser.setBackgroundResource(R.drawable.corner_green);
         }
@@ -65,6 +70,7 @@ public class UsersSetRoleDialog extends DialogFragment {
             radioButtonUser.setChecked(false);
             constraintLayoutAdmin.setBackgroundResource(R.drawable.corner_green);
             constraintLayoutUser.setBackgroundResource(R.drawable.corner_gray);
+            changeRole("admin");
         });
 
         constraintLayoutUser.setOnClickListener(v -> {
@@ -72,6 +78,7 @@ public class UsersSetRoleDialog extends DialogFragment {
             radioButtonUser.setChecked(true);
             constraintLayoutAdmin.setBackgroundResource(R.drawable.corner_gray);
             constraintLayoutUser.setBackgroundResource(R.drawable.corner_green);
+            changeRole("user");
         });
 
         radioButtonAdmin.setOnClickListener(v -> {
@@ -79,6 +86,7 @@ public class UsersSetRoleDialog extends DialogFragment {
             radioButtonUser.setChecked(false);
             constraintLayoutAdmin.setBackgroundResource(R.drawable.corner_green);
             constraintLayoutUser.setBackgroundResource(R.drawable.corner_gray);
+            changeRole("admin");
         });
 
         radioButtonUser.setOnClickListener(v -> {
@@ -86,9 +94,15 @@ public class UsersSetRoleDialog extends DialogFragment {
             radioButtonUser.setChecked(true);
             constraintLayoutAdmin.setBackgroundResource(R.drawable.corner_gray);
             constraintLayoutUser.setBackgroundResource(R.drawable.corner_green);
+            changeRole("user");
         });
 
         return builder.create();
+    }
+
+    void changeRole(String role) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("boards").child(boardId).child("users").child(userId).setValue(role);
     }
 
     @Override
