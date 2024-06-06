@@ -106,7 +106,7 @@ public class CardActivity extends AppCompatActivity {
 
         //Настраиваем listView вложений
         attachmentsList = findViewById(R.id.attachmentsList);
-        attachmentsAdapter = new ItemAttachmentsAdapter(this, attachmentItems);
+        attachmentsAdapter = new ItemAttachmentsAdapter(this, attachmentItems, getSupportFragmentManager(), boardData);
         attachmentsList.setAdapter(attachmentsAdapter);
 
         Button addAttachmentItem = findViewById(R.id.addAttachment);

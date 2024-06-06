@@ -124,13 +124,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     void showDeleteImageDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle("Удаление фото профиля");
-        builder.setMessage("Вы действительно хотите удалить фото профиля?");
+        builder.setTitle(R.string.profile_delete_dialog_title);
+        builder.setMessage(R.string.profile_delete_dialog_text);
         builder.setNegativeButton("Нет", (dialog, which) -> dialog.cancel());
         builder.setPositiveButton("Да", (dialog, which) -> {
             dialog.dismiss();
             //Показываем загрузочный диалог
-            LoadingDialog loadingDialog = new LoadingDialog(this, "Удаляем изображение...");
+            LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
             loadingDialog.startDialog();
             //Ставим дефолтное изображение пользователя
             Uri uri = Uri.parse("android.resource://com.example.teamdraft/" + R.drawable.user);
@@ -147,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
                     imageChanged = true;
 
                     loadingDialog.dismissDialog();
-                    Toast.makeText(ProfileActivity.this, "Изображение успешно удалено!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, R.string.profile_delete_dialog_success, Toast.LENGTH_SHORT).show();
                 });
             })).addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
         });
@@ -157,13 +157,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     void showSignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle("Выход из аккаунта");
-        builder.setMessage("Вы действительно хотите выйти из аккаунта?");
-        builder.setNegativeButton("Нет", (dialog, which) -> dialog.cancel());
-        builder.setPositiveButton("Да", (dialog, which) -> {
+        builder.setTitle(R.string.profile_exit_title);
+        builder.setMessage(R.string.profile_exit_text);
+        builder.setNegativeButton(R.string.profile_exit_no, (dialog, which) -> dialog.cancel());
+        builder.setPositiveButton(R.string.profile_exit_yes, (dialog, which) -> {
             dialog.dismiss();
             authProfile.signOut();
-            Toast.makeText(ProfileActivity.this, "Вы успешно вышли!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, R.string.profile_exit_complete, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

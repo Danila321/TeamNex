@@ -6,22 +6,55 @@
     <string name="menu_settings">Настройки</string>
     <string name="menu_feedback">Обратная связь</string>
 
+    <string name="settings_title">Общие</string>
+    <string name="settings_language_title">Язык</string>
+
+    <string name="feedback_text">По всем вопросам и предложениям обращаться по почте:</string>\
+    <string name="feedback_copy_text">Email скопирован в буфер обмена</string>
+
     <string name="login_title">Авторизация</string>
     <string name="login_password">Пароль</string>
     <string name="login_button">Войти</string>
     <string name="login_forgot_password">Забыли пароль?</string>
     <string name="login_text_bottom">Еще нет аккаунта?</string>
     <string name="login_button_register">Зарегистрироваться</string>
+    <string name="login_error_email">Введите свой email</string>
+    <string name="login_error_password">Введите пароль</string>
+    <string name="login_loading">Заходим в аккаунт…</string>
+    <string name="login_complete">Вы успешно авторизовались!</string>
+    <string name="login_error_user">Пользователь с таким email не найден</string>
+    <string name="login_error_incorrect">Введены неверные данные</string>
+    <string name="login_email_title">Ваш email не подтвержден</string>
+    <string name="login_email_text">Для авторизации необходимо подтвердить email, проверьте указанную почту и перейдите по ссылке в отправленном письме</string>
+    <string name="login_email_button">Хорошо</string>
 
     <string name="reset_title">Восстановление пароля</string>
     <string name="reset_text">Введите email адрес который вы указывали при регистрации</string>
     <string name="reset_button">Продолжить</string>
+    <string name="reset_error">Введите email</string>
+    <string name="reset_loading">Подождите немного…</string>
+    <string name="reset_dialog_title">Сброс пароля</string>
+    <string name="reset_dialog_text">На указанную почту было отправлено письмо с ссылкой для сброса пароля</string>
+    <string name="reset_dialog_button">Хорошо</string>
+    <string name="reset_error_user">Пользователь с таким email не найден</string>
 
     <string name="register_title">Регистрация</string>
     <string name="register_name">Имя</string>
     <string name="register_password">Пароль</string>
     <string name="register_confirm_password">Повторите пароль</string>
     <string name="register_button">Зарегистрироваться</string>
+    <string name="register_error_name">Введите свое имя</string>
+    <string name="register_error_email">Введите email</string>
+    <string name="register_error_password">Введите пароль</string>
+    <string name="register_error_password_again">Повторите введенный пароль</string>
+    <string name="register_error_password_not_match">Пароли не совпадают</string>
+    <string name="register_loading">Регистрируем вас…</string>
+    <string name="register_action_error_password">Пароль слишком слабый</string>
+    <string name="register_action_email">Email введен некорректно</string>
+    <string name="register_action_email_already">Пользователь с таким email уже зарегестрирован</string>
+    <string name="register_dialog_title">Вы успешно зарегистрировались!</string>
+    <string name="register_dialog_text">На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке</string>
+    <string name="register_dialog_button">Хорошо</string>
 
     <string name="profile_title">Профиль</string>
     <string name="profile_image_load">Выбрать</string>
@@ -33,11 +66,42 @@
     <string name="profile_photo_title">Фото профиля</string>
     <string name="profile_photo_button_choose">Выбрать</string>
     <string name="profile_photo_button_load">Загрузить</string>
+    <string name="profile_delete_dialog_text">Вы действительно хотите удалить фото профиля?</string>
+    <string name="profile_delete_dialog_title">Удаление фото профиля</string>
+    <string name="profile_delete_dialog_loading">Удаляем изображение…</string>
+    <string name="profile_delete_dialog_success">Изображение успешно удалено!</string>
+    <string name="profile_exit_title">Выход из аккаунта</string>
+    <string name="profile_exit_text">Вы действительно хотите выйти из аккаунта?</string>
+    <string name="profile_exit_complete">Вы успешно вышли!</string>
+    <string name="profile_exit_yes">Да</string>
+    <string name="profile_exit_no">Нет</string>
 
     <string name="board_title">Доски</string>
     <string name="board_button_connect">Подключиться</string>
     <string name="board_search">Поиск</string>
     <string name="board_button_create">Создать</string>
+    <string name="board_dialog_connect_title">Подключение</string>
+    <string name="board_dialog_connect_hint">Введите код</string>
+    <string name="board_dialog_connect_text">Подключиться</string>
+    <string name="board_dialog_connect_error">Введите 8-ми значный код</string>
+    <string name="board_dialog_create_loading">Создаем доску…</string>
+    <string name="board_dialog_connect_complete">Вы успешно подключились к доске</string>
+    <string name="board_dialog_connect_error_already">Вы уже подключены к данной доске</string>
+    <string name="board_dialog_connect_error_not_found">Доска с таким кодом не найдена</string>
+    <string name="board_dialog_connect_error_unknown">Ошибка при подключении пользователя к доске</string>
+    <string name="board_dialog_create_title">Новая доска</string>
+    <string name="board_dialog_create_hint">Введите название</string>
+    <string name="board_dialog_create_text">Создать</string>
+    <string name="board_dialog_create_error">Введите название</string>
+    <string name="board_time_minute1">" минуту назад"</string>
+    <string name="board_time_minute2">" минуты назад"</string>
+    <string name="board_time_minute3">" минут назад"</string>
+    <string name="board_time_hour1">" час назад"</string>
+    <string name="board_time_hour2">" часа назад"</string>
+    <string name="board_time_hour3">" часов назад"</string>
+    <string name="board_time_day1">" день назад"</string>
+    <string name="board_time_day2">" дня назад"</string>
+    <string name="board_time_day3">" дней назад"</string>
 
     <string name="board_settings_title">Настройки</string>
     <string name="board_settings_info">Информация</string>

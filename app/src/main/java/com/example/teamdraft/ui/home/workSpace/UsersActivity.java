@@ -1,14 +1,18 @@
 package com.example.teamdraft.ui.home.workSpace;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.teamdraft.GetUserRole;
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.home.workSpace.cardActivity.users.User;
+import com.example.teamdraft.ui.home.workSpace.dialogs.item.AddItemDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,11 +38,25 @@ public class UsersActivity extends AppCompatActivity {
         if (data != null) {
             boardId = data.getString("boardId");
 
-            getData(boardId);
-            ListView listView = findViewById(R.id.workspaceUsersListView);
-            adapter = new UsersAdapter(this, users, boardId, getSupportFragmentManager());
-            listView.setAdapter(adapter);
+            GetUserRole.getUserRole(boardId, this::roleManager);
         }
+    }
+
+    void roleManager(String role) {
+        ListView listView = findViewById(R.id.workspaceUsersListView);
+        switch (role) {
+            case "owner":
+                adapter = new UsersAdapter(this, users, boardId, getSupportFragmentManager(), true);
+                break;
+            case "admin":
+            case "user":
+                adapter = new UsersAdapter(this, users, boardId, getSupportFragmentManager(), false);
+                break;
+        }
+        listView.setAdapter(adapter);
+
+        //Получаем данные из БД
+        getData(boardId);
     }
 
     void getData(String boardId) {

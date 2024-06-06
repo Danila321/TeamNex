@@ -6,22 +6,55 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_feedback">Feedback</string>
 
+    <string name="settings_title">General</string>
+    <string name="settings_language_title">Language</string>
+
+    <string name="feedback_text">For all questions and suggestions, please contact us by mail:</string>
+    <string name="feedback_copy_text">The email has been copied to the clipboard</string>
+
     <string name="login_title">Login</string>
     <string name="login_password">Password</string>
     <string name="login_button">Sign in</string>
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_text_bottom">Do not have an account?</string>
     <string name="login_button_register">Sign up</string>
+    <string name="login_error_email">Enter your email address</string>
+    <string name="login_error_password">Enter the password</string>
+    <string name="login_loading">Log in to your account…</string>
+    <string name="login_complete">You have successfully logged in!</string>
+    <string name="login_error_user">The user with this email was not found</string>
+    <string name="login_error_incorrect">Incorrect data was entered</string>
+    <string name="login_email_title">Your email has not been confirmed</string>
+    <string name="login_email_text">To log in, you need to confirm the email, check the specified email and follow the link in the sent email</string>
+    <string name="login_email_button">OK</string>
 
     <string name="reset_title">Reset password</string>
     <string name="reset_text">Enter the email address that you provided during registration</string>
     <string name="reset_button">Reset</string>
+    <string name="reset_error">Enter your email address</string>
+    <string name="reset_loading">Wait a bit…</string>
+    <string name="reset_dialog_title">Password Reset</string>
+    <string name="reset_dialog_text">An email was sent to the specified email address with a link to reset the password</string>
+    <string name="reset_dialog_button">OK</string>
+    <string name="reset_error_user">The user with this email was not found</string>
 
     <string name="register_title">Create account</string>
     <string name="register_name">Name</string>
     <string name="register_password">Password</string>
     <string name="register_confirm_password">Confirm password</string>
     <string name="register_button">Sign up</string>
+    <string name="register_error_name">Enter your name</string>
+    <string name="register_error_email">Enter your email address</string>
+    <string name="register_error_password">Enter the password</string>
+    <string name="register_error_password_again">Repeat the entered password</string>
+    <string name="register_error_password_not_match">Passwords do not match</string>
+    <string name="register_loading">We register you…</string>
+    <string name="register_action_error_password">The password is too weak</string>
+    <string name="register_action_email">The email was entered incorrectly</string>
+    <string name="register_action_email_already">The user with this email has already been registered</string>
+    <string name="register_dialog_title">You have successfully registered!</string>
+    <string name="register_dialog_text">An email was sent to the specified email address with a confirmation link. To log in to the application, click on this link</string>
+    <string name="register_dialog_button">OK</string>
 
     <string name="profile_title">Profile</string>
     <string name="profile_image_load">Choose</string>
@@ -33,11 +66,42 @@
     <string name="profile_photo_title">Profile photo</string>
     <string name="profile_photo_button_choose">Choose</string>
     <string name="profile_photo_button_load">Load</string>
+    <string name="profile_delete_dialog_text">Do you really want to delete your profile photo?</string>
+    <string name="profile_delete_dialog_title">Deleting a profile photo</string>
+    <string name="profile_delete_dialog_loading">Deleting the image…</string>
+    <string name="profile_delete_dialog_success">The image has been successfully deleted!</string>
+    <string name="profile_exit_title">Log out of your account</string>
+    <string name="profile_exit_text">Do you really want to log out of your account?</string>
+    <string name="profile_exit_complete">You have successfully logged out!</string>
+    <string name="profile_exit_yes">Yes</string>
+    <string name="profile_exit_no">No</string>
 
     <string name="board_title">Boards</string>
     <string name="board_button_connect">Connect</string>
     <string name="board_search">Search</string>
     <string name="board_button_create">Create</string>
+    <string name="board_dialog_connect_title">Connection</string>
+    <string name="board_dialog_connect_hint">Enter the code</string>
+    <string name="board_dialog_connect_text">Connect</string>
+    <string name="board_dialog_connect_error">Enter the 8-digit code</string>
+    <string name="board_dialog_create_loading">Creating a board…</string>
+    <string name="board_dialog_connect_complete">You have successfully connected to the board</string>
+    <string name="board_dialog_connect_error_already">You are already connected to this board</string>
+    <string name="board_dialog_connect_error_not_found">The board with this code was not found</string>
+    <string name="board_dialog_connect_error_unknown">Error when connecting the user to the board</string>
+    <string name="board_dialog_create_title">New board</string>
+    <string name="board_dialog_create_hint">Enter a name</string>
+    <string name="board_dialog_create_text">Create</string>
+    <string name="board_dialog_create_error">Enter a name</string>
+    <string name="board_time_minute1">" minutes ago"</string>
+    <string name="board_time_minute2">" minutes ago"</string>
+    <string name="board_time_minute3">" minutes ago"</string>
+    <string name="board_time_hour1">" hours ago"</string>
+    <string name="board_time_hour2">" hours ago"</string>
+    <string name="board_time_hour3">" hours ago"</string>
+    <string name="board_time_day1">" days ago"</string>
+    <string name="board_time_day2">" days ago"</string>
+    <string name="board_time_day3">" days ago"</string>
 
     <string name="board_settings_title">Settings</string>
     <string name="board_settings_info">Information</string>

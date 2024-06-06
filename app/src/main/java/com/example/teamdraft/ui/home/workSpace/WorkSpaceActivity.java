@@ -25,7 +25,6 @@ public class WorkSpaceActivity extends AppCompatActivity {
     ArrayList<Item> items = new ArrayList<>();
     ItemsAdapter adapter;
     String boardIdData;
-    Button add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class WorkSpaceActivity extends AppCompatActivity {
         ImageButton back = findViewById(R.id.imageButtonBack);
         ImageButton users = findViewById(R.id.imageButtonUsers);
         ImageButton settings = findViewById(R.id.imageButtonSettings);
-        add = findViewById(R.id.buttonAddItem);
 
         back.setOnClickListener(view -> finish());
 
@@ -57,22 +55,23 @@ public class WorkSpaceActivity extends AppCompatActivity {
         });
 
         GetUserRole.getUserRole(boardIdData, this::roleManager);
-
-        //Кнопка добавления пункта
-        add.setOnClickListener(view -> {
-            AddItemDialog dialog = AddItemDialog.newInstance(boardIdData);
-            dialog.show(getSupportFragmentManager(), "addItem");
-        });
     }
 
     void roleManager(String role) {
         ListView list = findViewById(R.id.itemsListView);
+        Button add = findViewById(R.id.buttonAddItem);
         switch (role) {
             case "owner":
             case "admin":
+                //Кнопка добавления пункта
+                add.setOnClickListener(view -> {
+                    AddItemDialog dialog = AddItemDialog.newInstance(boardIdData);
+                    dialog.show(getSupportFragmentManager(), "addItem");
+                });
                 //Настраиваем адаптер и listView
                 adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), true);
                 break;
+            //Настраиваем адаптер и listView
             case "user":
                 //Настраиваем адаптер и listView
                 adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), false);

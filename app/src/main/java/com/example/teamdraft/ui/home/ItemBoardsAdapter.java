@@ -97,19 +97,19 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         long difference;
         if (minutesDifference < 60) {
             difference = minutesDifference;
-            words.add(" минуту назад");
-            words.add(" минуты назад");
-            words.add(" минут назад");
+            words.add(context.getString(R.string.board_time_minute1));
+            words.add(context.getString(R.string.board_time_minute2));
+            words.add(context.getString(R.string.board_time_minute3));
         } else if (minutesDifference < 24 * 60) {
             difference = minutesDifference / 60;
-            words.add(" час назад");
-            words.add(" часа назад");
-            words.add(" часов назад");
+            words.add(context.getString(R.string.board_time_hour1));
+            words.add(context.getString(R.string.board_time_hour2));
+            words.add(context.getString(R.string.board_time_hour3));
         } else {
             difference = minutesDifference / (24 * 60);
-            words.add(" день назад");
-            words.add(" дня назад");
-            words.add(" дней назад");
+            words.add(context.getString(R.string.board_time_day1));
+            words.add(context.getString(R.string.board_time_day2));
+            words.add(context.getString(R.string.board_time_day3));
         }
 
         //Преобразуем окончание для слова

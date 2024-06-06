@@ -78,7 +78,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:text="Название"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/AttachmentsEditButton"
             app:layout_constraintStart_toEndOf="@+id/attachmentItemImage"
             app:layout_constraintTop_toTopOf="@+id/attachmentItemImage" />
 
@@ -108,6 +108,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/AttachmentsDownloadLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -144,7 +145,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/AttachmentsEditButton"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginTop="14dp"
@@ -157,7 +158,7 @@
             app:srcCompat="@drawable/edit2" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/AttachmentsDeleteButton"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginEnd="14dp"

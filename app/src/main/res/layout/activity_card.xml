@@ -240,7 +240,7 @@
                     android:backgroundTint="#DADADA"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:letterSpacing="0.01"
-                    android:text="Добавить пункт"
+                    android:text="Добавить задачу"
                     android:textAllCaps="false"
                     android:textColor="#3E3E3E"
                     android:textSize="13sp"

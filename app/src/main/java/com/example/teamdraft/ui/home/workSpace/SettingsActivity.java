@@ -40,7 +40,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity implements OnChangeBoard {
-    boolean starState = false;
     ImageView boardImageView;
     String boardIdData, boardNameData;
     TextView boardNameText, boardOwnerText, boardCreateDateText, boardCodeText;
@@ -89,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
 
         mDatabase.child("boards")
                 .child(boardId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -180,26 +179,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                 });
                 break;
             case "admin":
-                //Включаем возможность изменения изображения
-                boardImageText.setVisibility(View.VISIBLE);
-                boardImageLayout.setOnClickListener(view -> openImagePicker());
-
-                //Включаем возможность изменения названия
-                editBoardName.setVisibility(View.VISIBLE);
-                editBoardName.setOnClickListener(view -> {
-                    EditNameDialog dialog = EditNameDialog.newInstance(boardNameData);
-                    dialog.show(getSupportFragmentManager(), "editBoardName");
-                });
-
-                //Включаем возможность отключения
-                actionLayout.setVisibility(View.VISIBLE);
-                Picasso.get().load(R.drawable.disconnect).into(actionImage);
-                actionText.setText("Отключиться от доски");
-                actionLayout.setOnClickListener(view -> {
-                    DisconnectDialog dialog = new DisconnectDialog();
-                    dialog.show(getSupportFragmentManager(), "disconnect");
-                });
-                break;
             case "user":
                 //Включаем возможность отключения
                 actionLayout.setVisibility(View.VISIBLE);
@@ -226,7 +205,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        // There are no request codes
                         Intent data = result.getData();
                         selectedImageUri = data.getData();
                         boardImageView.setImageURI(selectedImageUri);
@@ -307,8 +285,6 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
         //Обновляем данные в БД
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("boards").child(boardIdData).child("name").setValue(name);
-        //Обновляем данные
-        getData(boardIdData);
         //Устанавливаем флаг для обновления списка досок
         dataChanged = true;
     }

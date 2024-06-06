@@ -1,5 +1,6 @@
 package com.example.teamdraft.ui.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,14 +22,22 @@ import java.util.Locale;
 public class SettingsFragment extends Fragment implements OnChangeLanguage {
     private FragmentSettingsBinding binding;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        String currentLanguage = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getString("language", "ru");
+        TextView languageTextView = root.findViewById(R.id.settingsLanguageText);
+        if (currentLanguage.equals("ru")){
+            languageTextView.setText("Русский");
+        } else {
+            languageTextView.setText("English");
+        }
+
         ConstraintLayout language = root.findViewById(R.id.settingsLanguage);
         language.setOnClickListener(v -> {
-            String lang = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getString("language", "");
-            BottomSheetDialog dialog = BottomSheetDialog.newInstance(lang);
+            BottomSheetDialog dialog = BottomSheetDialog.newInstance(currentLanguage);
             dialog.show(getChildFragmentManager(), "chooseLanguageDialog");
         });
 

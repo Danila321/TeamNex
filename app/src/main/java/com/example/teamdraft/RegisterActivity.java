@@ -57,15 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
             passwordAgain = String.valueOf(editTextPasswordAgain.getText());
 
             if (name.isEmpty()) {
-                editTextName.setError("Введите свое имя");
+                editTextName.setError(getString(R.string.register_error_name));
             } else if (email.isEmpty()) {
-                editTextEmail.setError("Введите email");
+                editTextEmail.setError(getString(R.string.register_error_email));
             } else if (password.isEmpty()) {
-                editTextPassword.setError("Введите пароль");
+                editTextPassword.setError(getString(R.string.register_error_password));
             } else if (passwordAgain.isEmpty()) {
-                editTextPasswordAgain.setError("Повторите введенный пароль");
+                editTextPasswordAgain.setError(getString(R.string.register_error_password_again));
             } else if (!password.equals(passwordAgain)) {
-                editTextPasswordAgain.setError("Пароли не совпадают");
+                editTextPasswordAgain.setError(getString(R.string.register_error_password_not_match));
             } else {
                 registerUser(email, password, name);
             }
@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         //Показываем загрузочный диалог
-        LoadingDialog loadingDialog = new LoadingDialog(this, "Регистрируем вас...");
+        LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.register_loading));
         loadingDialog.startDialog();
         //Добавляем юзера в БД
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -129,11 +129,11 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            editTextPassword.setError("Пароль слишком слабый");
+                            editTextPassword.setError(getString(R.string.register_action_error_password));
                         } catch (FirebaseAuthInvalidCredentialsException e) {
-                            editTextEmail.setError("Email введен некорректно");
+                            editTextEmail.setError(getString(R.string.register_action_email));
                         } catch (FirebaseAuthUserCollisionException e) {
-                            editTextEmail.setError("Пользователь с таким email уже зарегестрирован");
+                            editTextEmail.setError(getString(R.string.register_action_email_already));
                         } catch (Exception e) {
                             Log.e("RegisterActivity", e.getMessage());
                             Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -144,9 +144,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-        builder.setTitle("Вы успешно зарегистрировались!");
-        builder.setMessage("На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке");
-        builder.setPositiveButton("Хорошо", (dialog, which) -> finish());
+        builder.setTitle(R.string.register_dialog_title);
+        builder.setMessage(R.string.register_dialog_text);
+        builder.setPositiveButton(R.string.register_dialog_button, (dialog, which) -> finish());
         builder.setCancelable(false);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

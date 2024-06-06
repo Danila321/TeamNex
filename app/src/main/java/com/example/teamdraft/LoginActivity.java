@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
             password = String.valueOf(editTextPassword.getText());
 
             if (email.isEmpty()) {
-                editTextEmail.setError("Введите свой email");
+                editTextEmail.setError(getString(R.string.login_error_email));
             } else if (password.isEmpty()) {
-                editTextPassword.setError("Введите пароль");
+                editTextPassword.setError(getString(R.string.login_error_password));
             } else {
                 loginUser(email, password);
             }
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         //Показываем загрузочный диалог
-        LoadingDialog loadingDialog = new LoadingDialog(this, "Заходим в аккаунт...");
+        LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.login_loading));
         loadingDialog.startDialog();
         //Авторизируем юзера
         mAuth.signInWithEmailAndPassword(email, password)
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Проверяем, подтвердил ли пользователь почту
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser.isEmailVerified()) {
-                            Toast.makeText(getApplicationContext(), "Вы успешно авторизовались!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.login_complete, Toast.LENGTH_SHORT).show();
                             //Переходим на страницу аккаунта
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
@@ -94,9 +94,9 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException e) {
-                            editTextEmail.setError("Пользователь с таким email не найден");
+                            editTextEmail.setError(getString(R.string.login_error_user));
                         } catch (FirebaseAuthInvalidCredentialsException e) {
-                            editTextEmail.setError("Введены неверные данные");
+                            editTextEmail.setError(getString(R.string.login_error_incorrect));
                         } catch (Exception e) {
                             Log.e("LoginActivity", e.getMessage());
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -107,9 +107,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setTitle("Ваш email не подтвержден");
-        builder.setMessage("Для авторизации необходимо подтвердить email, проверьте указанную почту и перейдите по ссылке в отправленном письме");
-        builder.setPositiveButton("Хорошо", (dialog, which) -> dialog.cancel());
+        builder.setTitle(R.string.login_email_title);
+        builder.setMessage(R.string.login_email_text);
+        builder.setPositiveButton(R.string.login_email_button, (dialog, which) -> dialog.cancel());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

@@ -84,26 +84,26 @@ public class CreateConnectBoardDialog extends DialogFragment {
         Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         if (type == 1) {
-            titleText.setText("Подключение");
-            editText.setHint("Введите код");
-            button.setText("Подключиться");
+            titleText.setText(R.string.board_dialog_connect_title);
+            editText.setHint(R.string.board_dialog_connect_hint);
+            button.setText(R.string.board_dialog_connect_text);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
             button.setOnClickListener(view -> {
                 if (editText.getText().length() != 8) {
-                    editText.setError("Введите 8-ми значный код");
+                    editText.setError(getString(R.string.board_dialog_connect_error));
                 } else {
                     connectToBoard(editText.getText().toString());
                     dismiss();
                 }
             });
         } else {
-            titleText.setText("Новая доска");
-            editText.setHint("Введите название");
-            button.setText("Создать");
+            titleText.setText(R.string.board_dialog_create_title);
+            editText.setHint(R.string.board_dialog_create_hint);
+            button.setText(R.string.board_dialog_create_text);
             button.setOnClickListener(view -> {
                 if (editText.getText().length() == 0) {
-                    editText.setError("Введите название");
+                    editText.setError(getString(R.string.board_dialog_create_error));
                 } else {
                     //Получаем текущие дату и время
                     @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -135,21 +135,21 @@ public class CreateConnectBoardDialog extends DialogFragment {
                                 mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user");
 
                                 onCreateConnectBoard.onChange();
-                                Toast.makeText(dialogView.getContext(), "Вы успешно подключились к доске", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_complete, Toast.LENGTH_SHORT).show();
                             } else {
                                 //Пользователь уже подключен к доске
-                                Toast.makeText(dialogView.getContext(), "Вы уже подключены к данной доске", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_error_already, Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
                         //Доска не найдена
-                        Toast.makeText(dialogView.getContext(), "Доска с таким кодом не найдена", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_error_not_found, Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(dialogView.getContext(), "Ошибка при подключении пользователя к доске", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_error_unknown, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -157,7 +157,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
 
     private void createBoard(String boardName, String boardDate, String boardEditDate) {
         //Показываем загрузочный диалог
-        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), "Создаем доску...");
+        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), getString(R.string.board_dialog_create_loading));
         loadingDialog.startDialog();
         FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("code").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

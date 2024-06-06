@@ -1,5 +1,6 @@
 package com.example.teamdraft.ui.home.workSpace;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +18,27 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.home.workSpace.cardActivity.users.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UsersAdapter extends ArrayAdapter<UserRole> {
     Context context;
     String boardId;
     FragmentManager fragmentManager;
+    boolean isOwner;
 
-    public UsersAdapter(@NonNull Context context, ArrayList<UserRole> users, String boardId, FragmentManager fragmentManager) {
+    public UsersAdapter(@NonNull Context context, ArrayList<UserRole> users, String boardId, FragmentManager fragmentManager, boolean isOwner) {
         super(context, R.layout.workspace_activity_users_item, users);
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.boardId = boardId;
+        this.isOwner = isOwner;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -64,17 +70,37 @@ public class UsersAdapter extends ArrayAdapter<UserRole> {
 
         ImageView roleImage = convertView.findViewById(R.id.UsersActivityRoleImage);
         TextView roleText = convertView.findViewById(R.id.UsersActivityRoleText);
-        if (role.equals("owner")){
-            roleText.setText("Владелец");
+
+        if (Objects.equals(FirebaseAuth.getInstance().getUid(), user.getId())){
+            name.setText(name.getText() + " (Вы)");
+        }
+
+        if (isOwner){
+            if (role.equals("owner")){
+                roleText.setText("Владелец");
+                roleText.setTextColor(ContextCompat.getColor(context, R.color.black));
+                roleLayout.setElevation(0);
+                roleLayout.setClickable(false);
+                roleImage.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
+            } else if (role.equals("admin")){
+                roleText.setText("Админ");
+            } else {
+                roleText.setText("Участник");
+            }
+        } else {
+            if (role.equals("owner")){
+                roleText.setText("Владелец");
+            } else if (role.equals("admin")){
+                roleText.setText("Админ");
+            } else {
+                roleText.setText("Участник");
+            }
             roleText.setTextColor(ContextCompat.getColor(context, R.color.black));
             roleLayout.setElevation(0);
             roleLayout.setClickable(false);
             roleImage.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
-        } else if (role.equals("admin")){
-            roleText.setText("Админ");
-        } else {
-            roleText.setText("Участник");
         }
 
         return convertView;

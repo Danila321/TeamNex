@@ -1,8 +1,7 @@
-package com.example.teamdraft.ui.home.workSpace.dialogs.item;
+package com.example.teamdraft.ui.home.workSpace.cardActivity.attachments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +19,17 @@ import com.example.teamdraft.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class EditItemDialog extends DialogFragment {
-    private String boardId, itemId, name;
+public class EditAttachmentDialog extends DialogFragment {
+    private String boardId, itemId, cardId, attachmentId, attachmentName;
 
-    public static EditItemDialog newInstance(String boardId, String itemId, String name) {
-        EditItemDialog dialog = new EditItemDialog();
+    public static EditAttachmentDialog newInstance(String boardId, String itemId, String cardId, String attachmentId, String attachmentName) {
+        EditAttachmentDialog dialog = new EditAttachmentDialog();
         Bundle args = new Bundle();
         args.putString("boardId", boardId);
         args.putString("itemId", itemId);
-        args.putString("name", name);
+        args.putString("cardId", cardId);
+        args.putString("attachmentId", attachmentId);
+        args.putString("attachmentName", attachmentName);
         dialog.setArguments(args);
         return dialog;
     }
@@ -39,7 +40,9 @@ public class EditItemDialog extends DialogFragment {
         if (getArguments() != null) {
             boardId = getArguments().getString("boardId");
             itemId = getArguments().getString("itemId");
-            name = getArguments().getString("name");
+            cardId = getArguments().getString("cardId");
+            attachmentId = getArguments().getString("attachmentId");
+            attachmentName = getArguments().getString("attachmentName");
         }
     }
 
@@ -59,7 +62,7 @@ public class EditItemDialog extends DialogFragment {
 
         title.setText("Изменить название");
 
-        editName.setText(name);
+        editName.setText(attachmentName);
 
         buttonEdit.setText("Изменить");
 
@@ -70,7 +73,7 @@ public class EditItemDialog extends DialogFragment {
             } else {
                 //Обновляем данные в БД
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                reference.child("boards").child(boardId).child("items").child(itemId).child("name").setValue(editName.getText().toString());
+                reference.child("boards").child(boardId).child("items").child(itemId).child("cards").child(cardId).child("attachments").child(attachmentId).child("name").setValue(editName.getText().toString());
                 dismiss();
             }
         });
