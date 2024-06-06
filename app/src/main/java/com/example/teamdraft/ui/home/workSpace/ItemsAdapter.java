@@ -55,7 +55,7 @@ public class ItemsAdapter extends ArrayAdapter<Item> {
         //Настраиваем ListView карточек
         ArrayList<Card> cards = new ArrayList<>();
         ListView listView = convertView.findViewById(R.id.cardsListView);
-        CardsAdapter adapter = new CardsAdapter(context, cards, fragmentManager, boardId, item.getId());
+        CardsAdapter adapter = new CardsAdapter(context, cards, fragmentManager, boardId, item.getId(), isAdmin);
         listView.setAdapter(adapter);
         updateCards(item.getId(), adapter, listView, cards);
 

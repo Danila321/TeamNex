@@ -40,13 +40,15 @@ public class CardsAdapter extends ArrayAdapter<Card> {
     private final String boardId;
     private final String itemId;
     FragmentManager fragmentManager;
+    boolean isAdmin;
 
-    public CardsAdapter(@NonNull Context context, ArrayList<Card> cards, FragmentManager fragmentManager, String boardId, String itemId) {
+    public CardsAdapter(@NonNull Context context, ArrayList<Card> cards, FragmentManager fragmentManager, String boardId, String itemId, boolean isAdmin) {
         super(context, R.layout.workspace_custom_card, cards);
         this.context = context;
         this.boardId = boardId;
         this.itemId = itemId;
         this.fragmentManager = fragmentManager;
+        this.isAdmin = isAdmin;
     }
 
     @NonNull
@@ -74,11 +76,14 @@ public class CardsAdapter extends ArrayAdapter<Card> {
             getAttachmentsCount(convertView, card.getId());
             getUsersCount(convertView, card.getId());
 
-            ImageButton editName = convertView.findViewById(R.id.CardEditNameButton);
-            editName.setOnClickListener(v -> {
-                EditCardDialog dialog = EditCardDialog.newInstance(boardId, itemId, card.getId(), card.getName());
-                dialog.show(fragmentManager, "editCardName");
-            });
+            if (isAdmin){
+                ImageButton editName = convertView.findViewById(R.id.CardEditNameButton);
+                editName.setVisibility(View.VISIBLE);
+                editName.setOnClickListener(v -> {
+                    EditCardDialog dialog = EditCardDialog.newInstance(boardId, itemId, card.getId(), card.getName());
+                    dialog.show(fragmentManager, "editCardName");
+                });
+            }
         }
 
         return convertView;

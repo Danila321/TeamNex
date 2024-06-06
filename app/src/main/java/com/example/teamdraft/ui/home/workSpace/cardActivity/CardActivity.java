@@ -3,6 +3,7 @@ package com.example.teamdraft.ui.home.workSpace.cardActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.teamdraft.GetUserRole;
 import com.example.teamdraft.R;
 import com.example.teamdraft.ui.home.workSpace.Card;
 import com.example.teamdraft.ui.home.workSpace.cardActivity.users.User;
@@ -30,6 +32,7 @@ import com.example.teamdraft.ui.home.workSpace.cardActivity.checkList.ItemCheckl
 import com.example.teamdraft.ui.home.workSpace.cardActivity.checkList.ItemChecklistAdapter;
 import com.example.teamdraft.ui.home.workSpace.cardActivity.users.AddUserDialog;
 import com.example.teamdraft.ui.home.workSpace.cardActivity.users.CardUsersAdapter;
+import com.example.teamdraft.ui.home.workSpace.dialogs.card.DeleteCardDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,6 +64,9 @@ public class CardActivity extends AppCompatActivity {
             cardId = data.getString("cardId");
         }
 
+        ImageButton close = findViewById(R.id.cardButtonClose);
+        close.setOnClickListener(v -> finish());
+
         //Получаем все данные
         getData();
         getUsers();
@@ -74,20 +80,6 @@ public class CardActivity extends AppCompatActivity {
         horizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
         adapter = new CardUsersAdapter(users);
         horizontalRecyclerView.setAdapter(adapter);
-
-        //Кнопка добавления пользователей
-        ImageButton addUserButton = findViewById(R.id.cardButtonAddUser);
-        addUserButton.setOnClickListener(v -> {
-            AddUserDialog dialog = AddUserDialog.newInstance(boardId, itemId, cardId);
-            dialog.show(getSupportFragmentManager(), "addUser");
-        });
-
-        //Кнопка изменения описания
-        Button editDescription = findViewById(R.id.buttonEditDescription);
-        editDescription.setOnClickListener(v -> {
-            EditDescriptionDialog dialog = EditDescriptionDialog.newInstance(boardId, itemId, cardId, descriptionText);
-            dialog.show(getSupportFragmentManager(), "editDescription");
-        });
 
         //Настраиваем listView чеклиста
         ArrayList<String> boardData = new ArrayList<>();
@@ -114,6 +106,40 @@ public class CardActivity extends AppCompatActivity {
             AddAttachmentDialog dialog = AddAttachmentDialog.newInstance(boardId, itemId, cardId);
             dialog.show(getSupportFragmentManager(), "addAttachment");
         });
+
+        GetUserRole.getUserRole(boardId, this::roleManager);
+    }
+
+    void roleManager(String role) {
+        //Кнопка добавления пользователей
+        ImageButton addUserButton = findViewById(R.id.cardButtonAddUser);
+        //Кнопка удаления карточки
+        ConstraintLayout delete = findViewById(R.id.cardDeleteLayout);
+        //Кнопка изменения описания
+        Button editDescription = findViewById(R.id.buttonEditDescription);
+
+        switch (role) {
+            case "owner":
+            case "admin":
+                addUserButton.setOnClickListener(v -> {
+                    AddUserDialog dialog = AddUserDialog.newInstance(boardId, itemId, cardId);
+                    dialog.show(getSupportFragmentManager(), "addUser");
+                });
+                delete.setOnClickListener(v -> {
+                    DeleteCardDialog dialog = DeleteCardDialog.newInstance(boardId, itemId, cardId);
+                    dialog.show(getSupportFragmentManager(), "deleteCard");
+                });
+                editDescription.setOnClickListener(v -> {
+                    EditDescriptionDialog dialog = EditDescriptionDialog.newInstance(boardId, itemId, cardId, descriptionText);
+                    dialog.show(getSupportFragmentManager(), "editDescription");
+                });
+                break;
+            //Настраиваем адаптер и listView
+            case "user":
+                addUserButton.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
+                break;
+        }
     }
 
     void getData() {
@@ -122,16 +148,20 @@ public class CardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Card card = snapshot.getValue(Card.class);
-                TextView cardTitle = findViewById(R.id.cardTitle);
-                TextView description = findViewById(R.id.descriptionText);
-                //Получаем название
-                cardTitle.setText(card.getName());
-                //Получаем описание
-                descriptionText = card.getDescription();
-                if (descriptionText.isEmpty()) {
-                    description.setText("Добавьте описание");
+                if (card != null) {
+                    TextView cardTitle = findViewById(R.id.cardTitle);
+                    TextView description = findViewById(R.id.descriptionText);
+                    //Получаем название
+                    cardTitle.setText(card.getName());
+                    //Получаем описание
+                    descriptionText = card.getDescription();
+                    if (descriptionText.isEmpty()) {
+                        description.setText("Добавьте описание");
+                    } else {
+                        description.setText(descriptionText);
+                    }
                 } else {
-                    description.setText(descriptionText);
+                    finish();
                 }
             }
 
