@@ -1,24 +1,25 @@
 {
   "project_info": {
     "project_number": "229840086127",
+    "firebase_url": "https://teamdraft-6ec72-default-rtdb.firebaseio.com",
     "project_id": "teamdraft-6ec72",
     "storage_bucket": "teamdraft-6ec72.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:229840086127:android:f923957c52aee40909599a",
+        "mobilesdk_app_id": "1:229840086127:android:ac3ae079e0d9bf5009599a",
         "android_client_info": {
-          "package_name": "com.example.teamdraft"
+          "package_name": "com.teamnexapp.teamnex"
         }
       },
       "oauth_client": [
         {
-          "client_id": "229840086127-atuq9dlfdqvu1ajsvudpf82o8dn13uii.apps.googleusercontent.com",
+          "client_id": "229840086127-llc6bfib763s8m58jlagc9gfjjtf733l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.teamdraft",
-            "certificate_hash": "0da9904472563c7310dcc379fc96ad361959f58a"
+            "package_name": "com.teamnexapp.teamnex",
+            "certificate_hash": "0160d4399cb4db53a2f1d03dcf648892676443f1"
           }
         },
         {

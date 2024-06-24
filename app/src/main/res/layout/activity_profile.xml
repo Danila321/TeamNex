@@ -50,11 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="54dp"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@android:color/holo_blue_dark"
-            android:fontFamily="sans-serif-light"
             android:text="@string/profile_image_load"
             android:textAllCaps="false"
-            app:cornerRadius="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,10 +62,8 @@
             android:layout_height="54dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="#FF5555"
-            android:fontFamily="sans-serif-light"
             android:text="@string/profile_image_delete"
             android:textAllCaps="false"
-            app:cornerRadius="9dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/ImageAccountAction"
             app:layout_constraintStart_toStartOf="@+id/ImageAccountAction" />
@@ -212,48 +207,32 @@
         android:layout_marginStart="18dp"
         android:layout_marginBottom="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            android:id="@+id/ProfileLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="7dp"
-            android:text="@string/profile_exit"
-            android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <Button
+        android:id="@+id/ProfileLogout"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/corner_red"
         android:layout_marginStart="18dp"
         android:layout_marginBottom="18dp"
+        android:text="@string/profile_exit"
+        android:textAllCaps="true"
+        android:textColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/ProfileDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="7dp"
-            android:text="@string/profile_delete"
-            android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/ProfileDelete"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="18dp"
+        android:text="@string/profile_delete"
+        android:textAllCaps="true"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ProfileLogout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
