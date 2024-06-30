@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="324dp"
-    android:layout_height="wrap_content"
-    android:background="@drawable/dialog_rounded">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="382dp"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView15"
@@ -12,7 +12,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Новое вложение"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_onSurface_highContrast"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,31 +31,31 @@
         app:layout_constraintTop_toTopOf="@+id/textView15"
         app:srcCompat="@drawable/close" />
 
-    <EditText
-        android:id="@+id/AttachmentDialogEditText"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="12dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/AttachmentDialogEditTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/custom_input"
-        android:drawableStart="@drawable/name_custom_icon"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:fontFamily="sans-serif-light"
-        android:hint="Введите название"
-        android:inputType="text"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Название"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:startIconDrawable="@drawable/icon_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/AttachmentDialogEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/AttachmentDialogAdd"
         android:layout_width="164dp"
         android:layout_height="50dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/workspace_button_date_gray_12dp"
@@ -63,7 +63,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AttachmentDialogEditText">
+        app:layout_constraintTop_toBottomOf="@+id/AttachmentDialogEditTextLayout">
 
         <ImageView
             android:id="@+id/imageView14"
@@ -95,15 +95,21 @@
     <Button
         android:id="@+id/AttachmentDialogButton"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginEnd="12dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:layout_height="58dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-light"
         android:text="Добавить"
-        android:textAllCaps="false"
         app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="@+id/AttachmentDialogAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/AttachmentDialogAdd" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.teamnexapp.teamnex.R;
 import com.squareup.picasso.Picasso;
+import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.AttachmentImageView;
+import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.AttachmentVideoView;
 
 import java.util.ArrayList;
 
@@ -60,6 +62,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             imageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, AttachmentImageView.class);
                 intent.putExtra("fileUri", fileUri);
+                intent.putExtra("fileName", item.getName());
                 context.startActivity(intent);
             });
         } else if (fileType.equals("mp4") || fileType.equals("mkv") || fileType.equals("avi")) {
@@ -74,6 +77,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             imageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, AttachmentVideoView.class);
                 intent.putExtra("fileUri", fileUri);
+                intent.putExtra("fileName", item.getName());
                 context.startActivity(intent);
             });
         } else {

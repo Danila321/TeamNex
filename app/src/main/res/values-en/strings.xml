@@ -42,6 +42,7 @@
     <string name="register_name">Name</string>
     <string name="register_password">Password</string>
     <string name="register_confirm_password">Confirm password</string>
+    <string name="register_button_continue">Continue</string>
     <string name="register_button">Sign up</string>
     <string name="register_error_name">Enter your name</string>
     <string name="register_error_email">Enter your email address</string>
@@ -81,7 +82,7 @@
     <string name="board_search">Search</string>
     <string name="board_button_create">Create</string>
     <string name="board_dialog_connect_title">Connection</string>
-    <string name="board_dialog_connect_hint">Enter the code</string>
+    <string name="board_dialog_connect_hint">Connection code</string>
     <string name="board_dialog_connect_text">Connect</string>
     <string name="board_dialog_connect_error">Enter the 8-digit code</string>
     <string name="board_dialog_create_loading">Creating a board…</string>

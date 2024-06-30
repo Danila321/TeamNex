@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.teamnexapp.teamnex.R;
 
 public class DisconnectDialog extends DialogFragment {
@@ -29,7 +30,7 @@ public class DisconnectDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_disconnect, null);
@@ -53,7 +54,6 @@ public class DisconnectDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_disconnect_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

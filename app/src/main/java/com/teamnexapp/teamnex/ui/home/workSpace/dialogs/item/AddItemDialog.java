@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.teamnexapp.teamnex.R;
 import com.teamnexapp.teamnex.ui.home.workSpace.Item;
 import com.google.firebase.database.DatabaseReference;
@@ -43,25 +46,27 @@ public class AddItemDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
 
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.EditDialogEditText);
+        TextInputLayout editTextLayout = dialogView.findViewById(R.id.EditDialogEditTextLayout);
+        TextInputEditText editText = dialogView.findViewById(R.id.EditDialogEditText);
         Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         titleText.setText("Новый пункт");
 
         button.setOnClickListener(view -> {
-            if (editText.getText().length() == 0) {
-                editText.setError("Введите название");
+            String text = String.valueOf(editText.getText()).trim();
+            if (text.isEmpty()) {
+                editTextLayout.setError("Введите название");
             } else {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String ID = UUID.randomUUID().toString();
-                Item item = new Item(ID, editText.getText().toString());
+                Item item = new Item(ID, text);
                 mDatabase.child("boards").child(boardId).child("items").child(ID).setValue(item);
                 dismiss();
             }
@@ -76,7 +81,6 @@ public class AddItemDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

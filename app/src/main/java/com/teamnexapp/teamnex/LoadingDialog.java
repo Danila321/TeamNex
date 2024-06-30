@@ -2,12 +2,13 @@ package com.teamnexapp.teamnex;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class LoadingDialog {
     private AlertDialog dialog;
@@ -21,7 +22,7 @@ public class LoadingDialog {
 
     @SuppressLint("InflateParams")
     public void startDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
 
         View dialogView = activity.getLayoutInflater().inflate(R.layout.dialog_loading, null);
         builder.setView(dialogView);
@@ -31,7 +32,6 @@ public class LoadingDialog {
         textView.setText(text);
 
         dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         int pixelsWidth = activity.getResources().getDimensionPixelSize(R.dimen.dialog_loading_width);

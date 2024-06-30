@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.teamnexapp.teamnex.GetUserRole;
+import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
 import com.teamnexapp.teamnex.ui.home.Board;
 import com.teamnexapp.teamnex.ui.home.workSpace.dialogs.settings.DeleteDialog;
@@ -217,6 +218,10 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
 
     private void uploadImage() {
         if (selectedImageUri != null) {
+            //Показываем загрузочный диалог
+            LoadingDialog dialog = new LoadingDialog(SettingsActivity.this, "Обновляем изображение...");
+            dialog.startDialog();
+
             StorageReference imageRef = FirebaseStorage.getInstance().getReference("boards").child(boardIdData)
                     .child(boardIdData + "_board_image");
 
@@ -226,6 +231,10 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             // Сохраняем URL в базе данных
                             FirebaseDatabase.getInstance().getReference("boards").child(boardIdData).child("imageUri").setValue(uri.toString());
+                            //Устанавливаем флаг для обновления списка досок
+                            dataChanged = true;
+                            //Закрываем загрузочный диалог
+                            dialog.dismissDialog();
                         });
                     })
                     .addOnFailureListener(e -> {

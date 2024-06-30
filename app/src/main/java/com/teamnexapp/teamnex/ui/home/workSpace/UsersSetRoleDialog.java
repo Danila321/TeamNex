@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.teamnexapp.teamnex.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,16 +45,19 @@ public class UsersSetRoleDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.workspace_activity_users_dialog, null);
         builder.setView(dialogView);
 
+        ImageButton close = dialogView.findViewById(R.id.UsersRoleDialogClose);
         ConstraintLayout constraintLayoutAdmin = dialogView.findViewById(R.id.constraintLayoutAdmin);
         ConstraintLayout constraintLayoutUser = dialogView.findViewById(R.id.constraintLayoutUser);
         RadioButton radioButtonAdmin = dialogView.findViewById(R.id.radioButtonAdmin);
         RadioButton radioButtonUser = dialogView.findViewById(R.id.radioButtonUser);
+
+        close.setOnClickListener(v -> dismiss());
 
         if (role.contains("admin")) {
             radioButtonAdmin.setChecked(true);
@@ -108,7 +113,6 @@ public class UsersSetRoleDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_role_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

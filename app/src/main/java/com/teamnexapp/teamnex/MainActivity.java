@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Устанавливаем язык приложения
         String lang = getSharedPreferences("Settings", Context.MODE_PRIVATE).getString("language", "ru");
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -43,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
         Configuration config = new Configuration(resources.getConfiguration());
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        //Устанавливаем тему приложения
+        if (getSharedPreferences("Settings", Context.MODE_PRIVATE).getBoolean("theme", true)) {
+            setTheme(R.style.Theme_TeamDraft);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            setTheme(R.style.AppTheme);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
 
         com.teamnexapp.teamnex.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -66,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
+            TextView name = view.findViewById(R.id.textView23);
+            name.setText(user.getDisplayName());
         } else {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

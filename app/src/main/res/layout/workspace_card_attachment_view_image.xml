@@ -18,13 +18,13 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="18dp"
-            app:layout_constraintBottom_toBottomOf="@+id/AttachmentVideoCloseButton"
+            app:layout_constraintBottom_toBottomOf="@+id/AttachmentImageCloseButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/AttachmentVideoCloseButton"
+            app:layout_constraintTop_toTopOf="@+id/AttachmentImageCloseButton"
             app:srcCompat="@drawable/picture" />
 
         <TextView
-            android:id="@+id/AttachmentVideoName"
+            android:id="@+id/AttachmentImageName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView7" />
 
         <ImageButton
-            android:id="@+id/AttachmentVideoCloseButton"
+            android:id="@+id/AttachmentImageCloseButton"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginTop="14dp"

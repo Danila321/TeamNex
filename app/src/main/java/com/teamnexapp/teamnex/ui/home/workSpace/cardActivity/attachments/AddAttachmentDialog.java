@@ -2,7 +2,6 @@ package com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.attachments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -16,7 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,6 +25,9 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,17 +74,20 @@ public class AddAttachmentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.workspace_card_attachments_dialog, null);
         builder.setView(dialogView);
 
-        EditText editText = dialogView.findViewById(R.id.AttachmentDialogEditText);
+        ImageButton close = dialogView.findViewById(R.id.AttachmentDialogClose);
+        TextInputLayout editTextLayout = dialogView.findViewById(R.id.AttachmentDialogEditTextLayout);
+        TextInputEditText editText = dialogView.findViewById(R.id.AttachmentDialogEditText);
         ConstraintLayout addFile = dialogView.findViewById(R.id.AttachmentDialogAdd);
+        TextView fileName = dialogView.findViewById(R.id.AttachmentDialogFileName);
         Button button = dialogView.findViewById(R.id.AttachmentDialogButton);
 
-        TextView fileName = dialogView.findViewById(R.id.AttachmentDialogFileName);
+        close.setOnClickListener(v -> dismiss());
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -103,12 +108,13 @@ public class AddAttachmentDialog extends DialogFragment {
         });
 
         button.setOnClickListener(v -> {
-            if (editText.getText().toString().isEmpty()) {
-                editText.setError("Введите название");
+            String text = String.valueOf(editText.getText()).trim();
+            if (text.isEmpty()) {
+                editTextLayout.setError("Введите название");
             } else if (fileUri == null) {
                 editText.setError("Выберите файл");
             } else {
-                uploadFile(fileUri, editText.getText().toString());
+                uploadFile(fileUri, text);
                 dismiss();
             }
         });
@@ -176,7 +182,6 @@ public class AddAttachmentDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_add_attachment_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

@@ -10,10 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -21,7 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText editTextEmail, editTextPassword;
+    private TextInputLayout emailLayout, passwordLayout;
+    private TextInputEditText editTextEmail, editTextPassword;
     Button buttonLogin;
     TextView forgotPassword, registerButton;
 
@@ -30,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        emailLayout = findViewById(R.id.textInputLayoutEmail);
+        passwordLayout = findViewById(R.id.textInputLayoutPassword);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btnLogin);
@@ -40,13 +44,16 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonLogin.setOnClickListener(v -> {
             String email, password;
-            email = String.valueOf(editTextEmail.getText());
+            email = String.valueOf(editTextEmail.getText()).trim();
             password = String.valueOf(editTextPassword.getText());
 
-            if (email.isEmpty()) {
-                editTextEmail.setError(getString(R.string.login_error_email));
-            } else if (password.isEmpty()) {
-                editTextPassword.setError(getString(R.string.login_error_password));
+            if (email.isEmpty() || password.isEmpty()) {
+                if (email.isEmpty()) {
+                    emailLayout.setError(getString(R.string.login_error_email));
+                }
+                if (password.isEmpty()) {
+                    passwordLayout.setError(getString(R.string.login_error_password));
+                }
             } else {
                 loginUser(email, password);
             }
@@ -94,9 +101,9 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidUserException e) {
-                            editTextEmail.setError(getString(R.string.login_error_user));
+                            emailLayout.setError(getString(R.string.login_error_user));
                         } catch (FirebaseAuthInvalidCredentialsException e) {
-                            editTextEmail.setError(getString(R.string.login_error_incorrect));
+                            passwordLayout.setError(getString(R.string.login_error_incorrect));
                         } catch (Exception e) {
                             Log.e("LoginActivity", e.getMessage());
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();

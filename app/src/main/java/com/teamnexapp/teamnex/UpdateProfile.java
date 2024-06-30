@@ -35,7 +35,7 @@ public class UpdateProfile extends AppCompatActivity {
         EditText editTextPassword = findViewById(R.id.password);
         EditText editTextPasswordAgain = findViewById(R.id.password_again);
         editTextName = findViewById(R.id.name);
-        buttonUpdate = findViewById(R.id.btn_register);
+        buttonUpdate = findViewById(R.id.btn);
 
         backButton.setOnClickListener(view -> finish());
 

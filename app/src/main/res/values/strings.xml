@@ -42,6 +42,7 @@
     <string name="register_name">Имя</string>
     <string name="register_password">Пароль</string>
     <string name="register_confirm_password">Повторите пароль</string>
+    <string name="register_button_continue">Продолжить</string>
     <string name="register_button">Зарегистрироваться</string>
     <string name="register_error_name">Введите свое имя</string>
     <string name="register_error_email">Введите email</string>
@@ -81,7 +82,7 @@
     <string name="board_search">Поиск</string>
     <string name="board_button_create">Создать</string>
     <string name="board_dialog_connect_title">Подключение</string>
-    <string name="board_dialog_connect_hint">Введите код</string>
+    <string name="board_dialog_connect_hint">Код подключения</string>
     <string name="board_dialog_connect_text">Подключиться</string>
     <string name="board_dialog_connect_error">Введите 8-ми значный код</string>
     <string name="board_dialog_create_loading">Создаем доску…</string>

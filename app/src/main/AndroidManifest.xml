@@ -17,11 +17,11 @@
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.home.workSpace.cardActivity.attachments.AttachmentVideoView"
+            android:name=".ui.home.workSpace.cardActivity.AttachmentVideoView"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.home.workSpace.cardActivity.attachments.AttachmentImageView"
+            android:name=".ui.home.workSpace.cardActivity.AttachmentImageView"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity

@@ -11,7 +11,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Новая доска"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_onSurface_highContrast"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         app:srcCompat="@drawable/close" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/EditDialogEditText"
+        android:id="@+id/EditDialogEditTextLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -41,9 +41,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditDialogTitle"
-        app:startIconDrawable="@drawable/name_custom_icon">
+        app:startIconDrawable="@drawable/icon_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EditDialogEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>
@@ -56,13 +57,11 @@
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
         android:fontFamily="sans-serif-light"
         android:text="Создать"
         android:textAllCaps="false"
-        app:cornerRadius="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditDialogEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogEditTextLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,28 +43,30 @@ public class ChooseDateDialog extends DialogFragment implements DatePickerDialog
             dateString = getArguments().getString("dateString");
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LocalDate date;
-        if (dateString == null){
+        if (dateString == null) {
             date = LocalDate.now();
         } else {
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             date = LocalDate.parse(dateString, inputFormatter);
         }
-        return new DatePickerDialog(requireContext(), this, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        return new DatePickerDialog(requireContext(), this, date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        month++;
         String monthString = String.valueOf(month);
         String dayString = String.valueOf(dayOfMonth);
-        if (month < 10){
+        if (month < 10) {
             monthString = "0" + month;
         }
-        if (dayOfMonth < 10){
+        if (dayOfMonth < 10) {
             dayString = "0" + dayOfMonth;
         }
         String dateString = dayString + "-" + monthString + "-" + year;

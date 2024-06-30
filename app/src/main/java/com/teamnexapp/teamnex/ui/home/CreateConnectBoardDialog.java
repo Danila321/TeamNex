@@ -1,7 +1,6 @@
 package com.teamnexapp.teamnex.ui.home;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,7 +73,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         dialogView = inflater.inflate(R.layout.dialog_edit, null);
@@ -80,35 +83,38 @@ public class CreateConnectBoardDialog extends DialogFragment {
         close.setOnClickListener(v -> dismiss());
 
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
-        EditText editText = dialogView.findViewById(R.id.EditDialogEditText);
+        TextInputLayout editTextLayout = dialogView.findViewById(R.id.EditDialogEditTextLayout);
+        TextInputEditText editText = dialogView.findViewById(R.id.EditDialogEditText);
         Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         if (type == 1) {
             titleText.setText(R.string.board_dialog_connect_title);
-            editText.setHint(R.string.board_dialog_connect_hint);
+            editTextLayout.setHint(R.string.board_dialog_connect_hint);
             button.setText(R.string.board_dialog_connect_text);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
             button.setOnClickListener(view -> {
-                if (editText.getText().length() != 8) {
-                    editText.setError(getString(R.string.board_dialog_connect_error));
+                String code = String.valueOf(editText.getText()).trim();
+                if (code.length() != 8) {
+                    editTextLayout.setError(getString(R.string.board_dialog_connect_error));
                 } else {
-                    connectToBoard(editText.getText().toString());
+                    connectToBoard(code);
                     dismiss();
                 }
             });
         } else {
             titleText.setText(R.string.board_dialog_create_title);
-            editText.setHint(R.string.board_dialog_create_hint);
+            editTextLayout.setHint(R.string.board_dialog_create_hint);
             button.setText(R.string.board_dialog_create_text);
             button.setOnClickListener(view -> {
-                if (editText.getText().length() == 0) {
-                    editText.setError(getString(R.string.board_dialog_create_error));
+                String name = String.valueOf(editText.getText()).trim();
+                if (name.isEmpty()) {
+                    editTextLayout.setError(getString(R.string.board_dialog_create_error));
                 } else {
                     //Получаем текущие дату и время
                     @SuppressLint("SimpleDateFormat") String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                     //Создаем доску
-                    createBoard(editText.getText().toString(), date, date);
+                    createBoard(name, date, date);
 
                     dismiss();
                 }
@@ -132,10 +138,10 @@ public class CreateConnectBoardDialog extends DialogFragment {
                             // Проверяем, не подключен ли уже текущий пользователь
                             if (!boardSnapshot.child("users").hasChild(currentUser.getUid())) {
                                 // Добавляем пользователя к списку пользователей доски
-                                mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user");
-
-                                onCreateConnectBoard.onChange();
-                                Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_complete, Toast.LENGTH_SHORT).show();
+                                mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user").addOnCompleteListener(task -> {
+                                    onCreateConnectBoard.onChange();
+                                    Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_complete, Toast.LENGTH_SHORT).show();
+                                });
                             } else {
                                 //Пользователь уже подключен к доске
                                 Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_error_already, Toast.LENGTH_SHORT).show();
@@ -187,15 +193,16 @@ public class CreateConnectBoardDialog extends DialogFragment {
 
                         // Создание узла доски с информацией о доске
                         Board board = new Board(ID, boardName, uri1.toString(), boardDate, boardEditDate, String.valueOf(boardCode));
-                        mDatabase.child("boards").child(ID).setValue(board);
+                        mDatabase.child("boards").child(ID).setValue(board).addOnCompleteListener(task -> {
+                            onCreateConnectBoard.onChange();
+                            Toast.makeText(dialogView.getContext(), "Доска успешно создана", Toast.LENGTH_SHORT).show();
+                        });
 
                         // Добавление создателя доски к списку пользователей
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         mDatabase.child("boards").child(ID).child("users").child(userId).setValue("owner");
 
                         loadingDialog.dismissDialog();
-
-                        onCreateConnectBoard.onChange();
                     });
                 });
             }
@@ -213,7 +220,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

@@ -1,19 +1,23 @@
 package com.teamnexapp.teamnex;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -30,7 +34,8 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
+    private TextInputLayout nameLayout, emailLayout, passwordLayout, passwordAgainLayout;
+    private TextInputEditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
     Button buttonRegister;
 
     @Override
@@ -38,12 +43,21 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.md_theme_primary));
+
         ImageButton backToLogin = findViewById(R.id.backButton);
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
         editTextPasswordAgain = findViewById(R.id.password_again);
-        buttonRegister = findViewById(R.id.btn_register);
+        buttonRegister = findViewById(R.id.btn);
+        nameLayout = findViewById(R.id.nameLayout);
+        emailLayout = findViewById(R.id.emailLayout);
+        passwordLayout = findViewById(R.id.passwordLayout);
+        passwordAgainLayout = findViewById(R.id.passwordAgainLayout);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -51,25 +65,55 @@ public class RegisterActivity extends AppCompatActivity {
 
         buttonRegister.setOnClickListener(v -> {
             String name, email, password, passwordAgain;
-            name = String.valueOf(editTextName.getText());
-            email = String.valueOf(editTextEmail.getText());
+            name = String.valueOf(editTextName.getText()).trim();
+            email = String.valueOf(editTextEmail.getText()).trim();
             password = String.valueOf(editTextPassword.getText());
             passwordAgain = String.valueOf(editTextPasswordAgain.getText());
 
-            if (name.isEmpty()) {
-                editTextName.setError(getString(R.string.register_error_name));
-            } else if (email.isEmpty()) {
-                editTextEmail.setError(getString(R.string.register_error_email));
-            } else if (password.isEmpty()) {
-                editTextPassword.setError(getString(R.string.register_error_password));
-            } else if (passwordAgain.isEmpty()) {
-                editTextPasswordAgain.setError(getString(R.string.register_error_password_again));
-            } else if (!password.equals(passwordAgain)) {
-                editTextPasswordAgain.setError(getString(R.string.register_error_password_not_match));
-            } else {
+            if (validateInputs(name, email, password, passwordAgain)) {
                 registerUser(email, password, name);
             }
         });
+    }
+
+    private boolean validateInputs(String name, String email, String password, String passwordAgain) {
+        boolean validate = true;
+        if (name.isEmpty()) {
+            nameLayout.setError(getString(R.string.register_error_name));
+            //validate = false;
+        } else {
+            nameLayout.setErrorEnabled(false);
+        }
+        if (email.isEmpty()) {
+            emailLayout.setError(getString(R.string.register_error_email));
+            validate = false;
+        } else {
+            emailLayout.setErrorEnabled(false);
+        }
+        if (password.isEmpty()) {
+            passwordLayout.setError(getString(R.string.register_error_password));
+            validate = false;
+        } else {
+            passwordLayout.setErrorEnabled(false);
+            if (password.length() < 7) {
+                passwordLayout.setError("Минимальная длина пароля: 7");
+            } else {
+                passwordLayout.setErrorEnabled(false);
+            }
+        }
+        if (passwordAgain.isEmpty()) {
+            passwordAgainLayout.setError(getString(R.string.register_error_password_again));
+            validate = false;
+        } else {
+            passwordAgainLayout.setErrorEnabled(false);
+            if (!password.equals(passwordAgain)) {
+                validate = false;
+                passwordAgainLayout.setError(getString(R.string.register_error_password_not_match));
+            } else {
+                passwordAgainLayout.setErrorEnabled(false);
+            }
+        }
+        return validate;
     }
 
     private void registerUser(String email, String password, String name) {
@@ -129,11 +173,11 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            editTextPassword.setError(getString(R.string.register_action_error_password));
+                            passwordLayout.setError(getString(R.string.register_action_error_password));
                         } catch (FirebaseAuthInvalidCredentialsException e) {
-                            editTextEmail.setError(getString(R.string.register_action_email));
+                            emailLayout.setError(getString(R.string.register_action_email));
                         } catch (FirebaseAuthUserCollisionException e) {
-                            editTextEmail.setError(getString(R.string.register_action_email_already));
+                            emailLayout.setError(getString(R.string.register_action_email_already));
                         } catch (Exception e) {
                             Log.e("RegisterActivity", e.getMessage());
                             Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -145,12 +189,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-        builder.setTitle(R.string.register_dialog_title);
-        builder.setMessage(R.string.register_dialog_text);
-        builder.setPositiveButton(R.string.register_dialog_button, (dialog, which) -> finish());
-        builder.setCancelable(false);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        new MaterialAlertDialogBuilder(RegisterActivity.this)
+                .setTitle(R.string.register_dialog_title)
+                .setMessage(R.string.register_dialog_text)
+                .setPositiveButton(R.string.register_dialog_button, (dialog, which) -> finish())
+                .setCancelable(false)
+                .show();
     }
 }

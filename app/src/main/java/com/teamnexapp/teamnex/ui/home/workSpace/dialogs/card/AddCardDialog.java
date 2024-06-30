@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.teamnexapp.teamnex.R;
 import com.teamnexapp.teamnex.ui.home.workSpace.Card;
@@ -56,7 +57,8 @@ public class AddCardDialog extends DialogFragment {
 
         ImageButton close = dialogView.findViewById(R.id.EditDialogClose);
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
-        TextInputLayout editText = dialogView.findViewById(R.id.EditDialogEditText);
+        TextInputLayout editTextLayout = dialogView.findViewById(R.id.EditDialogEditTextLayout);
+        TextInputEditText editText = dialogView.findViewById(R.id.EditDialogEditText);
         Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         close.setOnClickListener(v -> dismiss());
@@ -64,17 +66,27 @@ public class AddCardDialog extends DialogFragment {
         titleText.setText("Новая карточка");
 
         button.setOnClickListener(view -> {
-            if (editText.getEditText().length() == 0) {
-                editText.setError("Введите название");
+            String text = String.valueOf(editText.getText()).trim();
+            if (text.isEmpty()) {
+                editTextLayout.setError("Введите название");
             } else {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String ID = UUID.randomUUID().toString();
-                Card card = new Card(ID, editText.getEditText().toString(), "");
+                Card card = new Card(ID, text, "");
                 mDatabase.child("boards").child(boardId).child("items").child(itemId).child("cards").child(ID).setValue(card);
                 dismiss();
             }
         });
 
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
+            getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
     }
 }

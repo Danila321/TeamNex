@@ -15,7 +15,7 @@
         android:layout_marginEnd="20dp"
         android:gravity="center"
         android:text="@string/feedback_text"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_onSurface_highContrast"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

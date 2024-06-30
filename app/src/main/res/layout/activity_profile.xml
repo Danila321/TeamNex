@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:text="@string/profile_title"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_onSurface_highContrast"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/profile_name"
-            android:textColor="@color/black"
+            android:textColor="@color/md_theme_onSurface_highContrast"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -145,7 +145,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-light"
             android:text="Email"
-            android:textColor="@color/black"
+            android:textColor="@color/md_theme_onSurface_highContrast"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ProfileTextViewName" />

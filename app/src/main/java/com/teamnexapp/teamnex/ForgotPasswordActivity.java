@@ -1,6 +1,5 @@
 package com.teamnexapp.teamnex;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,15 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-    private EditText editTextEmail;
+    private TextInputLayout emailLayout;
+    private TextInputEditText editTextEmail;
     Button buttonReset;
 
     @Override
@@ -26,16 +28,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         ImageButton backToLogin = findViewById(R.id.backButton);
+        emailLayout = findViewById(R.id.textInputLayoutForgotEmail);
         editTextEmail = findViewById(R.id.email);
         buttonReset = findViewById(R.id.btn_reset);
 
         backToLogin.setOnClickListener(view -> finish());
 
         buttonReset.setOnClickListener(v -> {
-            String email = String.valueOf(editTextEmail.getText());
+            String email = String.valueOf(editTextEmail.getText()).trim();
 
             if (email.isEmpty()) {
-                editTextEmail.setError(getString(R.string.reset_error));
+                emailLayout.setError(getString(R.string.reset_error));
             } else {
                 resetPassword(email);
             }
@@ -57,17 +60,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         authProfile.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             loadingDialog.dismissDialog();
             if (task.isSuccessful()) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPasswordActivity.this);
-                builder.setTitle(R.string.reset_dialog_title);
-                builder.setMessage(R.string.reset_dialog_text);
-                builder.setPositiveButton(R.string.reset_dialog_button, (dialog, which) -> finish());
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                new MaterialAlertDialogBuilder(ForgotPasswordActivity.this)
+                        .setTitle(R.string.reset_dialog_title)
+                        .setMessage(R.string.reset_dialog_text)
+                        .setPositiveButton(R.string.reset_dialog_button, (dialog, which) -> finish())
+                        .show();
             } else {
                 try {
                     throw task.getException();
                 } catch (FirebaseAuthInvalidUserException e) {
-                    editTextEmail.setError(getString(R.string.reset_error_user));
+                    emailLayout.setError(getString(R.string.reset_error_user));
                 } catch (Exception e) {
                     Log.e("ForgotPasswordActivity", e.getMessage());
                     Toast.makeText(ForgotPasswordActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();

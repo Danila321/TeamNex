@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
+    android:background="@color/card_background"
     tools:context=".ui.home.workSpace.cardActivity.CardActivity">
 
 
@@ -127,14 +127,16 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/workspace_button_date_gray_12dp"
                     android:padding="8dp"
                     android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/horizontalRecyclerView"
-                    app:layout_constraintTop_toTopOf="@+id/horizontalRecyclerView"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/user_add" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -163,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Описание"
-                    android:textColor="@color/black"
+                    android:textColor="@color/md_theme_onSurface_highContrast"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView8"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
                     app:layout_constraintTop_toTopOf="@+id/imageView8" />
@@ -224,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Задачи"
-                    android:textColor="@color/black"
+                    android:textColor="@color/md_theme_onSurface_highContrast"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                     app:layout_constraintStart_toEndOf="@+id/imageView6"
                     app:layout_constraintTop_toTopOf="@+id/imageView6" />
@@ -300,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Вложения"
-                    android:textColor="@color/black"
+                    android:textColor="@color/md_theme_onSurface_highContrast"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView9"
                     app:layout_constraintStart_toEndOf="@+id/imageView9"
                     app:layout_constraintTop_toTopOf="@+id/imageView9" />

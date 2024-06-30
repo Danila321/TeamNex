@@ -82,13 +82,10 @@
         android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginBottom="4dp"
-        android:backgroundTint="@android:color/holo_blue_light"
         android:drawableLeft="@drawable/plus_small"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Добавить пункт"
-        android:textAllCaps="false"
         android:textSize="17sp"
-        app:cornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

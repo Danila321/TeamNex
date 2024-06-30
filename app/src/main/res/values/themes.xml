@@ -48,9 +48,8 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#FFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="actionOverflowButtonStyle">@style/ThreeDotColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.TeamDraft.NoActionBar">
@@ -66,10 +65,6 @@
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@android:color/black</item>
-    </style>
-
-    <style name="ThreeDotColor" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="tint">@android:color/black</item>
     </style>
 
     <style name="Theme.TeamDraft.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
