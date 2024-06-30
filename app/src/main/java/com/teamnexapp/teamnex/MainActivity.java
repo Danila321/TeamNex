@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
         View view = navigationView.getHeaderView(0);
         ImageView profileImageView = view.findViewById(R.id.ProfileImageView);
+        TextView name = view.findViewById(R.id.textView23);
         Button profileSettings = view.findViewById(R.id.ProfileSettings);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
-            TextView name = view.findViewById(R.id.textView23);
             name.setText(user.getDisplayName());
         } else {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         if (data != null) {
                             if (data.getBooleanExtra("imageChanged", false)) {
                                 Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
+                                name.setText(user.getDisplayName());
                             }
                         }
                     }

@@ -3,7 +3,6 @@ package com.teamnexapp.teamnex;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -31,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
     private FirebaseUser firebaseUser;
     ImageView imageView;
-    boolean imageChanged = false;
+    boolean dataChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Настраиваем кнопки выхода
         backButton.setOnClickListener(v -> {
             Intent result = new Intent();
-            result.putExtra("imageChanged", imageChanged);
+            result.putExtra("imageChanged", dataChanged);
             setResult(Activity.RESULT_OK, result);
             finish();
         });
@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 Intent result = new Intent();
-                result.putExtra("imageChanged", imageChanged);
+                result.putExtra("imageChanged", dataChanged);
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
@@ -87,10 +87,11 @@ public class ProfileActivity extends AppCompatActivity {
                             if (data != null) {
                                 if (data.getBooleanExtra("imageChanged", false)) {
                                     Picasso.get().load(firebaseUser.getPhotoUrl()).into(imageView);
-                                    imageChanged = true;
+                                    dataChanged = true;
                                 }
-                                if (data.getBooleanExtra("dataChanged", false)){
+                                if (data.getBooleanExtra("dataChanged", false)) {
                                     textViewName.setText(firebaseUser.getDisplayName());
+                                    dataChanged = true;
                                 }
                             }
                         }
@@ -120,52 +121,50 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void showDeleteImageDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle(R.string.profile_delete_dialog_title);
-        builder.setMessage(R.string.profile_delete_dialog_text);
-        builder.setNegativeButton("Нет", (dialog, which) -> dialog.cancel());
-        builder.setPositiveButton("Да", (dialog, which) -> {
-            dialog.dismiss();
-            //Показываем загрузочный диалог
-            LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
-            loadingDialog.startDialog();
-            //Ставим дефолтное изображение пользователя
-            Uri uri = Uri.parse("android.resource://com.teamnexapp.teamnex/" + R.drawable.user);
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
-            StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid());
-            fileReference.putFile(uri).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
-                UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
-                firebaseUser.updateProfile(profileChangeRequest).addOnSuccessListener(unused -> {
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                    mDatabase.child("users").child(authProfile.getCurrentUser().getUid()).child("photo").setValue(uri1.toString());
+        new MaterialAlertDialogBuilder(ProfileActivity.this)
+                .setTitle(R.string.profile_delete_dialog_title)
+                .setMessage(R.string.profile_delete_dialog_text)
+                .setNegativeButton("Нет", (dialog, which) -> dialog.cancel())
+                .setPositiveButton("Да", (dialog, which) -> {
+                    dialog.dismiss();
+                    //Показываем загрузочный диалог
+                    LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
+                    loadingDialog.startDialog();
+                    //Ставим дефолтное изображение пользователя
+                    Uri uri = Uri.parse("android.resource://com.teamnexapp.teamnex/" + R.drawable.user);
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
+                    StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid());
+                    fileReference.putFile(uri).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
+                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
+                        firebaseUser.updateProfile(profileChangeRequest).addOnSuccessListener(unused -> {
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("users").child(authProfile.getCurrentUser().getUid()).child("photo").setValue(uri1.toString());
 
-                    Picasso.get().load(uri1).into(imageView);
+                            Picasso.get().load(uri1).into(imageView);
 
-                    imageChanged = true;
+                            dataChanged = true;
 
-                    loadingDialog.dismissDialog();
-                    Toast.makeText(ProfileActivity.this, R.string.profile_delete_dialog_success, Toast.LENGTH_SHORT).show();
-                });
-            })).addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+                            loadingDialog.dismissDialog();
+                            Toast.makeText(ProfileActivity.this, R.string.profile_delete_dialog_success, Toast.LENGTH_SHORT).show();
+                        });
+                    })).addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                })
+                .show();
     }
 
     void showSignOutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-        builder.setTitle(R.string.profile_exit_title);
-        builder.setMessage(R.string.profile_exit_text);
-        builder.setNegativeButton(R.string.profile_exit_no, (dialog, which) -> dialog.cancel());
-        builder.setPositiveButton(R.string.profile_exit_yes, (dialog, which) -> {
-            dialog.dismiss();
-            authProfile.signOut();
-            Toast.makeText(ProfileActivity.this, R.string.profile_exit_complete, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        new MaterialAlertDialogBuilder(ProfileActivity.this)
+                .setTitle(R.string.profile_exit_title)
+                .setMessage(R.string.profile_exit_text)
+                .setNegativeButton(R.string.profile_exit_no, (dialog, which) -> dialog.cancel())
+                .setPositiveButton(R.string.profile_exit_yes, (dialog, which) -> {
+                    dialog.dismiss();
+                    authProfile.signOut();
+                    Toast.makeText(ProfileActivity.this, R.string.profile_exit_complete, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                })
+                .show();
     }
 }

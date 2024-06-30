@@ -37,24 +37,10 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
             languageTextView.setText("English");
         }
 
-        boolean currentTheme = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getBoolean("theme", true);
-        TextView themeTextView = root.findViewById(R.id.settingsThemeText);
-        if (currentTheme) {
-            themeTextView.setText("Светлая");
-        } else {
-            themeTextView.setText("Тёмная");
-        }
-
         ConstraintLayout language = root.findViewById(R.id.settingsLanguage);
         language.setOnClickListener(v -> {
             BottomSheetDialogLanguage dialog = BottomSheetDialogLanguage.newInstance(currentLanguage);
             dialog.show(getChildFragmentManager(), "chooseLanguageDialog");
-        });
-
-        ConstraintLayout theme = root.findViewById(R.id.settingsTheme);
-        theme.setOnClickListener(v -> {
-            BottomSheetDialogTheme dialogTheme = BottomSheetDialogTheme.newInstance(currentTheme);
-            dialogTheme.show(getChildFragmentManager(), "chooseThemeDialog");
         });
 
         return root;
@@ -76,17 +62,6 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit().putString("language", language).apply();
-        getActivity().recreate();
-    }
-
-    @Override
-    public void onChangeTheme(boolean theme) {
-        if (theme){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit().putBoolean("theme", theme).apply();
         getActivity().recreate();
     }
 }
