@@ -162,8 +162,6 @@ public class AddUserDialog extends DialogFragment {
 
                     }
                 });
-
-
             }
 
             @Override
@@ -179,7 +177,6 @@ public class AddUserDialog extends DialogFragment {
         if (getDialog() != null && getDialog().getWindow() != null) {
             int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_edit_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }
