@@ -62,7 +62,11 @@ public class WorkSpaceActivity extends AppCompatActivity {
     void roleManager(String role) {
         RecyclerView list = findViewById(R.id.itemsListView);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        horizontalLayoutManager.findFirstVisibleItemPosition();
         list.setLayoutManager(horizontalLayoutManager);
+
+        list.addItemDecoration(new DotsIndicatorDecoration(this));
+
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(list);
 

@@ -1,8 +1,10 @@
 package com.teamnexapp.teamnex.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -15,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -24,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Picasso;
 import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,7 +81,11 @@ public class CreateConnectBoardDialog extends DialogFragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        dialogView = inflater.inflate(R.layout.dialog_edit, null);
+        if (type == 1) {
+            dialogView = inflater.inflate(R.layout.dialog_connect, null);
+        } else {
+            dialogView = inflater.inflate(R.layout.dialog_edit, null);
+        }
         builder.setView(dialogView);
 
         ImageButton close = dialogView.findViewById(R.id.EditDialogClose);
@@ -88,9 +97,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
         Button button = dialogView.findViewById(R.id.EditDialogButton);
 
         if (type == 1) {
-            titleText.setText(R.string.board_dialog_connect_title);
-            editTextLayout.setHint(R.string.board_dialog_connect_hint);
-            button.setText(R.string.board_dialog_connect_text);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
             button.setOnClickListener(view -> {
@@ -101,6 +107,22 @@ public class CreateConnectBoardDialog extends DialogFragment {
                     connectToBoard(code);
                     dismiss();
                 }
+            });
+            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            if (data != null) {
+                                connectToBoard(data.getStringExtra("code"));
+                                dismiss();
+                            }
+                        }
+                    });
+            Button scan = dialogView.findViewById(R.id.buttonQR);
+            scan.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), QRCodeScannerActivity.class);
+                activityResultLauncher.launch(intent);
             });
         } else {
             titleText.setText(R.string.board_dialog_create_title);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TeamDraft</string>
+    <string name="app_name">TeamNex</string>
 
     <string name="menu_home">Главная</string>
     <string name="menu_settings">Настройки</string>
@@ -108,7 +108,7 @@
     <string name="board_settings_info">Информация</string>
     <string name="board_settings_info_owner">Владелец:</string>
     <string name="board_settings_info_created">Создано:</string>
-    <string name="board_settings_code">Код доступа:</string>
+    <string name="board_settings_code">Подключение:</string>
     <string name="board_settings_code_text">Код скопирован в буфер обмена</string>
     <string name="board_settings_delete">Удалить доску</string>
     <string name="board_settings_edit">Изменить</string>

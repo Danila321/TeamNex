@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="324dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/EditDialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/board_dialog_connect_title"
+        android:textColor="@color/md_theme_onSurface_highContrast"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/EditDialogClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/workspace_button_close"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/EditDialogTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/EditDialogTitle"
+        app:srcCompat="@drawable/close" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/EditDialogEditTextLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:hint="@string/board_dialog_connect_hint"
+        app:layout_constraintEnd_toStartOf="@+id/EditDialogButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogTitle"
+        app:startIconDrawable="@drawable/icon_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/EditDialogEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/EditDialogButton"
+        style="?attr/materialIconButtonFilledStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="12dp"
+        android:padding="16dp"
+        app:cornerRadius="18dp"
+        app:icon="@drawable/check2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogTitle" />
+
+    <Button
+        android:id="@+id/buttonQR"
+        style="?attr/materialIconButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="15dp"
+        android:text="Сканировать"
+        app:cornerRadius="26dp"
+        app:icon="@drawable/qr_scan"
+        app:iconGravity="top"
+        app:iconPadding="12dp"
+        app:iconSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/EditDialogEditTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/EditDialogEditTextLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

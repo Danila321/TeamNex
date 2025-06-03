@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -108,6 +109,12 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                                     ClipData clip = ClipData.newPlainText("code", board.getCode());
                                     clipboard.setPrimaryClip(clip);
                                     Toast.makeText(SettingsActivity.this, R.string.board_settings_code_text, Toast.LENGTH_SHORT).show();
+                                });
+
+                                Button showQR = findViewById(R.id.SettingsShowQR);
+                                showQR.setOnClickListener(v -> {
+                                    SettingsQRDialog settingsQRDialog = SettingsQRDialog.newInstance(board.getCode());
+                                    settingsQRDialog.show(getSupportFragmentManager(), "qr");
                                 });
 
                                 // Получаем UID создателя доски

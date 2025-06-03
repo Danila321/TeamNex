@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.boards_custom_item, null);
         }
         Board board = getItem(position);
+        Log.e("TAG", board.getId());
 
         ConstraintLayout boardItem = convertView.findViewById(R.id.boardItem);
         ImageView boardImage = convertView.findViewById(R.id.boardImageView);

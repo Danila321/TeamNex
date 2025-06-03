@@ -11,4 +11,6 @@
     <dimen name="dialog_disconnect_width">320dp</dimen>
     <dimen name="dialog_add_attachment_width">382dp</dimen>
     <dimen name="dialog_role_width">390dp</dimen>
+    <dimen name="radius">5dp</dimen>
+    <dimen name="dots_height">10dp</dimen>
 </resources>
