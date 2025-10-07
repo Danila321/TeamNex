@@ -1,4 +1,4 @@
-package com.teamnexapp.teamnex.ui.home.workSpace;
+package com.teamnexapp.teamnex.ui.home.workSpace.settingsActivity;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.GetUserRole;
 import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
@@ -39,7 +40,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 public class SettingsActivity extends AppCompatActivity implements OnChangeBoard {
     ImageView boardImageView;
@@ -96,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                         if (dataSnapshot.exists()) {
                             Board board = dataSnapshot.getValue(Board.class);
                             if (board != null) {
-                                Picasso.get().load(board.getImageUri()).into(boardImageView);
+                                Glide.with(SettingsActivity.this).load(board.getImageUri()).into(boardImageView);
                                 boardNameData = board.getName();
                                 boardNameText.setText(board.getName());
                                 boardCreateDateText.setText(board.getDate());
@@ -190,7 +190,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
             case "user":
                 //Включаем возможность отключения
                 actionLayout.setVisibility(View.VISIBLE);
-                Picasso.get().load(R.drawable.disconnect).into(actionImage);
+                Glide.with(this).load(R.drawable.disconnect).into(actionImage);
                 actionText.setText("Отключиться от доски");
                 actionLayout.setOnClickListener(view -> {
                     DisconnectDialog dialog = new DisconnectDialog();

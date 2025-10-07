@@ -1,6 +1,5 @@
-package com.teamnexapp.teamnex.ui.home.workSpace;
+package com.teamnexapp.teamnex.ui.home.workSpace.usersActivity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;

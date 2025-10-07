@@ -20,7 +20,6 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.teamnexapp.teamnex.R;
-import com.squareup.picasso.Picasso;
 import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.AttachmentImageView;
 import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.AttachmentVideoView;
 
@@ -54,8 +53,8 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
         String fileUri = item.getFile();
         String fileType = item.getFileType();
         if (fileType.equals("png") || fileType.equals("jpg") || fileType.equals("jpeg") || fileType.equals("webp")) {
-            Picasso.get().load(fileUri).into(imageView);
-            Picasso.get().load(R.drawable.picture).into(imageType);
+            Glide.with(context).load(fileUri).into(imageView);
+            Glide.with(context).load(R.drawable.picture).into(imageType);
             //Показываем тип файла
             fileTypeTextView.setText("Фото");
             //Настраиваем открытие фотографии
@@ -70,7 +69,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
                     .setDefaultRequestOptions(new RequestOptions().frame(0).fitCenter())
                     .load(fileUri)
                     .into(imageView);
-            Picasso.get().load(R.drawable.video).into(imageType);
+            Glide.with(context).load(R.drawable.video).into(imageType);
             //Показываем тип файла
             fileTypeTextView.setText("Видео");
             //Настраиваем открытие видео

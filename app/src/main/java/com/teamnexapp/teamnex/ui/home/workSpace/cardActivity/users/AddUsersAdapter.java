@@ -13,22 +13,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class AddUsersAdapter extends ArrayAdapter<UserType> {
     ArrayList<String> data;
     AddUserDialog dialog;
+    Context context;
 
     public AddUsersAdapter(@NonNull Context context, ArrayList<UserType> users, ArrayList<String> data, AddUserDialog dialog) {
         super(context, R.layout.workspace_card_adduser_custom_item, users);
+        this.context = context;
         this.data = data;
         this.dialog = dialog;
     }
@@ -46,7 +48,7 @@ public class AddUsersAdapter extends ArrayAdapter<UserType> {
 
         //Показываем фотографию
         ImageView userImage = convertView.findViewById(R.id.cardAddUserImageView);
-        Picasso.get().load(Uri.parse(user.getPhoto())).into(userImage);
+        Glide.with(context).load(Uri.parse(user.getPhoto())).into(userImage);
 
         //Показываем имя
         TextView userName = convertView.findViewById(R.id.cardUserName);

@@ -58,7 +58,7 @@
     <string name="register_dialog_button">OK</string>
 
     <string name="profile_title">Profile</string>
-    <string name="profile_image_load">Choose</string>
+    <string name="profile_image_load">Change</string>
     <string name="profile_image_delete">Delete</string>
     <string name="profile_name">Name</string>
     <string name="profile_exit">LOG OUT</string>

@@ -28,7 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.squareup.picasso.Picasso;
 import com.teamnexapp.teamnex.LoadingDialog;
 import com.teamnexapp.teamnex.R;
 import com.google.firebase.auth.FirebaseAuth;

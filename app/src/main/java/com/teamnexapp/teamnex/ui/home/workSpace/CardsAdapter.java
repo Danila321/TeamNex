@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
 import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.CardActivity;
 import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.checkList.ItemChecklist;
@@ -28,7 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -123,7 +123,7 @@ public class CardsAdapter extends ArrayAdapter<Card> {
                         checklistLayout.setBackgroundResource(R.drawable.workspace_item_date_green_8dp);
                         checklistText.setTextColor(ContextCompat.getColor(context, R.color.white));
                         ImageView image = convertView.findViewById(R.id.cardChecklistImage);
-                        Picasso.get().load(R.drawable.checklist_white).into(image);
+                        Glide.with(context).load(R.drawable.checklist_white).into(image);
                     } else if (date != LocalDate.MAX) {
                         //Проверяем наличие даты
                         if (date.isAfter(LocalDate.now())) {

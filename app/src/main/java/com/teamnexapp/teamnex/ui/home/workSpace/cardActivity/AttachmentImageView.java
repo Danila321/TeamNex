@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
-import com.squareup.picasso.Picasso;
 
 public class AttachmentImageView extends AppCompatActivity {
 
@@ -29,6 +29,6 @@ public class AttachmentImageView extends AppCompatActivity {
         name.setText(imageName);
 
         ImageView imageView = findViewById(R.id.AttachmentViewImage);
-        Picasso.get().load(imageUri).into(imageView);
+        Glide.with(this).load(imageUri).into(imageView);
     }
 }

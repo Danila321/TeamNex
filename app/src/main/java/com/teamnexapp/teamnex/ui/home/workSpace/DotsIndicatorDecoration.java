@@ -18,7 +18,7 @@ import com.teamnexapp.teamnex.R;
 
 public class DotsIndicatorDecoration extends RecyclerView.ItemDecoration {
     private final int mIndicatorHeight = (int) (DP * 16);
-    private final float mIndicatorStrokeWidth = DP * 3;
+    private final float mIndicatorStrokeWidth = DP * 4;
     private final float mIndicatorItemLength = DP * 16;
     private final float mIndicatorItemPadding = DP * 8;
 

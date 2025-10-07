@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         boolean validate = true;
         if (name.isEmpty()) {
             nameLayout.setError(getString(R.string.register_error_name));
-            //validate = false;
+            validate = false;
         } else {
             nameLayout.setErrorEnabled(false);
         }
@@ -97,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             passwordLayout.setErrorEnabled(false);
             if (password.length() < 7) {
                 passwordLayout.setError("Минимальная длина пароля: 7");
+                validate = false;
             } else {
                 passwordLayout.setErrorEnabled(false);
             }

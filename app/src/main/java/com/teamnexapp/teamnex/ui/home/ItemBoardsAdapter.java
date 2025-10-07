@@ -18,10 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
-import com.teamnexapp.teamnex.ui.home.workSpace.SettingsActivity;
+import com.teamnexapp.teamnex.ui.home.workSpace.settingsActivity.SettingsActivity;
 import com.teamnexapp.teamnex.ui.home.workSpace.WorkSpaceActivity;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,7 +59,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         ImageButton boardSettings = convertView.findViewById(R.id.boardSettingsButton);
 
         if (board != null) {
-            Picasso.get().load(board.getImageUri()).into(boardImage);
+            Glide.with(context).load(board.getImageUri()).into(boardImage);
             nameTextView.setText(board.getName());
             dateTextView.setText(getPassedTime(board.getEditDate()));
         }

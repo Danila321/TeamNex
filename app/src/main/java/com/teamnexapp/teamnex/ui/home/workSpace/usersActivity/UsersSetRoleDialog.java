@@ -1,4 +1,4 @@
-package com.teamnexapp.teamnex.ui.home.workSpace;
+package com.teamnexapp.teamnex.ui.home.workSpace.usersActivity;
 
 import android.app.Dialog;
 import android.os.Bundle;

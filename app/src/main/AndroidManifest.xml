@@ -21,7 +21,7 @@
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.home.workSpace.UsersActivity"
+            android:name=".ui.home.workSpace.usersActivity.UsersActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
@@ -37,7 +37,7 @@
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ui.home.workSpace.SettingsActivity"
+            android:name=".ui.home.workSpace.settingsActivity.SettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
@@ -49,15 +49,15 @@
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".UpdateProfile"
+            android:name=".profile.UpdateNameProfile"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".UploadProfileImageActivity"
+            android:name=".profile.imageSettings.ProfileImageSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.TeamDraft.NoActionBar" />
         <activity

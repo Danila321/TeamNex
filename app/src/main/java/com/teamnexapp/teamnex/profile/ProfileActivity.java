@@ -1,13 +1,17 @@
-package com.teamnexapp.teamnex;
+package com.teamnexapp.teamnex.profile;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,15 +21,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
+import com.teamnexapp.teamnex.LoginActivity;
+import com.teamnexapp.teamnex.R;
+import com.teamnexapp.teamnex.profile.imageSettings.ProfileImageSettingsActivity;
 
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
@@ -38,16 +44,24 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
         ImageButton backButton = findViewById(R.id.backButton);
         imageView = findViewById(R.id.ProfileImageView);
-        Button imageChoose = findViewById(R.id.ImageAccountAction);
-        Button imageDelete = findViewById(R.id.ImageAccountDelete);
-        ImageButton editProfile = findViewById(R.id.ProfileEditButton);
+        Button imageSettings = findViewById(R.id.imageSettingsButton);
         TextView textViewEmail = findViewById(R.id.ProfileTextViewEmail);
+
         TextView textViewName = findViewById(R.id.ProfileTextViewName);
+        TextView textViewPrivacyPolicy = findViewById(R.id.ProfilePrivacyPolicyText);
+        TextView textViewSiteLink = findViewById(R.id.ProfileSiteText);
+
         TextView textViewLogout = findViewById(R.id.ProfileLogout);
         TextView textViewDeleteAccount = findViewById(R.id.ProfileDelete);
-        ProgressBar progressBar = findViewById(R.id.ProfileProgressBar);
+        //ProgressBar progressBar = findViewById(R.id.ProfileProgressBar);
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
         //Настраиваем кнопки выхода
         backButton.setOnClickListener(v -> {
@@ -73,11 +87,11 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(ProfileActivity.this, "Произошла ошибка!", Toast.LENGTH_SHORT).show();
         } else {
             //Забираем данные пользователя из БД и показываем их
-            progressBar.setVisibility(View.VISIBLE);
-            textViewName.setText(firebaseUser.getDisplayName());
+            //progressBar.setVisibility(View.VISIBLE);
+            Glide.with(this).load(firebaseUser.getPhotoUrl()).into(imageView);
             textViewEmail.setText(firebaseUser.getEmail());
-            Picasso.get().load(firebaseUser.getPhotoUrl()).into(imageView);
-            progressBar.setVisibility(View.INVISIBLE);
+            textViewName.setText(firebaseUser.getDisplayName());
+            //progressBar.setVisibility(View.INVISIBLE);
 
             ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -86,70 +100,33 @@ public class ProfileActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             if (data != null) {
                                 if (data.getBooleanExtra("imageChanged", false)) {
-                                    Picasso.get().load(firebaseUser.getPhotoUrl()).into(imageView);
+                                    Glide.with(this).load(firebaseUser.getPhotoUrl()).into(imageView);
                                     dataChanged = true;
                                 }
-                                if (data.getBooleanExtra("dataChanged", false)) {
-                                    textViewName.setText(firebaseUser.getDisplayName());
+                                /*if (data.getBooleanExtra("dataChanged", false)) {
                                     dataChanged = true;
-                                }
+                                }*/
                             }
                         }
                     });
 
-            //Настраиваем кнопки для работы с изображением
-            imageChoose.setOnClickListener(v -> {
-                Intent intent = new Intent(ProfileActivity.this, UploadProfileImageActivity.class);
+            //Настраиваем кнопку для работы с изображением
+            imageSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(ProfileActivity.this, ProfileImageSettingsActivity.class);
                 activityResultLauncher.launch(intent);
             });
-            imageDelete.setOnClickListener(v -> showDeleteImageDialog());
 
-            //Настраиваем кнопку редактирования данных профиля
-            editProfile.setOnClickListener(v -> {
-                Intent intent = new Intent(ProfileActivity.this, UpdateProfile.class);
-                activityResultLauncher.launch(intent);
-            });
+
+            textViewPrivacyPolicy.setPaintFlags(textViewPrivacyPolicy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            textViewSiteLink.setPaintFlags(textViewSiteLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
             //Настраиваем кнопку выхода из аккаунта
             textViewLogout.setOnClickListener(v -> showSignOutDialog());
 
             //Настраиваем кнопку удаления аккаунта
-            textViewDeleteAccount.setOnClickListener(v -> {
-                //TODO: Реализовать удаление аккаунта
-            });
+            textViewDeleteAccount.setOnClickListener(view -> showDeleteAccountDialog());
         }
-    }
-
-    void showDeleteImageDialog() {
-        new MaterialAlertDialogBuilder(ProfileActivity.this)
-                .setTitle(R.string.profile_delete_dialog_title)
-                .setMessage(R.string.profile_delete_dialog_text)
-                .setNegativeButton("Нет", (dialog, which) -> dialog.cancel())
-                .setPositiveButton("Да", (dialog, which) -> {
-                    dialog.dismiss();
-                    //Показываем загрузочный диалог
-                    LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
-                    loadingDialog.startDialog();
-                    //Ставим дефолтное изображение пользователя
-                    Uri uri = Uri.parse("android.resource://com.teamnexapp.teamnex/" + R.drawable.user);
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
-                    StorageReference fileReference = storageReference.child(authProfile.getCurrentUser().getUid());
-                    fileReference.putFile(uri).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
-                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(uri1).build();
-                        firebaseUser.updateProfile(profileChangeRequest).addOnSuccessListener(unused -> {
-                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("users").child(authProfile.getCurrentUser().getUid()).child("photo").setValue(uri1.toString());
-
-                            Picasso.get().load(uri1).into(imageView);
-
-                            dataChanged = true;
-
-                            loadingDialog.dismissDialog();
-                            Toast.makeText(ProfileActivity.this, R.string.profile_delete_dialog_success, Toast.LENGTH_SHORT).show();
-                        });
-                    })).addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                })
-                .show();
     }
 
     void showSignOutDialog() {
@@ -166,5 +143,9 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                 })
                 .show();
+    }
+
+    void showDeleteAccountDialog() {
+        //TODO: Реализовать удаление аккаунта
     }
 }

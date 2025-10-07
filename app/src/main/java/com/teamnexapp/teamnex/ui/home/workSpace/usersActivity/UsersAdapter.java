@@ -1,4 +1,4 @@
-package com.teamnexapp.teamnex.ui.home.workSpace;
+package com.teamnexapp.teamnex.ui.home.workSpace.usersActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,10 +16,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
 import com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.users.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -51,7 +51,7 @@ public class UsersAdapter extends ArrayAdapter<UserRole> {
         String role = userRole.getRole();
 
         ImageView image = convertView.findViewById(R.id.UsersActivityImage);
-        Picasso.get().load(user.getPhoto()).into(image);
+        Glide.with(context).load(user.getPhoto()).into(image);
 
         TextView name = convertView.findViewById(R.id.UsersActivityName);
         name.setText(user.getName());

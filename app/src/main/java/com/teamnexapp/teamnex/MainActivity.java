@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.teamnexapp.teamnex.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
+import com.teamnexapp.teamnex.profile.ProfileActivity;
 
 import java.util.Locale;
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         Button profileSettings = view.findViewById(R.id.ProfileSettings);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
+            Glide.with(this).load(user.getPhotoUrl()).into(profileImageView);
             name.setText(user.getDisplayName());
         } else {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null) {
                             if (data.getBooleanExtra("imageChanged", false)) {
-                                Picasso.get().load(user.getPhotoUrl()).into(profileImageView);
+                                Glide.with(this).load(user.getPhotoUrl()).into(profileImageView);
                                 name.setText(user.getDisplayName());
                             }
                         }

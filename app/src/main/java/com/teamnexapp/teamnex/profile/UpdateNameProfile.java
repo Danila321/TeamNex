@@ -1,4 +1,4 @@
-package com.teamnexapp.teamnex;
+package com.teamnexapp.teamnex.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +24,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.teamnexapp.teamnex.LoadingDialog;
+import com.teamnexapp.teamnex.R;
 
-public class UpdateProfile extends AppCompatActivity {
+public class UpdateNameProfile extends AppCompatActivity {
     private TextInputEditText editTextName;
     private TextInputLayout nameLayout;
     Button buttonUpdate;
@@ -93,7 +94,7 @@ public class UpdateProfile extends AppCompatActivity {
                 usersRef.setValue(name);
 
                 loadingDialog.dismissDialog();
-                Toast.makeText(UpdateProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateNameProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
 
                 Intent result = new Intent();
                 result.putExtra("dataChanged", true);

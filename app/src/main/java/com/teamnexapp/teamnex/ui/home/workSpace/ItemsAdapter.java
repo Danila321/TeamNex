@@ -32,15 +32,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     private final ArrayList<Item> items;
     private final Context context;
     private final String boardId;
+    private final int listViewHeight;
     FragmentManager fragmentManager;
     boolean isAdmin;
 
-    public ItemsAdapter(Context context, ArrayList<Item> items, String boardId, FragmentManager fragmentManager, boolean isAdmin) {
+    public ItemsAdapter(Context context, ArrayList<Item> items, String boardId, FragmentManager fragmentManager, boolean isAdmin, int listViewHeight) {
         this.context = context;
         this.items = items;
         this.boardId = boardId;
         this.fragmentManager = fragmentManager;
         this.isAdmin = isAdmin;
+        this.listViewHeight = listViewHeight;
     }
 
     @NonNull
@@ -69,7 +71,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             });
 
             //Кнопка изменения названия
-
             holder.edit.setOnClickListener(v -> {
                 EditItemDialog dialog = EditItemDialog.newInstance(boardId, item.getId(), item.getName());
                 dialog.show(fragmentManager, "editItemName");
@@ -127,7 +128,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     @Override
                     public void onGlobalLayout() {
                         list.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
                         int height = 0;
                         for (int i = 0; i < adapter.getCount(); i++) {
                             View itemView = adapter.getView(i, null, list);
@@ -136,6 +136,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
                             );
                             height += itemView.getMeasuredHeight();
+                        }
+                        //Коэффициент ограничения
+                        int heightRestriction = Math.round(context.getResources().getDisplayMetrics().density * 170);
+                        if (height > listViewHeight - heightRestriction) {
+                            height = listViewHeight - heightRestriction;
                         }
                         ViewGroup.LayoutParams params = list.getLayoutParams();
                         params.height = height;

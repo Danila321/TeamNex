@@ -1,5 +1,6 @@
 package com.teamnexapp.teamnex.ui.home.workSpace.cardActivity.users;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.teamnexapp.teamnex.R;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class CardUsersAdapter extends RecyclerView.Adapter<CardUsersAdapter.ViewHolder> {
     private final ArrayList<User> users;
+    private Context context;
 
-    public CardUsersAdapter(ArrayList<User> data) {
+    public CardUsersAdapter(ArrayList<User> data, Context context) {
+        this.context = context;
         users = data;
     }
 
@@ -33,7 +35,7 @@ public class CardUsersAdapter extends RecyclerView.Adapter<CardUsersAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = users.get(position);
         holder.name.setText(user.getName());
-        Picasso.get().load(Uri.parse(user.getPhoto())).into(holder.image);
+        Glide.with(context).load(Uri.parse(user.getPhoto())).into(holder.image);
     }
 
     @Override

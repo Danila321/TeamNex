@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.teamnexapp.teamnex.ui.home.workSpace.settingsActivity.SettingsActivity;
+import com.teamnexapp.teamnex.ui.home.workSpace.usersActivity.UsersActivity;
 
 import java.util.ArrayList;
 
@@ -70,30 +73,39 @@ public class WorkSpaceActivity extends AppCompatActivity {
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(list);
 
-        Button add = findViewById(R.id.buttonAddItem);
-        switch (role) {
-            case "owner":
-            case "admin":
-                //Кнопка добавления пункта
-                add.setOnClickListener(view -> {
-                    AddItemDialog dialog = AddItemDialog.newInstance(boardIdData);
-                    dialog.show(getSupportFragmentManager(), "addItem");
-                });
-                //Настраиваем адаптер и listView
-                adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), true);
-                break;
-            //Настраиваем адаптер и listView
-            case "user":
-                //Настраиваем адаптер и listView
-                adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), false);
-                //Убираем кнопку добавления
-                add.setVisibility(View.GONE);
-                break;
-        }
-        list.setAdapter(adapter);
+        list.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                list.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-        //Получаем данные из БД
-        updateItems();
+                //Получаем высоту горизонтального списка для ограничения внутреннего списка
+                int listViewHeight = list.getHeight();
+
+                Button add = findViewById(R.id.buttonAddItem);
+                switch (role) {
+                    case "owner":
+                    case "admin":
+                        //Кнопка добавления пункта
+                        add.setOnClickListener(view -> {
+                            AddItemDialog dialog = AddItemDialog.newInstance(boardIdData);
+                            dialog.show(getSupportFragmentManager(), "addItem");
+                        });
+                        //Настраиваем адаптер и listView
+                        adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), true, listViewHeight);
+                        break;
+                    case "user":
+                        //Настраиваем адаптер и listView
+                        adapter = new ItemsAdapter(WorkSpaceActivity.this, items, boardIdData, getSupportFragmentManager(), false, listViewHeight);
+                        //Убираем кнопку добавления
+                        add.setVisibility(View.GONE);
+                        break;
+                }
+                list.setAdapter(adapter);
+
+                //Получаем данные из БД
+                updateItems();
+            }
+        });
     }
 
     public void updateItems() {

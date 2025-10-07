@@ -78,7 +78,7 @@ public class CardActivity extends AppCompatActivity {
         RecyclerView horizontalRecyclerView = findViewById(R.id.horizontalRecyclerView);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         horizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
-        adapter = new CardUsersAdapter(users);
+        adapter = new CardUsersAdapter(users, this);
         horizontalRecyclerView.setAdapter(adapter);
 
         //Настраиваем listView чеклиста

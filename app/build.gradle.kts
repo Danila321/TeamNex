@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.teamnexapp.teamnex"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.teamnexapp.teamnex"
@@ -37,25 +37,25 @@ android {
 
 dependencies {
 
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0")
-    implementation("androidx.navigation:navigation-fragment:2.9.0")
-    implementation("androidx.navigation:navigation-ui:2.9.0")
-    implementation("com.squareup.picasso:picasso:2.8")
-    implementation("com.github.bumptech.glide:glide:4.14.2")
-    implementation("com.google.zxing:core:3.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
+    implementation("androidx.navigation:navigation-fragment:2.9.5")
+    implementation("androidx.navigation:navigation-ui:2.9.5")
+    implementation("com.github.bumptech.glide:glide:5.0.5")
+    implementation("com.google.zxing:core:3.5.3")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.github.yuriy-budiyev:code-scanner:2.3.0")
-    implementation("com.yandex.android:mobileads:7.12.3")
+    implementation("com.yandex.android:mobileads:7.16.0")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
     implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
-    implementation("com.google.firebase:firebase-storage:21.0.2")
-    implementation("com.google.firebase:firebase-database:21.0.0")
-    implementation("androidx.activity:activity:1.10.1")
+    implementation("com.google.firebase:firebase-storage:22.0.1")
+    implementation("com.google.firebase:firebase-database:22.0.1")
+    implementation("androidx.activity:activity:1.11.0")
+    implementation("androidx.gridlayout:gridlayout:1.1.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }

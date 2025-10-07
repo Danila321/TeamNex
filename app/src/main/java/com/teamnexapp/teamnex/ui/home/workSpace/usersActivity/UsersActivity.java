@@ -1,4 +1,4 @@
-package com.teamnexapp.teamnex.ui.home.workSpace;
+package com.teamnexapp.teamnex.ui.home.workSpace.usersActivity;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
