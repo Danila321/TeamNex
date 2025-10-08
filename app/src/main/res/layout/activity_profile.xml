@@ -7,7 +7,7 @@
     tools:context=".profile.ProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/main.appbar"
+        android:id="@+id/ProfileAppBar"
         android:layout_width="match_parent"
         android:layout_height="310dp"
         android:fitsSystemWindows="true"
@@ -15,7 +15,7 @@
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/main.collapsing"
+            android:id="@+id/ProfileCollapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="310dp"
             android:fitsSystemWindows="true"

@@ -5,14 +5,20 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -58,10 +64,20 @@ public class ProfileActivity extends AppCompatActivity {
         TextView textViewDeleteAccount = findViewById(R.id.ProfileDelete);
         //ProgressBar progressBar = findViewById(R.id.ProfileProgressBar);
 
+        CollapsingToolbarLayout ctl = findViewById(R.id.ProfileCollapsingToolbar);
+        ctl.setScrimAnimationDuration(0);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        AppBarLayout appBarLayout = findViewById(R.id.ProfileAppBar);
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
+            if (verticalOffset < -602){
+                getWindow().setStatusBarColor(Color.parseColor("#EAEEF2"));
+            } else {
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+            }
+        });
 
         //Настраиваем кнопки выхода
         backButton.setOnClickListener(v -> {
