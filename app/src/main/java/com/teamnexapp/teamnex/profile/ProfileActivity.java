@@ -3,6 +3,7 @@ package com.teamnexapp.teamnex.profile;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -19,6 +20,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView imageView;
     boolean dataChanged = false;
 
+    boolean flag = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,18 +68,32 @@ public class ProfileActivity extends AppCompatActivity {
         TextView textViewDeleteAccount = findViewById(R.id.ProfileDelete);
         //ProgressBar progressBar = findViewById(R.id.ProfileProgressBar);
 
-        CollapsingToolbarLayout ctl = findViewById(R.id.ProfileCollapsingToolbar);
-        ctl.setScrimAnimationDuration(0);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        //Настраиваем изменение цвета status bar
+        int startColor = Color.parseColor("#F6FAFE");
+        int endColor = Color.parseColor("#EAEEF2");
+        ValueAnimator va1 = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+        va1.setDuration(130);
+        va1.addUpdateListener(animation -> getWindow().setStatusBarColor((int) va1.getAnimatedValue()));
+        ValueAnimator va2 = ValueAnimator.ofObject(new ArgbEvaluator(), endColor, startColor);
+        va2.setDuration(130);
+        va2.addUpdateListener(animation -> getWindow().setStatusBarColor((int) va2.getAnimatedValue()));
         AppBarLayout appBarLayout = findViewById(R.id.ProfileAppBar);
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
             if (verticalOffset < -602){
-                getWindow().setStatusBarColor(Color.parseColor("#EAEEF2"));
+                if (flag){
+                    flag = false;
+                    va1.start();
+                }
             } else {
-                getWindow().setStatusBarColor(Color.TRANSPARENT);
+                if (!flag){
+                    flag = true;
+                    va2.start();
+                }
             }
         });
 
