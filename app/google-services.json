@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:229840086127:android:ac3ae079e0d9bf5009599a",
         "android_client_info": {
-          "package_name": "com.teamnexapp.teamnex"
+          "package_name": "com.myappteam.projectapp"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "229840086127-llc6bfib763s8m58jlagc9gfjjtf733l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teamnexapp.teamnex",
+            "package_name": "com.myappteam.projectapp",
             "certificate_hash": "0160d4399cb4db53a2f1d03dcf648892676443f1"
           }
         },

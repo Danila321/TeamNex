@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.teamnexapp.teamnex"
+    namespace = "com.myappteam.projectapp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.teamnexapp.teamnex"
+        applicationId = "com.myappteam.projectapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 7

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.teamnexapp.teamnex.ui.home.HomeFragment"
+        android:name="com.myappteam.projectapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.teamnexapp.teamnex.ui.settings.SettingsFragment"
+        android:name="com.myappteam.projectapp.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/nav_feedback"
-        android:name="com.teamnexapp.teamnex.ui.feedback.FeedbackFragment"
+        android:name="com.myappteam.projectapp.ui.feedback.FeedbackFragment"
         android:label="@string/menu_feedback"
         tools:layout="@layout/fragment_feedback" />
 </navigation>
