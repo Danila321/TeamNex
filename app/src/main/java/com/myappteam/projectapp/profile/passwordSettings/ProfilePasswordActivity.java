@@ -40,7 +40,7 @@ public class ProfilePasswordActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.profilePasswordConstraintLayout, new ProfilePasswordSettingsFirst())
+                .replace(R.id.profileConstaraintLayout, new ProfilePasswordSettingsFirst())
                 .commit();
 
         /*
@@ -56,7 +56,7 @@ public class ProfilePasswordActivity extends AppCompatActivity {
 
         buttonUpdate = findViewById(R.id.btn);
 
-        backButton.setOnClickListener(view -> finish());
+
 
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
