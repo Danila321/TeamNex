@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
-        editTextPasswordAgain = findViewById(R.id.password_again);
+        editTextPasswordAgain = findViewById(R.id.passwordAgain);
         buttonRegister = findViewById(R.id.btn);
         nameLayout = findViewById(R.id.nameLayout);
         emailLayout = findViewById(R.id.emailLayout);

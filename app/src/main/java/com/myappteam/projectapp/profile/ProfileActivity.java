@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.myappteam.projectapp.LoginActivity;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.profile.imageSettings.ProfileImageSettingsActivity;
+import com.myappteam.projectapp.profile.passwordSettings.ProfilePasswordActivity;
 
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth authProfile;
@@ -150,6 +151,12 @@ public class ProfileActivity extends AppCompatActivity {
             editNameButton.setOnClickListener(v -> {
                 Intent intent = new Intent(ProfileActivity.this, UpdateNameProfile.class);
                 activityResultLauncher.launch(intent);
+            });
+
+            //Кнопка изменения пароля
+            editPasswordButton.setOnClickListener(v -> {
+                Intent intent = new Intent(ProfileActivity.this, ProfilePasswordActivity.class);
+                startActivity(intent);
             });
 
 
