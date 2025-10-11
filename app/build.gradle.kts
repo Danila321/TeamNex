@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId = "com.myappteam.projectapp"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 7
-        versionName = "1.0.2.3"
+        targetSdk = 35
+        versionCode = 11
+        versionName = "1.0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

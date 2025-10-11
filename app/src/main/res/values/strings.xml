@@ -54,7 +54,7 @@
     <string name="register_action_email">Email введен некорректно</string>
     <string name="register_action_email_already">Пользователь с таким email уже зарегестрирован</string>
     <string name="register_dialog_title">Вы успешно зарегистрировались!</string>
-    <string name="register_dialog_text">На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке</string>
+    <string name="register_dialog_text">На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке. Проверяйте папку СПАМ.</string>
     <string name="register_dialog_button">Хорошо</string>
 
     <string name="profile_title">Профиль</string>

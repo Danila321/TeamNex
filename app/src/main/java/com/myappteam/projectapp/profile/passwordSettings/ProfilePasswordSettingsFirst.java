@@ -87,12 +87,9 @@ public class ProfilePasswordSettingsFirst extends Fragment {
         }
         LoadingDialog loadingDialog = new LoadingDialog(getActivity(), "Проверяем пароль...");
         loadingDialog.startDialog();
-        user.reauthenticate(EmailAuthProvider.getCredential(user.getEmail(), password)).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                loadingDialog.dismissDialog();
-                onCheckPassword.onChecked(task.isSuccessful());
-            }
+        user.reauthenticate(EmailAuthProvider.getCredential(user.getEmail(), password)).addOnCompleteListener(task -> {
+            loadingDialog.dismissDialog();
+            onCheckPassword.onChecked(task.isSuccessful());
         });
     }
 

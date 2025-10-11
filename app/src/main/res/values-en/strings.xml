@@ -54,7 +54,7 @@
     <string name="register_action_email">The email was entered incorrectly</string>
     <string name="register_action_email_already">The user with this email has already been registered</string>
     <string name="register_dialog_title">You have successfully registered!</string>
-    <string name="register_dialog_text">An email was sent to the specified email address with a confirmation link. To log in to the application, click on this link</string>
+    <string name="register_dialog_text">An email was sent to the specified email address with a confirmation link. To log in to the application, click on this link. Check SPAM folder</string>
     <string name="register_dialog_button">OK</string>
 
     <string name="profile_title">Profile</string>

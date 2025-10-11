@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -162,7 +163,15 @@ public class ProfileActivity extends AppCompatActivity {
 
             //Блок ссылок
             textViewPrivacyPolicy.setPaintFlags(textViewPrivacyPolicy.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            textViewPrivacyPolicy.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://teamnex.tilda.ws/privacy_policy"));
+                v.getContext().startActivity(intent);
+            });
             textViewSiteLink.setPaintFlags(textViewSiteLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            textViewSiteLink.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://teamnex.tilda.ws/"));
+                v.getContext().startActivity(intent);
+            });
 
 
             //Настраиваем кнопку выхода из аккаунта
@@ -190,6 +199,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     void showDeleteAccountDialog() {
-        //TODO: Реализовать удаление аккаунта
+        new MaterialAlertDialogBuilder(ProfileActivity.this)
+                .setTitle("Удаление аккаунта")
+                .setMessage("В разработке...")
+                .setPositiveButton("Ок", (dialog, which) -> dialog.cancel())
+                .show();
     }
 }

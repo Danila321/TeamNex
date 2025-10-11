@@ -359,6 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:text="Политика конфидециальности"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -368,6 +369,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="18dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:text="Информационный сайт TeamNex"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/ProfilePrivacyPolicyText" />
