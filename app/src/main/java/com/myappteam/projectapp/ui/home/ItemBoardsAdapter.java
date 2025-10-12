@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.boards_custom_item, null);
         }
         Board board = getItem(position);
-        Log.e("TAG", board.getId());
 
         ConstraintLayout boardItem = convertView.findViewById(R.id.boardItem);
         ImageView boardImage = convertView.findViewById(R.id.boardImageView);
@@ -155,22 +153,27 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
 
             FilterResults results = new FilterResults();
 
-            final ArrayList<Board> list = data;
+            if (filterString.isEmpty()) {
+                results.values = data;
+                results.count = data.size();
+            } else {
+                final ArrayList<Board> list = data;
 
-            int count = list.size();
-            final ArrayList<Board> result = new ArrayList<>(count);
+                int count = list.size();
+                final ArrayList<Board> result = new ArrayList<>(count);
 
-            String filterableString;
+                String filterableString;
 
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i).getName();
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    result.add(list.get(i));
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i).getName();
+                    if (filterableString.toLowerCase().contains(filterString)) {
+                        result.add(list.get(i));
+                    }
                 }
-            }
 
-            results.values = result;
-            results.count = result.size();
+                results.values = result;
+                results.count = result.size();
+            }
 
             return results;
         }

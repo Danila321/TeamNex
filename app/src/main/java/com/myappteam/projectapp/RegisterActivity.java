@@ -136,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
                         firebaseUser.updateProfile(profileChangeRequest);
 
                         // Загружаем дефолтное изображения пользователя в Storage
-                        Uri uri = Uri.parse("android.resource://com.teamnexapp.teamnex/" + R.drawable.user);
+                        Uri uri = Uri.parse("android.resource://com.myappteam.projectapp/" + R.drawable.user);
                         StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
                         StorageReference fileReference = storageReference.child(mAuth.getCurrentUser().getUid());
                         fileReference.putFile(uri).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {

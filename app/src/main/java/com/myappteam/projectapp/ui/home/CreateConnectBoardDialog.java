@@ -188,8 +188,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
         FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("code").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("sdfsdgsfg", "GETTTTTTTTTTTTTTTT");
-
                 //Получаем коды всех досок
                 ArrayList<String> codes = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -203,10 +201,8 @@ public class CreateConnectBoardDialog extends DialogFragment {
                 Uri uri = Uri.parse("android.resource://com.myappteam.projectapp/" + R.drawable.background);
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference("boards").child(ID).child(ID + "_board_image");
                 storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
-                    Log.i("IMAAAAA", "GEEEEEEEEEE");
                     // Получаем URL загруженного изображения
                     storageReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
-                        Log.i("LOFFFF", "DDDDDDDDDDDD");
                         //Создаем уникальный код доски
                         int boardCode;
                         do {

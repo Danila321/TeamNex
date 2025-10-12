@@ -102,7 +102,7 @@ public class ProfileImageSettingsActivity extends AppCompatActivity implements P
                     LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
                     loadingDialog.startDialog();
                     //Ставим дефолтное изображение пользователя
-                    Uri uri = Uri.parse("android.resource://com.teamnexapp.teamnex/" + R.drawable.user);
+                    Uri uri = Uri.parse("android.resource://com.myappteam.projectapp/" + R.drawable.user);
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
                     StorageReference fileReference = storageReference.child(authAccount.getCurrentUser().getUid());
                     fileReference.putFile(uri).addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri1 -> {
