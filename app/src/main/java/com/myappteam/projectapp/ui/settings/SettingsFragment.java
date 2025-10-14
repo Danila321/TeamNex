@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
     private BannerAdView loadBannerAd(@NonNull final BannerAdSize adSize) {
         final BannerAdView bannerAd = binding.adContainerViewSettings;
         bannerAd.setAdSize(adSize);
-        bannerAd.setAdUnitId("R-M-11467421-1");
+        bannerAd.setAdUnitId("R-M-17485023-1");
         bannerAd.setBannerAdEventListener(new BannerAdEventListener() {
             @Override
             public void onAdLoaded() {

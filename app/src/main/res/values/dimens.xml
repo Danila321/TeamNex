@@ -13,4 +13,23 @@
     <dimen name="dialog_role_width">390dp</dimen>
     <dimen name="radius">5dp</dimen>
     <dimen name="dots_height">10dp</dimen>
+
+
+
+    <dimen name="item_padding">16dp</dimen>
+    <dimen name="navigation_item_text_padding">24dp</dimen>
+    <dimen name="list_item_padding">12dp</dimen>
+    <dimen name="list_item_text_padding">16dp</dimen>
+    <dimen name="navigation_item_text_size">20sp</dimen>
+
+    <dimen name="native_offset_small">4dp</dimen>
+    <dimen name="native_offset_medium">8dp</dimen>
+    <dimen name="native_offset_large">16dp</dimen>
+
+    <dimen name="native_favicon_height">16dp</dimen>
+    <dimen name="native_favicon_width">16dp</dimen>
+
+    <dimen name="native_asset_text_size_small">11sp</dimen>
+    <dimen name="native_asset_text_size_medium">13sp</dimen>
+    <dimen name="native_asset_text_size_large">15sp</dimen>
 </resources>

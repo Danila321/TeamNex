@@ -85,6 +85,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="@string/yandex_mobileads_age_restricted_user"
+            android:value="true" />
     </application>
 
 </manifest>

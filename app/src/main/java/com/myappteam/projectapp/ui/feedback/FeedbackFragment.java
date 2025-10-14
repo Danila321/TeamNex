@@ -80,7 +80,7 @@ public class FeedbackFragment extends Fragment {
     private BannerAdView loadBannerAd(@NonNull final BannerAdSize adSize) {
         final BannerAdView bannerAd = binding.adContainerViewFeedback;
         bannerAd.setAdSize(adSize);
-        bannerAd.setAdUnitId("R-M-11467421-3");
+        bannerAd.setAdUnitId("R-M-17485023-2");
         bannerAd.setBannerAdEventListener(new BannerAdEventListener() {
             @Override
             public void onAdLoaded() {
