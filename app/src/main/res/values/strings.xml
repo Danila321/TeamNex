@@ -141,10 +141,6 @@
     <string name="gdpr_dialog_message">This application contains Yandex advertising code that collects data in order to show you relevant ads that better match your interests. To learn more about how and why Yandex processes your data, see the Privacy Policy.</string>
     <string name="gdpr_enabled">User consent enabled</string>
     <string name="gdpr_disabled">User consent disabled</string>
-    <string name="coppa_dialog_title">This is a sample of COPPA dialog</string>
-    <string name="coppa_dialog_message">This application contains Yandex advertising code that may show ads that are not suitable for children. Please enter your age so we can make sure the ads shown are appropriate.</string>
-    <string name="coppa_enabled">User is age restricted</string>
-    <string name="coppa_disabled">User is not age restricted</string>
     <string name="location_dialog_title">This is a sample of location dialog</string>
     <string name="location_dialog_message">This application contains Yandex advertising code that gets your approximate location in order to show you relevant ads that better match your region.</string>
     <string name="location_enabled">Location consent enabled</string>
@@ -153,7 +149,5 @@
     <string name="accept">Accept</string>
     <string name="about">About</string>
     <string name="decline">Decline</string>
-    <string name="coppa_underage">I am underage</string>
-    <string name="coppa__not_underage">I am not underage</string>
     <string name="age">Age</string>
 </resources>

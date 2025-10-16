@@ -86,8 +86,8 @@
             </intent-filter>
         </activity>
         <meta-data
-            android:name="@string/yandex_mobileads_age_restricted_user"
-            android:value="true" />
+            android:name="com.yandex.mobile.ads.AUTOMATIC_SDK_INITIALIZATION"
+            android:value="false" />
     </application>
 
 </manifest>

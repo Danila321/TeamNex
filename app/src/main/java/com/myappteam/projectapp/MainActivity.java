@@ -28,6 +28,7 @@ import com.myappteam.projectapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.myappteam.projectapp.profile.ProfileActivity;
+import com.yandex.mobile.ads.common.MobileAds;
 
 import java.util.Locale;
 
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
+
+        //Инициализируем Яндекс рекламу
+        MobileAds.setUserConsent(false);
+        MobileAds.initialize(this, () -> {
+            // now you can use ads
+        });
 
         com.myappteam.projectapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

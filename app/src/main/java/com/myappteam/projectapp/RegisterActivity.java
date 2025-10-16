@@ -1,11 +1,19 @@
 package com.myappteam.projectapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +21,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -37,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout nameLayout, emailLayout, passwordLayout, passwordAgainLayout;
     private TextInputEditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
     Button buttonRegister;
+    TextView privacyPolicyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailLayout = findViewById(R.id.emailLayout);
         passwordLayout = findViewById(R.id.passwordLayout);
         passwordAgainLayout = findViewById(R.id.passwordAgainLayout);
+        privacyPolicyText = findViewById(R.id.agreePrivacyPolicyText);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -74,6 +85,34 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(email, password, name);
             }
         });
+
+        //Настраиваем ссылку на Политику конфиденциальности
+        String fullText = "Регистрируясь, вы соглашаетесь с Политикой конфиденциальности TeamNex";
+        String linkText = "Политикой конфиденциальности";
+
+        int start = fullText.indexOf(linkText);
+        int end = start + linkText.length();
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                // открываем браузер с твоей ссылкой
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://teamnex.tilda.ws/privacy_policy"));
+                widget.getContext().startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+            }
+        };
+
+        SpannableString spannable = new SpannableString(fullText);
+        spannable.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        privacyPolicyText.setText(spannable);
+        privacyPolicyText.setMovementMethod(LinkMovementMethod.getInstance());
+        privacyPolicyText.setHighlightColor(Color.TRANSPARENT);
     }
 
     private boolean validateInputs(String name, String email, String password, String passwordAgain) {
