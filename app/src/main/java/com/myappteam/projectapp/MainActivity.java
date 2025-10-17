@@ -3,8 +3,6 @@ package com.myappteam.projectapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +20,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.myappteam.projectapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,21 +29,12 @@ import com.yandex.mobile.ads.common.MobileAds;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Устанавливаем язык приложения
-        String lang = getSharedPreferences("Settings", Context.MODE_PRIVATE).getString("language", "ru");
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration config = new Configuration(resources.getConfiguration());
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
 
         //Устанавливаем тему приложения
         if (getSharedPreferences("Settings", Context.MODE_PRIVATE).getBoolean("theme", true)) {

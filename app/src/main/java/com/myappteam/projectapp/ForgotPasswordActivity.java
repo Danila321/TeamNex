@@ -1,7 +1,5 @@
 package com.myappteam.projectapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +15,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends BaseActivity {
     private TextInputLayout emailLayout;
     private TextInputEditText editTextEmail;
     Button buttonReset;

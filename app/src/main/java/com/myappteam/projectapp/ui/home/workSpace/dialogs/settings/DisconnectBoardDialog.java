@@ -16,7 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.myappteam.projectapp.R;
 
-public class DisconnectDialog extends DialogFragment {
+public class DisconnectBoardDialog extends DialogFragment {
     private OnChangeBoard onChangeBoard;
 
     @Override

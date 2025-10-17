@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.myappteam.projectapp.R;
 
-public class DeleteDialog extends DialogFragment {
+public class DeleteBoardDialog extends DialogFragment {
     private String titleText, descriptionText;
     private OnChangeBoard onChangeBoard;
 
@@ -27,8 +27,8 @@ public class DeleteDialog extends DialogFragment {
         onChangeBoard = (OnChangeBoard) context;
     }
 
-    public static DeleteDialog newInstance(String titleText, String descriptionText) {
-        DeleteDialog dialog = new DeleteDialog();
+    public static DeleteBoardDialog newInstance(String titleText, String descriptionText) {
+        DeleteBoardDialog dialog = new DeleteBoardDialog();
         Bundle args = new Bundle();
         args.putString("titleText", titleText);
         args.putString("descriptionText", descriptionText);

@@ -1,7 +1,6 @@
 package com.myappteam.projectapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
@@ -41,7 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private TextInputLayout nameLayout, emailLayout, passwordLayout, passwordAgainLayout;
     private TextInputEditText editTextName, editTextEmail, editTextPassword, editTextPasswordAgain;
@@ -87,8 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         //Настраиваем ссылку на Политику конфиденциальности
-        String fullText = "Регистрируясь, вы соглашаетесь с Политикой конфиденциальности TeamNex";
-        String linkText = "Политикой конфиденциальности";
+        String fullText = getString(R.string.register_privacy_policy);
+        String linkText = getString(R.string.register_privacy_policy_link);
 
         int start = fullText.indexOf(linkText);
         int end = start + linkText.length();
@@ -135,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             passwordLayout.setErrorEnabled(false);
             if (password.length() < 7) {
-                passwordLayout.setError("Минимальная длина пароля: 7");
+                passwordLayout.setError(getString(R.string.register_error_min_password));
                 validate = false;
             } else {
                 passwordLayout.setErrorEnabled(false);

@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
@@ -24,13 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.GetUserRole;
 import com.myappteam.projectapp.LoadingDialog;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.ui.home.Board;
-import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.DeleteDialog;
-import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.DisconnectDialog;
-import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.EditNameDialog;
+import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.DeleteBoardDialog;
+import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.DisconnectBoardDialog;
+import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.EditBoardDialog;
 import com.myappteam.projectapp.ui.home.workSpace.dialogs.settings.OnChangeBoard;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class SettingsActivity extends AppCompatActivity implements OnChangeBoard {
+public class SettingsActivity extends BaseActivity implements OnChangeBoard {
     ImageView boardImageView;
     String boardIdData, boardNameData;
     TextView boardNameText, boardOwnerText, boardCreateDateText, boardCodeText;
@@ -162,9 +162,7 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
         ConstraintLayout boardImageLayout = findViewById(R.id.boardImageLayout);
         TextView boardImageText = findViewById(R.id.boardImageText);
         ImageButton editBoardName = findViewById(R.id.editBoardName);
-        ConstraintLayout actionLayout = findViewById(R.id.SettingsActionLayout);
-        ImageView actionImage = findViewById(R.id.SettingsActionImage);
-        TextView actionText = findViewById(R.id.SettingsActionText);
+        Button deleteBoard = findViewById(R.id.settingsDeleteBoardButton);
 
         switch (role) {
             case "owner":
@@ -175,25 +173,24 @@ public class SettingsActivity extends AppCompatActivity implements OnChangeBoard
                 //Включаем возможность изменения названия
                 editBoardName.setVisibility(View.VISIBLE);
                 editBoardName.setOnClickListener(view -> {
-                    EditNameDialog dialog = EditNameDialog.newInstance(boardNameData);
+                    EditBoardDialog dialog = EditBoardDialog.newInstance(boardNameData);
                     dialog.show(getSupportFragmentManager(), "editBoardName");
                 });
 
                 //Включаем возможность удаления
-                actionLayout.setVisibility(View.VISIBLE);
-                actionLayout.setOnClickListener(view -> {
-                    DeleteDialog dialog = DeleteDialog.newInstance("доски", "доску");
+                deleteBoard.setVisibility(View.VISIBLE);
+                deleteBoard.setOnClickListener(view -> {
+                    DeleteBoardDialog dialog = DeleteBoardDialog.newInstance("доски", "доску");
                     dialog.show(getSupportFragmentManager(), "deleteBoard");
                 });
                 break;
             case "admin":
             case "user":
                 //Включаем возможность отключения
-                actionLayout.setVisibility(View.VISIBLE);
-                Glide.with(this).load(R.drawable.disconnect).into(actionImage);
-                actionText.setText("Отключиться от доски");
-                actionLayout.setOnClickListener(view -> {
-                    DisconnectDialog dialog = new DisconnectDialog();
+                deleteBoard.setVisibility(View.VISIBLE);
+                deleteBoard.setText("Отключиться от доски");
+                deleteBoard.setOnClickListener(view -> {
+                    DisconnectBoardDialog dialog = new DisconnectBoardDialog();
                     dialog.show(getSupportFragmentManager(), "disconnect");
                 });
                 break;

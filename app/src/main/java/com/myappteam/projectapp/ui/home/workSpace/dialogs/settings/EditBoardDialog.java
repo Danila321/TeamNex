@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.myappteam.projectapp.R;
 
-public class EditNameDialog extends DialogFragment {
+public class EditBoardDialog extends DialogFragment {
     private String name;
     private OnChangeBoard onChangeBoard;
 
@@ -29,8 +29,8 @@ public class EditNameDialog extends DialogFragment {
         onChangeBoard = (OnChangeBoard) context;
     }
 
-    public static EditNameDialog newInstance(String name) {
-        EditNameDialog dialog = new EditNameDialog();
+    public static EditBoardDialog newInstance(String name) {
+        EditBoardDialog dialog = new EditBoardDialog();
         Bundle args = new Bundle();
         args.putString("name", name);
         dialog.setArguments(args);
@@ -60,17 +60,17 @@ public class EditNameDialog extends DialogFragment {
         ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
         Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
 
-        title.setText("Изменить название");
+        title.setText(getString(R.string.board_settings_edit_name_title));
 
         editText.setText(name);
 
-        buttonEdit.setText("Изменить");
+        buttonEdit.setText(getString(R.string.board_settings_edit_name_button));
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {
             String text = String.valueOf(editText.getText()).trim();
             if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
+                editTextLayout.setError(getString(R.string.board_settings_edit_name_error));
             } else {
                 onChangeBoard.onEdit(text);
                 dismiss();

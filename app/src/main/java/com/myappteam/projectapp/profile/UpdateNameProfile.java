@@ -50,6 +50,7 @@ public class UpdateNameProfile extends AppCompatActivity {
         editTextName = findViewById(R.id.name);
         nameLayout = findViewById(R.id.nameLayout);
         buttonUpdate = findViewById(R.id.btn);
+        TextView privacyPolicyText = findViewById(R.id.agreePrivacyPolicyText);
 
         backButton.setOnClickListener(view -> finish());
 
@@ -63,6 +64,7 @@ public class UpdateNameProfile extends AppCompatActivity {
         editTextEmail.setVisibility(View.GONE);
         editTextPassword.setVisibility(View.GONE);
         editTextPasswordAgain.setVisibility(View.GONE);
+        privacyPolicyText.setVisibility(View.GONE);
         buttonUpdate.setText(R.string.profile_button_update);
 
         if (firebaseUser != null) {

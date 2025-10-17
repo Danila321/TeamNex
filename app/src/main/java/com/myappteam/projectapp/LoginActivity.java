@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private FirebaseAuth mAuth;
     private TextInputLayout emailLayout, passwordLayout;
     private TextInputEditText editTextEmail, editTextPassword;
@@ -50,9 +50,13 @@ public class LoginActivity extends AppCompatActivity {
             if (email.isEmpty() || password.isEmpty()) {
                 if (email.isEmpty()) {
                     emailLayout.setError(getString(R.string.login_error_email));
+                } else {
+                    emailLayout.setErrorEnabled(false);
                 }
                 if (password.isEmpty()) {
                     passwordLayout.setError(getString(R.string.login_error_password));
+                } else {
+                    passwordLayout.setErrorEnabled(false);
                 }
             } else {
                 loginUser(email, password);
@@ -88,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Проверяем, подтвердил ли пользователь почту
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser.isEmailVerified()) {
-                            Toast.makeText(getApplicationContext(), R.string.login_complete, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.login_complete, Toast.LENGTH_SHORT).show();
                             //Переходим на страницу аккаунта
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);

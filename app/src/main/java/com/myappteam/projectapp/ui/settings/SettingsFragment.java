@@ -1,9 +1,6 @@
 package com.myappteam.projectapp.ui.settings;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -17,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.myappteam.projectapp.LocaleHelper;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.databinding.FragmentSettingsBinding;
 import com.yandex.mobile.ads.banner.BannerAdEventListener;
@@ -37,7 +35,8 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        String currentLanguage = getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).getString("language", "ru");
+        String currentLanguage = LocaleHelper.getLanguage(getActivity());
+
         TextView languageTextView = root.findViewById(R.id.settingsLanguageText);
         if (currentLanguage.equals("ru")) {
             languageTextView.setText("Русский");
@@ -72,14 +71,9 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
 
     @Override
     public void onChangeLanguage(String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Resources resources = getActivity().getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-
-        getActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit().putString("language", language).apply();
+        //Сохраняем новый язык в SharedPreferences
+        LocaleHelper.saveLanguage(getActivity(), language);
+        //Перезапускаем активити
         getActivity().recreate();
     }
 
@@ -108,7 +102,7 @@ public class SettingsFragment extends Fragment implements OnChangeSettings {
                 // If this callback occurs after the activity is destroyed, you
                 // must call destroy and return or you may get a memory leak.
                 // Note `isDestroyed` is a method on Activity.
-                if (getActivity() != null){
+                if (getActivity() != null) {
                     if (getActivity().isDestroyed() && mBannerAd != null) {
                         mBannerAd.destroy();
                     }

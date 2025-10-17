@@ -27,6 +27,7 @@
     <string name="login_email_title">Your email has not been confirmed</string>
     <string name="login_email_text">To log in, you need to confirm the email, check the specified email and follow the link in the sent email</string>
     <string name="login_email_button">OK</string>
+    <string name="login_register">Register</string>
 
     <string name="reset_title">Reset password</string>
     <string name="reset_text">Enter the email address that you provided during registration</string>
@@ -49,6 +50,9 @@
     <string name="register_error_password">Enter the password</string>
     <string name="register_error_password_again">Repeat the entered password</string>
     <string name="register_error_password_not_match">Passwords do not match</string>
+    <string name="register_error_min_password">Minimum password length: 7</string>
+    <string name="register_privacy_policy">By registering, you agree to the Privacy Policy of TeamNex</string>
+    <string name="register_privacy_policy_link">Privacy Policy</string>
     <string name="register_loading">We register you…</string>
     <string name="register_action_error_password">The password is too weak</string>
     <string name="register_action_email">The email was entered incorrectly</string>
@@ -109,8 +113,56 @@
     <string name="board_settings_info_owner">Owner:</string>
     <string name="board_settings_info_created">Created:</string>
     <string name="board_settings_code">Access code:</string>
-    <string name="board_settings_code_text">The code has been copied to the clipboard</string>
+    <string name="board_settings_code_text">The code has been copied to the clipboard</string>\
+    <string name="board_settings_show_qr">Show</string>
     <string name="board_settings_delete">Delete board</string>
     <string name="board_settings_edit">Edit</string>
+    <string name="board_settings_timer_title">Timer</string>
     <string name="board_settings_choose_image">Choose image</string>
+    <string name="board_settings_edit_name_title">Change the name</string>
+    <string name="board_settings_edit_name_layout">Name</string>
+    <string name="board_settings_edit_name_button">Change</string>
+    <string name="board_settings_edit_name_error">Enter the name</string>
+    <string name="board_settings_qr_dilog">Scan QR-code in app</string>
+
+
+
+    <string name="in_development">In development…</string>
+
+
+
+    <!--  Ad info  -->
+    <string name="network">Network</string>
+    <string name="logs">Logs</string>
+    <string name="load_ad">Load ad</string>
+    <string name="loading_ad">Loading ad</string>
+    <string name="pause_inroll_button_text">Pause</string>
+    <string name="resume_inroll_button_text">Resume</string>
+    <string name="instream_content_url">https://storage.mds.yandex.net/get-ads-mobile-sdk/212922/d170b1d2-0871-40ef-af57-9a0ae7428622</string>
+
+    <!--  Native ad  -->
+    <string name="native_ad_title_text">Yandex.Browser for iPhone and Android</string>
+    <string name="native_ad_body_text">Your bookmarks and favorite sites are available to you on any device with Yandex.Browser. You will never lose them, even if you lose your device or break it.</string>
+    <string name="native_ad_domain_text">https://browser.yandex.com</string>
+    <string name="native_ad_sponsored_text">Yandex.Direct</string>
+    <string name="native_ad_age_text">16+ </string>
+    <string name="native_ad_warning_text">We strongly recommend avoiding this type of website and not clicking the Ignore this warning button!</string>
+    <string name="native_ad_call_to_action_text">Install</string>
+    <string name="native_appinstall_price_text">Free</string>
+
+    <!--  Policies  -->
+    <string name="policies">Policies</string>
+    <string name="gdpr_dialog_title">This is sample of GDPR dialog</string>
+    <string name="gdpr_dialog_message">This application contains Yandex advertising code that collects data in order to show you relevant ads that better match your interests. To learn more about how and why Yandex processes your data, see the Privacy Policy.</string>
+    <string name="gdpr_enabled">User consent enabled</string>
+    <string name="gdpr_disabled">User consent disabled</string>
+    <string name="location_dialog_title">This is a sample of location dialog</string>
+    <string name="location_dialog_message">This application contains Yandex advertising code that gets your approximate location in order to show you relevant ads that better match your region.</string>
+    <string name="location_enabled">Location consent enabled</string>
+    <string name="location_disabled">Location consent disabled</string>
+    <string name="open_dialog">Open dialog</string>
+    <string name="accept">Accept</string>
+    <string name="about">About</string>
+    <string name="decline">Decline</string>
+    <string name="age">Age</string>
 </resources>

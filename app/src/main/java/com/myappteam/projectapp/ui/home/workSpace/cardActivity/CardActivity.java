@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.GetUserRole;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.ui.home.workSpace.Card;
@@ -41,7 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CardActivity extends AppCompatActivity {
+public class CardActivity extends BaseActivity {
     String boardId, itemId, cardId;
     String descriptionText;
     ListView checkList, attachmentsList;

@@ -27,6 +27,7 @@
     <string name="login_email_title">Ваш email не подтвержден</string>
     <string name="login_email_text">Для авторизации необходимо подтвердить email, проверьте указанную почту и перейдите по ссылке в отправленном письме</string>
     <string name="login_email_button">Хорошо</string>
+    <string name="login_register">Зарегистрироваться</string>
 
     <string name="reset_title">Восстановление пароля</string>
     <string name="reset_text">Введите email адрес который вы указывали при регистрации</string>
@@ -49,6 +50,9 @@
     <string name="register_error_password">Введите пароль</string>
     <string name="register_error_password_again">Повторите введенный пароль</string>
     <string name="register_error_password_not_match">Пароли не совпадают</string>
+    <string name="register_error_min_password">Минимальная длина пароля: 7</string>
+    <string name="register_privacy_policy">Регистрируясь, вы соглашаетесь с Политикой конфиденциальности TeamNex</string>
+    <string name="register_privacy_policy_link">Политикой конфиденциальности</string>
     <string name="register_loading">Регистрируем вас…</string>
     <string name="register_action_error_password">Пароль слишком слабый</string>
     <string name="register_action_email">Email введен некорректно</string>
@@ -108,11 +112,22 @@
     <string name="board_settings_info">Информация</string>
     <string name="board_settings_info_owner">Владелец:</string>
     <string name="board_settings_info_created">Создано:</string>
-    <string name="board_settings_code">Подключение:</string>
+    <string name="board_settings_code">Код доступа</string>
     <string name="board_settings_code_text">Код скопирован в буфер обмена</string>
+    <string name="board_settings_show_qr">Показать</string>
     <string name="board_settings_delete">Удалить доску</string>
     <string name="board_settings_edit">Изменить</string>
+    <string name="board_settings_timer_title">Таймер</string>
     <string name="board_settings_choose_image">Выберите изображение</string>
+    <string name="board_settings_edit_name_title">Изменить название</string>
+    <string name="board_settings_edit_name_layout">Название</string>
+    <string name="board_settings_edit_name_button">Изменить</string>
+    <string name="board_settings_edit_name_error">Введите название</string>
+    <string name="board_settings_qr_dilog">Отсканируйте QR-код в приложении</string>
+
+
+
+    <string name="in_development">В разработке…</string>
 
 
 

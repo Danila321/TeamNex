@@ -7,6 +7,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.GetUserRole;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.ui.home.workSpace.cardActivity.users.User;
@@ -18,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends BaseActivity {
     String boardId;
     UsersAdapter adapter;
     ArrayList<UserRole> users = new ArrayList<>();

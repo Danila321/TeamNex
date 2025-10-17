@@ -1,7 +1,6 @@
 package com.myappteam.projectapp.ui.home.workSpace;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.GetUserRole;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.ui.home.workSpace.dialogs.item.AddItemDialog;
@@ -26,7 +26,7 @@ import com.myappteam.projectapp.ui.home.workSpace.usersActivity.UsersActivity;
 
 import java.util.ArrayList;
 
-public class WorkSpaceActivity extends AppCompatActivity {
+public class WorkSpaceActivity extends BaseActivity {
     ArrayList<Item> items = new ArrayList<>();
     ItemsAdapter adapter;
     String boardIdData;

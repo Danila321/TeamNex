@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,10 +51,13 @@ public class AddItemDialog extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.dialog_edit, null);
         builder.setView(dialogView);
 
+        ImageButton close = dialogView.findViewById(R.id.EditDialogClose);
         TextView titleText = dialogView.findViewById(R.id.EditDialogTitle);
         TextInputLayout editTextLayout = dialogView.findViewById(R.id.EditDialogEditTextLayout);
         TextInputEditText editText = dialogView.findViewById(R.id.EditDialogEditText);
         Button button = dialogView.findViewById(R.id.EditDialogButton);
+
+        close.setOnClickListener(v -> dismiss());
 
         titleText.setText("Новый пункт");
 
