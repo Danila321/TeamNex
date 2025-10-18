@@ -119,7 +119,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="256dp"
         android:fontFamily="sans-serif-light"
-        android:text="Email"
+        android:text=""
         android:textSize="16sp"
         app:layout_behavior="com.myappteam.projectapp.profile.behaviors.BehaviorEmailText" />
 
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="18dp"
-                    android:text="Имя"
+                    android:text=""
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView10"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -234,7 +234,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Пароль"
+                    android:text="@string/profile_password"
                     android:textColor="@color/md_theme_onSurface_highContrast"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -284,7 +284,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Подписка TeamNex Pro"
+                    android:text="@string/profile_teamnex_pro"
                     android:textColor="@color/md_theme_onSurface_highContrast"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -296,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="18dp"
-                    android:text="В разработке..."
+                    android:text="@string/in_development"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView1202"
                     app:layout_constraintTop_toBottomOf="@+id/textView1202" />
@@ -334,7 +334,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:fontFamily="sans-serif-light"
-                    android:text="Уведомления"
+                    android:text="@string/profile_notifications"
                     android:textColor="@color/md_theme_onSurface_highContrast"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -360,7 +360,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="Политика конфидециальности"
+                    android:text="@string/profile_privacy_policy_link"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -370,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="18dp"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="Информационный сайт TeamNex"
+                    android:text="@string/profile_site_link"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/ProfilePrivacyPolicyText" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,12 @@
 
     <string name="settings_title">Общие</string>
     <string name="settings_language_title">Язык</string>
+    <string name="settings_bottom_dialog_title">Выберите язык</string>
 
     <string name="feedback_text">По всем вопросам и предложениям обращаться по почте:</string>\
     <string name="feedback_copy_text">Email скопирован в буфер обмена</string>
+
+
 
     <string name="login_title">Авторизация</string>
     <string name="login_password">Пароль</string>
@@ -29,6 +32,8 @@
     <string name="login_email_button">Хорошо</string>
     <string name="login_register">Зарегистрироваться</string>
 
+
+
     <string name="reset_title">Восстановление пароля</string>
     <string name="reset_text">Введите email адрес который вы указывали при регистрации</string>
     <string name="reset_button">Продолжить</string>
@@ -38,6 +43,8 @@
     <string name="reset_dialog_text">На указанную почту было отправлено письмо с ссылкой для сброса пароля</string>
     <string name="reset_dialog_button">Хорошо</string>
     <string name="reset_error_user">Пользователь с таким email не найден</string>
+
+
 
     <string name="register_title">Регистрация</string>
     <string name="register_name">Имя</string>
@@ -61,25 +68,54 @@
     <string name="register_dialog_text">На указанную почту было отправлено письмо с ссылкой для подтверждения, для авторизации в приложении необходимо перейти по этой ссылке. Проверяйте папку СПАМ.</string>
     <string name="register_dialog_button">Хорошо</string>
 
+
+
     <string name="profile_title">Профиль</string>
-    <string name="profile_image_load">Изменить</string>
-    <string name="profile_image_delete">Удалить</string>
     <string name="profile_name">Имя</string>
+    <string name="profile_password">Пароль</string>
+    <string name="profile_teamnex_pro">Подписка TeamNex Pro</string>
+    <string name="profile_notifications">Уведомления</string>
+    <string name="profile_privacy_policy_link">Политика конфидециальности</string>
+    <string name="profile_site_link">Информационный сайт TeamNex</string>
     <string name="profile_exit">ВЫЙТИ</string>
     <string name="profile_delete">УДАЛИТЬ АККАУНТ</string>
-    <string name="profile_button_update">Обновить</string>
+
     <string name="profile_photo_title">Фото профиля</string>
-    <string name="profile_photo_button_choose">Выбрать</string>
-    <string name="profile_photo_button_load">Загрузить</string>
-    <string name="profile_delete_dialog_text">Вы действительно хотите удалить фото профиля?</string>
-    <string name="profile_delete_dialog_title">Удаление фото профиля</string>
-    <string name="profile_delete_dialog_loading">Удаляем изображение…</string>
-    <string name="profile_delete_dialog_success">Изображение успешно удалено!</string>
+    <string name="profile_photo_change">Изменить</string>
+    <string name="profile_photo_delete">Удалить</string>
+    <string name="profile_photo_dialog_title">Новое фото профиля</string>
+    <string name="profile_photo_button_save">Сохранить</string>
+    <string name="profile_photo_button_cancel">Отмена</string>
+    <string name="profile_photo_loading">Загружаем фото…</string>
+    <string name="profile_photo_success">Изображение успешно загружено!</string>
+    <string name="profile_photo_delete_dialog_title">Удаление фото профиля</string>
+    <string name="profile_photo_delete_dialog_text">Вы действительно хотите удалить фото профиля?</string>
+    <string name="profile_photo_delete_dialog_loading">Удаляем изображение…</string>
+    <string name="profile_photo_delete_dialog_success">Изображение успешно удалено!</string>
+
+    <string name="profile_name_title">Имя пользователя</string>
+    <string name="profile_name_error">Введите свое имя</string>
+    <string name="profile_name_button_update">Обновить</string>
+    <string name="profile_name_loading">Обновляем данные…</string>
+    <string name="profile_name_success">Профиль успешно обновлен</string>
+
+    <string name="profile_password1_title">Изменение пароля</string>
+    <string name="profile_password1_hint">Текущий пароль</string>
+    <string name="profile_password1_error">Введите ваш текущий пароль</string>
+    <string name="profile_password1_error2">Неверный пароль</string>
+    <string name="profile_password1_dialog">Проверяем пароль…</string>
+    <string name="profile_password2_title">Новый пароль</string>
+    <string name="profile_password2_button">Сохранить</string>
+    <string name="profile_password2_dialog">Меняем пароль…</string>
+    <string name="profile_password_success">Новый пароль успешно установлен!</string>
+
     <string name="profile_exit_title">Выход из аккаунта</string>
     <string name="profile_exit_text">Вы действительно хотите выйти из аккаунта?</string>
     <string name="profile_exit_complete">Вы успешно вышли!</string>
     <string name="profile_exit_yes">Да</string>
     <string name="profile_exit_no">Нет</string>
+
+
 
     <string name="board_title">Доски</string>
     <string name="board_button_connect">Подключиться</string>
@@ -108,6 +144,8 @@
     <string name="board_time_day2">" дня назад"</string>
     <string name="board_time_day3">" дней назад"</string>
 
+
+
     <string name="board_settings_title">Настройки</string>
     <string name="board_settings_info">Информация</string>
     <string name="board_settings_info_owner">Владелец:</string>
@@ -115,7 +153,16 @@
     <string name="board_settings_code">Код доступа</string>
     <string name="board_settings_code_text">Код скопирован в буфер обмена</string>
     <string name="board_settings_show_qr">Показать</string>
-    <string name="board_settings_delete">Удалить доску</string>
+    <string name="board_settings_delete_button">Удалить доску</string>
+    <string name="board_settings_disconnect_button">Отключиться</string>
+
+    <string name="board_settings_dialog_delete_title">Удаление доски</string>
+    <string name="board_settings_dialog_delete_text">Вы уверены что хотите удалить доску? Это действие является безвозвратным!</string>
+
+    <string name="board_settings_disconnect_dialog_title">Отключение</string>
+    <string name="board_settings_disconnect_dialog_text">Вы уверены что хотите отключиться от этой доски?</string>
+    <string name="board_settings_disconnect_dialog_cancel">Отмена</string>
+    <string name="board_settings_disconnect_dialog_accept">Отключиться</string>
     <string name="board_settings_edit">Изменить</string>
     <string name="board_settings_timer_title">Таймер</string>
     <string name="board_settings_choose_image">Выберите изображение</string>
@@ -124,6 +171,11 @@
     <string name="board_settings_edit_name_button">Изменить</string>
     <string name="board_settings_edit_name_error">Введите название</string>
     <string name="board_settings_qr_dilog">Отсканируйте QR-код в приложении</string>
+
+
+
+    <string name="dialog_delete_cancel">Отмена</string>
+    <string name="dialog_delete_accept">Удалить</string>
 
 
 

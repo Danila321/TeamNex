@@ -18,31 +18,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.myappteam.projectapp.R;
 
 public class DeleteBoardDialog extends DialogFragment {
-    private String titleText, descriptionText;
     private OnChangeBoard onChangeBoard;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         onChangeBoard = (OnChangeBoard) context;
-    }
-
-    public static DeleteBoardDialog newInstance(String titleText, String descriptionText) {
-        DeleteBoardDialog dialog = new DeleteBoardDialog();
-        Bundle args = new Bundle();
-        args.putString("titleText", titleText);
-        args.putString("descriptionText", descriptionText);
-        dialog.setArguments(args);
-        return dialog;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            titleText = getArguments().getString("titleText");
-            descriptionText = getArguments().getString("descriptionText");
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -58,8 +39,8 @@ public class DeleteBoardDialog extends DialogFragment {
         TextView title = dialogView.findViewById(R.id.TextDialogTitle);
         TextView description = dialogView.findViewById(R.id.TextDialogDescription);
 
-        title.setText("Удаление " + titleText);
-        description.setText("Вы уверены что хотите удалить\n" + descriptionText + "? Это действие является\nбезвозвратным!");
+        title.setText(getString(R.string.board_settings_dialog_delete_title));
+        description.setText(getString(R.string.board_settings_dialog_delete_text));
 
         Button buttonCancel = dialogView.findViewById(R.id.TextDialogButtonCancel);
         Button buttonDelete = dialogView.findViewById(R.id.TextDialogButtonDelete);

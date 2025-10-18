@@ -8,7 +8,6 @@
     <dimen name="dialog_edit_width">364dp</dimen>
     <dimen name="dialog_text_width">350dp</dimen>
     <dimen name="dialog_loading_width">280dp</dimen>
-    <dimen name="dialog_disconnect_width">320dp</dimen>
     <dimen name="dialog_add_attachment_width">382dp</dimen>
     <dimen name="dialog_role_width">390dp</dimen>
     <dimen name="radius">5dp</dimen>

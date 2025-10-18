@@ -57,19 +57,19 @@ public class ProfilePasswordSettingsFirst extends Fragment {
 
         buttonContinue.setOnClickListener(v -> {
             String password = String.valueOf(oldPasswordEditText.getText()).trim();
-            if (password.isEmpty()){
-                oldPasswordLayout.setError("Введите ваш текущий пароль");
+            if (password.isEmpty()) {
+                oldPasswordLayout.setError(getString(R.string.profile_password1_error));
             } else {
                 oldPasswordLayout.setErrorEnabled(false);
                 validate(firebaseUser, password, checked -> {
-                    if (checked){
+                    if (checked) {
                         getParentFragmentManager()
                                 .beginTransaction()
                                 .setCustomAnimations(R.anim.profile_password_open, R.anim.profile_password_hide)
                                 .replace(R.id.profileConstraintLayout, ProfilePasswordFragmentSecond.newInstance(password))
                                 .commit();
                     } else {
-                        oldPasswordLayout.setError("Неверный пароль");
+                        oldPasswordLayout.setError(getString(R.string.profile_password1_error2));
                     }
                 });
             }
@@ -78,14 +78,14 @@ public class ProfilePasswordSettingsFirst extends Fragment {
         return root;
     }
 
-    private void validate(FirebaseUser user, String password, OnCheckPasswordListener onCheckPassword){
+    private void validate(FirebaseUser user, String password, OnCheckPasswordListener onCheckPassword) {
         //Закрываем клавиатуру
         View view = getActivity().getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), "Проверяем пароль...");
+        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), getString(R.string.profile_password1_dialog));
         loadingDialog.startDialog();
         user.reauthenticate(EmailAuthProvider.getCredential(user.getEmail(), password)).addOnCompleteListener(task -> {
             loadingDialog.dismissDialog();
@@ -93,7 +93,7 @@ public class ProfilePasswordSettingsFirst extends Fragment {
         });
     }
 
-    public interface OnCheckPasswordListener{
+    public interface OnCheckPasswordListener {
         void onChecked(boolean checked);
     }
 }

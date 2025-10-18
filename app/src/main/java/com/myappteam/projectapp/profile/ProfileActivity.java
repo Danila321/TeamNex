@@ -3,7 +3,6 @@ package com.myappteam.projectapp.profile;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.animation.ArgbEvaluator;
@@ -25,12 +24,13 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.LoginActivity;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.profile.imageSettings.ProfileImageSettingsActivity;
 import com.myappteam.projectapp.profile.passwordSettings.ProfilePasswordActivity;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
     private FirebaseAuth authProfile;
     private FirebaseUser firebaseUser;
     ImageView imageView;

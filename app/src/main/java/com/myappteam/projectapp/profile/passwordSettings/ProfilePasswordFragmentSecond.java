@@ -86,7 +86,7 @@ public class ProfilePasswordFragmentSecond extends Fragment {
         } else {
             passwordLayout.setErrorEnabled(false);
             if (password.length() < 7) {
-                passwordLayout.setError("Минимальная длина пароля: 7");
+                passwordLayout.setError(getString(R.string.register_error_min_password));
                 validate = false;
             } else {
                 passwordLayout.setErrorEnabled(false);
@@ -116,7 +116,7 @@ public class ProfilePasswordFragmentSecond extends Fragment {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         //Показываем загрузочный диалог
-        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), "Меняем пароль...");
+        LoadingDialog loadingDialog = new LoadingDialog(getActivity(), getString(R.string.profile_password2_dialog));
         loadingDialog.startDialog();
 
         firebaseUser.reauthenticate(EmailAuthProvider.getCredential(firebaseUser.getEmail(), oldPassword)).addOnCompleteListener(task -> {
@@ -125,7 +125,7 @@ public class ProfilePasswordFragmentSecond extends Fragment {
                     if (task1.isSuccessful()) {
                         loadingDialog.dismissDialog();
                         getActivity().finish();
-                        Toast.makeText(getContext(), "Новый пароль успешно установлен!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.profile_password_success), Toast.LENGTH_SHORT).show();
                     } else {
 
                     }

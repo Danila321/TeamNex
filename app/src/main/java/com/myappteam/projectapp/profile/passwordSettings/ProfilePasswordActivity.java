@@ -3,12 +3,12 @@ package com.myappteam.projectapp.profile.passwordSettings;
 import android.os.Bundle;
 import android.view.Window;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.R;
 
-public class ProfilePasswordActivity extends AppCompatActivity {
+public class ProfilePasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -8,9 +8,12 @@
 
     <string name="settings_title">General</string>
     <string name="settings_language_title">Language</string>
+    <string name="settings_bottom_dialog_title">Select a language</string>
 
     <string name="feedback_text">For all questions and suggestions, please contact us by mail:</string>
     <string name="feedback_copy_text">The email has been copied to the clipboard</string>
+
+
 
     <string name="login_title">Login</string>
     <string name="login_password">Password</string>
@@ -29,6 +32,8 @@
     <string name="login_email_button">OK</string>
     <string name="login_register">Register</string>
 
+
+
     <string name="reset_title">Reset password</string>
     <string name="reset_text">Enter the email address that you provided during registration</string>
     <string name="reset_button">Reset</string>
@@ -38,6 +43,8 @@
     <string name="reset_dialog_text">An email was sent to the specified email address with a link to reset the password</string>
     <string name="reset_dialog_button">OK</string>
     <string name="reset_error_user">The user with this email was not found</string>
+
+
 
     <string name="register_title">Create account</string>
     <string name="register_name">Name</string>
@@ -61,25 +68,54 @@
     <string name="register_dialog_text">An email was sent to the specified email address with a confirmation link. To log in to the application, click on this link. Check SPAM folder</string>
     <string name="register_dialog_button">OK</string>
 
+
+
     <string name="profile_title">Profile</string>
-    <string name="profile_image_load">Change</string>
-    <string name="profile_image_delete">Delete</string>
     <string name="profile_name">Name</string>
+    <string name="profile_password">Password</string>
+    <string name="profile_teamnex_pro">TeamNex Pro Subscription</string>
+    <string name="profile_notifications">Notifications</string>
+    <string name="profile_privacy_policy_link">Privacy Policy</string>
+    <string name="profile_site_link">TeamNex information Website</string>
     <string name="profile_exit">LOG OUT</string>
     <string name="profile_delete">DELETE ACCOUNT</string>
-    <string name="profile_button_update">Update</string>
+
     <string name="profile_photo_title">Profile photo</string>
-    <string name="profile_photo_button_choose">Choose</string>
-    <string name="profile_photo_button_load">Load</string>
-    <string name="profile_delete_dialog_text">Do you really want to delete your profile photo?</string>
-    <string name="profile_delete_dialog_title">Deleting a profile photo</string>
-    <string name="profile_delete_dialog_loading">Deleting the image…</string>
-    <string name="profile_delete_dialog_success">The image has been successfully deleted!</string>
+    <string name="profile_photo_change">Change</string>
+    <string name="profile_photo_delete">Delete</string>
+    <string name="profile_photo_dialog_title">New profile photo</string>
+    <string name="profile_photo_button_save">Save</string>
+    <string name="profile_photo_button_cancel">Cancel</string>
+    <string name="profile_photo_loading">Uploading a photo…</string>
+    <string name="profile_photo_success">The image has been uploaded successfully!</string>
+    <string name="profile_photo_delete_dialog_text">Do you really want to delete your profile photo?</string>
+    <string name="profile_photo_delete_dialog_title">Deleting a profile photo</string>
+    <string name="profile_photo_delete_dialog_loading">Deleting the image…</string>
+    <string name="profile_photo_delete_dialog_success">The image has been successfully deleted!</string>
+
+    <string name="profile_name_title">Username</string>
+    <string name="profile_name_error">Enter your name</string>
+    <string name="profile_name_button_update">Update</string>
+    <string name="profile_name_loading">Updating the data…</string>
+    <string name="profile_name_success">Profile has been successfully updated</string>
+
+    <string name="profile_password1_title">Changing the password</string>
+    <string name="profile_password1_hint">Current password</string>
+    <string name="profile_password1_error">Enter your current password</string>
+    <string name="profile_password1_error2">Invalid password</string>
+    <string name="profile_password1_dialog">Checking the password…</string>
+    <string name="profile_password2_title">New password</string>
+    <string name="profile_password2_button">Save</string>
+    <string name="profile_password2_dialog">Changing the password…</string>
+    <string name="profile_password_success">The new password has been successfully set!</string>
+
     <string name="profile_exit_title">Log out of your account</string>
     <string name="profile_exit_text">Do you really want to log out of your account?</string>
     <string name="profile_exit_complete">You have successfully logged out!</string>
     <string name="profile_exit_yes">Yes</string>
     <string name="profile_exit_no">No</string>
+
+
 
     <string name="board_title">Boards</string>
     <string name="board_button_connect">Connect</string>
@@ -108,6 +144,8 @@
     <string name="board_time_day2">" days ago"</string>
     <string name="board_time_day3">" days ago"</string>
 
+
+
     <string name="board_settings_title">Settings</string>
     <string name="board_settings_info">Information</string>
     <string name="board_settings_info_owner">Owner:</string>
@@ -115,7 +153,16 @@
     <string name="board_settings_code">Access code:</string>
     <string name="board_settings_code_text">The code has been copied to the clipboard</string>\
     <string name="board_settings_show_qr">Show</string>
-    <string name="board_settings_delete">Delete board</string>
+    <string name="board_settings_delete_button">Delete board</string>
+    <string name="board_settings_disconnect_button">Disconnect</string>
+
+    <string name="board_settings_dialog_delete_title">Deleting the board</string>
+    <string name="board_settings_dialog_delete_text">Are you sure you want to delete the board? This action is irreversible!</string>
+
+    <string name="board_settings_disconnect_dialog_title">Disconnecting</string>
+    <string name="board_settings_disconnect_dialog_text">Are you sure you want to disconnect from this board?</string>
+    <string name="board_settings_disconnect_dialog_cancel">Cancel</string>
+    <string name="board_settings_disconnect_dialog_accept">Disconnect</string>
     <string name="board_settings_edit">Edit</string>
     <string name="board_settings_timer_title">Timer</string>
     <string name="board_settings_choose_image">Choose image</string>
@@ -124,6 +171,11 @@
     <string name="board_settings_edit_name_button">Change</string>
     <string name="board_settings_edit_name_error">Enter the name</string>
     <string name="board_settings_qr_dilog">Scan QR-code in app</string>
+
+
+
+    <string name="dialog_delete_cancel">Cancel</string>
+    <string name="dialog_delete_accept">Delete</string>
 
 
 

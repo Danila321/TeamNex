@@ -51,7 +51,7 @@ public class DisconnectBoardDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
-            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_disconnect_width);
+            int pixelsWidth = getResources().getDimensionPixelSize(R.dimen.dialog_text_width);
             getDialog().getWindow().setLayout(pixelsWidth, WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }

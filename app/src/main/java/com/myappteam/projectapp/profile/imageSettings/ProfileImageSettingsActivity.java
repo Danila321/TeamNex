@@ -3,7 +3,6 @@ package com.myappteam.projectapp.profile.imageSettings;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,10 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.LoadingDialog;
 import com.myappteam.projectapp.R;
 
-public class ProfileImageSettingsActivity extends AppCompatActivity implements ProfileImageSettingsBottomDialog.OnChangeImage {
+public class ProfileImageSettingsActivity extends BaseActivity implements ProfileImageSettingsBottomDialog.OnChangeImage {
     private ImageView imageView;
     FirebaseAuth authAccount;
     FirebaseUser firebaseUser;
@@ -93,13 +93,13 @@ public class ProfileImageSettingsActivity extends AppCompatActivity implements P
 
     void showDeleteImageDialog() {
         new MaterialAlertDialogBuilder(ProfileImageSettingsActivity.this)
-                .setTitle(R.string.profile_delete_dialog_title)
-                .setMessage(R.string.profile_delete_dialog_text)
-                .setNegativeButton("Нет", (dialog, which) -> dialog.cancel())
-                .setPositiveButton("Да", (dialog, which) -> {
+                .setTitle(R.string.profile_photo_delete_dialog_title)
+                .setMessage(R.string.profile_photo_delete_dialog_text)
+                .setNegativeButton(getString(R.string.profile_exit_no), (dialog, which) -> dialog.cancel())
+                .setPositiveButton(getString(R.string.profile_exit_yes), (dialog, which) -> {
                     dialog.dismiss();
                     //Показываем загрузочный диалог
-                    LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_delete_dialog_loading));
+                    LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_photo_delete_dialog_loading));
                     loadingDialog.startDialog();
                     //Ставим дефолтное изображение пользователя
                     Uri uri = Uri.parse("android.resource://com.myappteam.projectapp/" + R.drawable.user);
@@ -118,7 +118,7 @@ public class ProfileImageSettingsActivity extends AppCompatActivity implements P
                             dataChanged = true;
 
                             loadingDialog.dismissDialog();
-                            Toast.makeText(ProfileImageSettingsActivity.this, R.string.profile_delete_dialog_success, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileImageSettingsActivity.this, R.string.profile_photo_delete_dialog_success, Toast.LENGTH_SHORT).show();
                         });
                     })).addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
@@ -129,7 +129,7 @@ public class ProfileImageSettingsActivity extends AppCompatActivity implements P
     public void onChangeImage() {
         if (uriImage != null) {
             //Показываем загрузочный диалог
-            LoadingDialog loadingDialog = new LoadingDialog(this, "Загружаем фото...");
+            LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_photo_loading));
             loadingDialog.startDialog();
             //Обновляем данные пользователя
             StorageReference storageReference = FirebaseStorage.getInstance().getReference("DisplayPics");
@@ -148,7 +148,7 @@ public class ProfileImageSettingsActivity extends AppCompatActivity implements P
                     dataChanged = true;
 
                     loadingDialog.dismissDialog();
-                    Toast.makeText(ProfileImageSettingsActivity.this, "Изображение успешно загружено!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileImageSettingsActivity.this, getString(R.string.profile_photo_success), Toast.LENGTH_SHORT).show();
                 });
             })).addOnFailureListener(e -> Toast.makeText(ProfileImageSettingsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
         }

@@ -1,6 +1,5 @@
 package com.myappteam.projectapp.profile;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
@@ -24,10 +23,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.myappteam.projectapp.BaseActivity;
 import com.myappteam.projectapp.LoadingDialog;
 import com.myappteam.projectapp.R;
 
-public class UpdateNameProfile extends AppCompatActivity {
+public class UpdateNameProfile extends BaseActivity {
     private TextInputEditText editTextName;
     private TextInputLayout nameLayout;
     Button buttonUpdate;
@@ -60,12 +60,12 @@ public class UpdateNameProfile extends AppCompatActivity {
         CardView cardView = findViewById(R.id.cardView5);
         cardView.setVisibility(View.INVISIBLE);
 
-        title.setText("Имя пользователя");
+        title.setText(getString(R.string.profile_name_title));
         editTextEmail.setVisibility(View.GONE);
         editTextPassword.setVisibility(View.GONE);
         editTextPasswordAgain.setVisibility(View.GONE);
         privacyPolicyText.setVisibility(View.GONE);
-        buttonUpdate.setText(R.string.profile_button_update);
+        buttonUpdate.setText(R.string.profile_name_button_update);
 
         if (firebaseUser != null) {
             editTextName.setText(firebaseUser.getDisplayName());
@@ -77,7 +77,7 @@ public class UpdateNameProfile extends AppCompatActivity {
     private void updateData(FirebaseUser firebaseUser) {
         String name = String.valueOf(editTextName.getText()).trim();
         if (name.isEmpty()) {
-            nameLayout.setError("Введите свое имя");
+            nameLayout.setError(getString(R.string.profile_name_error));
         } else {
             //Закрываем клавиатуру
             View view = this.getCurrentFocus();
@@ -86,7 +86,7 @@ public class UpdateNameProfile extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
             //Показываем загрузочный диалог
-            LoadingDialog loadingDialog = new LoadingDialog(this, "Обновляем данные...");
+            LoadingDialog loadingDialog = new LoadingDialog(this, getString(R.string.profile_name_loading));
             loadingDialog.startDialog();
             //Обновляем данные пользователя
             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
@@ -96,7 +96,7 @@ public class UpdateNameProfile extends AppCompatActivity {
                 usersRef.setValue(name);
 
                 loadingDialog.dismissDialog();
-                Toast.makeText(UpdateNameProfile.this, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateNameProfile.this, getString(R.string.profile_name_success), Toast.LENGTH_SHORT).show();
 
                 Intent result = new Intent();
                 result.putExtra("dataChanged", true);

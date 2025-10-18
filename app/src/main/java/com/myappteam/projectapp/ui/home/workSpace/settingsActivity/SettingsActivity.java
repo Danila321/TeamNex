@@ -173,6 +173,7 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
         TextView boardImageText = findViewById(R.id.boardImageText);
         ImageButton editBoardName = findViewById(R.id.editBoardName);
         Button deleteBoard = findViewById(R.id.settingsDeleteBoardButton);
+        Button disconnectBoard = findViewById(R.id.settingsDisconnectBoardButton);
 
         switch (role) {
             case "owner":
@@ -190,16 +191,15 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
                 //Включаем возможность удаления
                 deleteBoard.setVisibility(View.VISIBLE);
                 deleteBoard.setOnClickListener(view -> {
-                    DeleteBoardDialog dialog = DeleteBoardDialog.newInstance("доски", "доску");
+                    DeleteBoardDialog dialog = new DeleteBoardDialog();
                     dialog.show(getSupportFragmentManager(), "deleteBoard");
                 });
                 break;
             case "admin":
             case "user":
                 //Включаем возможность отключения
-                deleteBoard.setVisibility(View.VISIBLE);
-                deleteBoard.setText("Отключиться от доски");
-                deleteBoard.setOnClickListener(view -> {
+                disconnectBoard.setVisibility(View.VISIBLE);
+                disconnectBoard.setOnClickListener(view -> {
                     DisconnectBoardDialog dialog = new DisconnectBoardDialog();
                     dialog.show(getSupportFragmentManager(), "disconnect");
                 });

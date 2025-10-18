@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-light"
-        android:text="Новое фото профиля"
+        android:text="@string/profile_photo_dialog_title"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
         android:id="@+id/applyImageCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Отмена"
+        android:text="@string/profile_photo_button_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/applyImagePhoto"
         app:layout_constraintTop_toTopOf="@+id/applyImagePhoto" />
@@ -43,7 +43,7 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
+        android:text="@string/profile_photo_button_save"
         app:layout_constraintBottom_toBottomOf="@+id/applyImagePhoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/applyImagePhoto" />
