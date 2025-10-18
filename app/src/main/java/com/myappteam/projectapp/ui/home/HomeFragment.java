@@ -1,8 +1,6 @@
 package com.myappteam.projectapp.ui.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,27 +13,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.Query;
 import com.myappteam.projectapp.R;
 import com.myappteam.projectapp.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements OnCreateConnectBoard {
+public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     ArrayList<Board> items = new ArrayList<>();
     ItemBoardsAdapter adapter;
+    private Query mDatabase;
+    private ValueEventListener listener;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -83,22 +81,9 @@ public class HomeFragment extends Fragment implements OnCreateConnectBoard {
 
         refresh.setOnClickListener(v -> loadBoardsData());
 
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            if (data.getBooleanExtra("dataChanged", false)) {
-                                loadBoardsData();
-                            }
-                        }
-                    }
-                });
-
         //Загружаем данные всех досок и выводим на экран
         loadBoardsData();
-        adapter = new ItemBoardsAdapter(requireContext(), items, activityResultLauncher);
+        adapter = new ItemBoardsAdapter(requireContext(), items);
         listView.setAdapter(adapter);
 
         create.setOnClickListener(view1 -> {
@@ -109,6 +94,22 @@ public class HomeFragment extends Fragment implements OnCreateConnectBoard {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mDatabase != null && listener != null) {
+            mDatabase.addValueEventListener(listener);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mDatabase != null && listener != null) {
+            mDatabase.removeEventListener(listener);
+        }
+    }
+
     private void loadBoardsData() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -116,41 +117,34 @@ public class HomeFragment extends Fragment implements OnCreateConnectBoard {
             return;
         }
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = currentUser.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("boards").orderByChild("users/" + userId);
 
-        mDatabase.child("boards")
-                .orderByChild("users/" + userId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        items.clear();
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                items.clear();
 
-                        for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
-                            //Получаем роль юзера
-                            String userRole = boardSnapshot.child("users").child(userId).getValue(String.class);
-                            if (userRole != null && (userRole.equals("owner") || userRole.equals("admin") || userRole.equals("user"))) {
-                                // Добавляем доску в список
-                                Board board = boardSnapshot.getValue(Board.class);
-                                if (board != null) {
-                                    items.add(board);
-                                }
-                            }
+                for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
+                    //Получаем роль юзера
+                    String userRole = boardSnapshot.child("users").child(userId).getValue(String.class);
+                    if (userRole != null && (userRole.equals("owner") || userRole.equals("admin") || userRole.equals("user"))) {
+                        // Добавляем доску в список
+                        Board board = boardSnapshot.getValue(Board.class);
+                        if (board != null) {
+                            items.add(board);
                         }
-
-                        adapter.notifyDataSetChanged();
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                adapter.notifyDataSetChanged();
+            }
 
-                    }
-                });
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-    @Override
-    public void onChange() {
-        loadBoardsData();
+            }
+        };
     }
 
     @Override

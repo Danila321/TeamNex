@@ -48,13 +48,10 @@ import java.util.UUID;
 public class CreateConnectBoardDialog extends DialogFragment {
     View dialogView;
     private int type;
-    OnCreateConnectBoard onCreateConnectBoard;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        onCreateConnectBoard = (OnCreateConnectBoard) getParentFragment();
-        System.out.println(onCreateConnectBoard);
     }
 
     public static CreateConnectBoardDialog newInstance(int type) {
@@ -159,7 +156,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
                             if (!boardSnapshot.child("users").hasChild(currentUser.getUid())) {
                                 // Добавляем пользователя к списку пользователей доски
                                 mDatabase.child("boards").child(boardSnapshot.getKey()).child("users").child(currentUser.getUid()).setValue("user").addOnCompleteListener(task -> {
-                                    onCreateConnectBoard.onChange();
                                     Toast.makeText(dialogView.getContext(), R.string.board_dialog_connect_complete, Toast.LENGTH_SHORT).show();
                                 });
                             } else {
@@ -214,7 +210,6 @@ public class CreateConnectBoardDialog extends DialogFragment {
                         // Создание узла доски с информацией о доске
                         Board board = new Board(ID, boardName, uri1.toString(), boardDate, boardEditDate, String.valueOf(boardCode));
                         mDatabase.child("boards").child(ID).setValue(board).addOnCompleteListener(task -> {
-                            onCreateConnectBoard.onChange();
                             Toast.makeText(dialogView.getContext(), "Доска успешно создана", Toast.LENGTH_SHORT).show();
                         });
 

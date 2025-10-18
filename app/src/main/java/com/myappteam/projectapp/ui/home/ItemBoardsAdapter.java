@@ -1,6 +1,5 @@
 package com.myappteam.projectapp.ui.home;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -32,14 +31,12 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
     private final ArrayList<Board> data;
     private ArrayList<Board> filteredData;
     private final ItemFilter itemFilter = new ItemFilter();
-    ActivityResultLauncher<Intent> activityResultLauncher;
 
-    public ItemBoardsAdapter(@NonNull Context context, ArrayList<Board> items, ActivityResultLauncher<Intent> activityResultLauncher) {
+    public ItemBoardsAdapter(@NonNull Context context, ArrayList<Board> items) {
         super(context, R.layout.boards_custom_item, items);
         this.context = context;
         this.data = items;
         this.filteredData = items;
-        this.activityResultLauncher = activityResultLauncher;
     }
 
     @NonNull
@@ -71,7 +68,7 @@ public class ItemBoardsAdapter extends ArrayAdapter<Board> {
         boardSettings.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), SettingsActivity.class);
             intent.putExtra("boardId", board.getId());
-            activityResultLauncher.launch(intent);
+            context.startActivity(intent);
         });
 
         return convertView;

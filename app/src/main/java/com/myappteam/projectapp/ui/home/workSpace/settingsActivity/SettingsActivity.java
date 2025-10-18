@@ -46,7 +46,8 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
     String boardIdData, boardNameData;
     TextView boardNameText, boardOwnerText, boardCreateDateText, boardCodeText;
     private Uri selectedImageUri;
-    boolean dataChanged = false;
+    private DatabaseReference mDatabase;
+    private ValueEventListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +57,11 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
         //Настраиваем кнопки выхода
         ImageButton backButton = findViewById(R.id.backButtonSettings);
         backButton.setOnClickListener(v -> {
-            Intent result = new Intent();
-            result.putExtra("dataChanged", dataChanged);
-            setResult(Activity.RESULT_OK, result);
             finish();
         });
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Intent result = new Intent();
-                result.putExtra("dataChanged", dataChanged);
-                setResult(Activity.RESULT_OK, result);
                 finish();
             }
         });
@@ -80,82 +75,97 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
             boardCodeText = findViewById(R.id.SettingsBoardCode);
 
             boardIdData = data.getString("boardId");
-            getData(boardIdData);
+            createDataListener(boardIdData);
             GetUserRole.getUserRole(boardIdData, this::roleManager);
         }
     }
 
-    void getData(String boardId) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mDatabase != null && listener != null) {
+            mDatabase.addValueEventListener(listener);
+        }
+    }
 
-        mDatabase.child("boards")
-                .child(boardId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            Board board = dataSnapshot.getValue(Board.class);
-                            if (board != null) {
-                                Glide.with(SettingsActivity.this).load(board.getImageUri()).into(boardImageView);
-                                boardNameData = board.getName();
-                                boardNameText.setText(board.getName());
-                                boardCreateDateText.setText(board.getDate());
-                                boardCodeText.setText(board.getCode());
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDatabase != null && listener != null) {
+            mDatabase.removeEventListener(listener);
+        }
+    }
 
-                                //Кнопка копирования кода в буфер обмена
-                                ImageButton copyCode = findViewById(R.id.SettingsImageButtonCopyCode);
-                                copyCode.setOnClickListener(v -> {
-                                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                                    ClipData clip = ClipData.newPlainText("code", board.getCode());
-                                    clipboard.setPrimaryClip(clip);
-                                    Toast.makeText(SettingsActivity.this, R.string.board_settings_code_text, Toast.LENGTH_SHORT).show();
-                                });
+    void createDataListener(String boardId) {
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("boards").child(boardId);
 
-                                Button showQR = findViewById(R.id.SettingsShowQR);
-                                showQR.setOnClickListener(v -> {
-                                    SettingsQRDialog settingsQRDialog = SettingsQRDialog.newInstance(board.getCode());
-                                    settingsQRDialog.show(getSupportFragmentManager(), "qr");
-                                });
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Board board = dataSnapshot.getValue(Board.class);
+                    if (board != null) {
+                        Glide.with(SettingsActivity.this).load(board.getImageUri()).into(boardImageView);
+                        boardNameData = board.getName();
+                        boardNameText.setText(board.getName());
+                        boardCreateDateText.setText(board.getDate());
+                        boardCodeText.setText(board.getCode());
 
-                                // Получаем UID создателя доски
-                                String creatorUserId = null;
-                                for (DataSnapshot userSnapshot : dataSnapshot.child("users").getChildren()) {
-                                    String userRole = userSnapshot.getValue(String.class);
-                                    if ("owner".equals(userRole)) {
-                                        creatorUserId = userSnapshot.getKey();
-                                        break;
+                        //Кнопка копирования кода в буфер обмена
+                        ImageButton copyCode = findViewById(R.id.SettingsImageButtonCopyCode);
+                        copyCode.setOnClickListener(v -> {
+                            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("code", board.getCode());
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(SettingsActivity.this, R.string.board_settings_code_text, Toast.LENGTH_SHORT).show();
+                        });
+
+                        Button showQR = findViewById(R.id.SettingsShowQR);
+                        showQR.setOnClickListener(v -> {
+                            SettingsQRDialog settingsQRDialog = SettingsQRDialog.newInstance(board.getCode());
+                            settingsQRDialog.show(getSupportFragmentManager(), "qr");
+                        });
+
+                        // Получаем UID создателя доски
+                        String creatorUserId = null;
+                        for (DataSnapshot userSnapshot : dataSnapshot.child("users").getChildren()) {
+                            String userRole = userSnapshot.getValue(String.class);
+                            if ("owner".equals(userRole)) {
+                                creatorUserId = userSnapshot.getKey();
+                                break;
+                            }
+                        }
+
+                        // Теперь делаем запрос для получения имени создателя
+                        if (creatorUserId != null) {
+                            DatabaseReference ownerNameDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                            ownerNameDatabaseReference.child("users").child(creatorUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                                    if (userSnapshot.exists()) {
+                                        String userName = userSnapshot.child("name").getValue(String.class);
+
+                                        if (userName != null) {
+                                            boardOwnerText.setText(userName);
+                                        }
                                     }
                                 }
 
-                                // Теперь делаем запрос для получения имени создателя
-                                if (creatorUserId != null) {
-                                    mDatabase.child("users").child(creatorUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                                            if (userSnapshot.exists()) {
-                                                String userName = userSnapshot.child("name").getValue(String.class);
-
-                                                if (userName != null) {
-                                                    boardOwnerText.setText(userName);
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            // Обработка ошибок
-                                        }
-                                    });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // Обработка ошибок
                                 }
-                            }
+                            });
                         }
                     }
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Обработка ошибок
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Обработка ошибок
+            }
+        };
     }
 
     void roleManager(String role) {
@@ -235,8 +245,6 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             // Сохраняем URL в базе данных
                             FirebaseDatabase.getInstance().getReference("boards").child(boardIdData).child("imageUri").setValue(uri.toString());
-                            //Устанавливаем флаг для обновления списка досок
-                            dataChanged = true;
                             //Закрываем загрузочный диалог
                             dialog.dismissDialog();
                         });
@@ -256,9 +264,6 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().removeValue();
 
-                Intent result = new Intent();
-                result.putExtra("dataChanged", true);
-                setResult(Activity.RESULT_OK, result);
                 //Закрываем Activity
                 finish();
             }
@@ -279,9 +284,6 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 snapshot.getRef().removeValue();
 
-                Intent result = new Intent();
-                result.putExtra("dataChanged", true);
-                setResult(Activity.RESULT_OK, result);
                 //Закрываем Activity
                 finish();
             }
@@ -298,7 +300,5 @@ public class SettingsActivity extends BaseActivity implements OnChangeBoard {
         //Обновляем данные в БД
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("boards").child(boardIdData).child("name").setValue(name);
-        //Устанавливаем флаг для обновления списка досок
-        dataChanged = true;
     }
 }
