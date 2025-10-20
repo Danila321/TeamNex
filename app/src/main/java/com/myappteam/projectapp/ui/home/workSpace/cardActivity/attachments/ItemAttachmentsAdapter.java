@@ -56,7 +56,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             Glide.with(context).load(fileUri).into(imageView);
             Glide.with(context).load(R.drawable.picture).into(imageType);
             //Показываем тип файла
-            fileTypeTextView.setText("Фото");
+            fileTypeTextView.setText(context.getString(R.string.card_activity_attachments_item_type_photo));
             //Настраиваем открытие фотографии
             imageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, AttachmentImageView.class);
@@ -71,7 +71,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
                     .into(imageView);
             Glide.with(context).load(R.drawable.video).into(imageType);
             //Показываем тип файла
-            fileTypeTextView.setText("Видео");
+            fileTypeTextView.setText(context.getString(R.string.card_activity_attachments_item_type_video));
             //Настраиваем открытие видео
             imageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, AttachmentVideoView.class);
@@ -86,7 +86,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
             typeTextView.setVisibility(View.VISIBLE);
             typeTextView.setText(fileType);
             //Показываем тип файла
-            fileTypeTextView.setText("Файл");
+            fileTypeTextView.setText(context.getString(R.string.card_activity_attachments_item_type_file));
         }
 
         //Кнопка загрузки файла
@@ -94,7 +94,7 @@ public class ItemAttachmentsAdapter extends ArrayAdapter<ItemAttachment> {
         download.setOnClickListener(v -> {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(item.getFile()));
             request.setTitle(item.getName());
-            request.setDescription("Идет загрузка...");
+            request.setDescription(context.getString(R.string.card_activity_attachments_item_download_text));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
             downloadManager.enqueue(request);

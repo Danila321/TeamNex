@@ -47,21 +47,21 @@ public class DeleteUserDialog extends DialogFragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_text, null);
+        View dialogView = inflater.inflate(R.layout.dialog_delete, null);
         builder.setView(dialogView);
 
         TextView title = dialogView.findViewById(R.id.TextDialogTitle);
         TextView description = dialogView.findViewById(R.id.TextDialogDescription);
 
-        title.setText("Отключение");
-        description.setText("Вы уверены что хотите отключить\nпользователя от этой доски?");
+        title.setText(getString(R.string.users_activity_dialog_title));
+        description.setText(getString(R.string.users_activity_dialog_text));
 
         Button buttonCancel = dialogView.findViewById(R.id.TextDialogButtonCancel);
         Button buttonDelete = dialogView.findViewById(R.id.TextDialogButtonDelete);
 
         buttonCancel.setOnClickListener(view -> dismiss());
 
-        buttonDelete.setText("Отключить");
+        buttonDelete.setText(getString(R.string.users_activity_dialog_button));
         buttonDelete.setOnClickListener(view -> {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             reference.child("boards").child(boardId).child("users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {

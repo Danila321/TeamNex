@@ -115,6 +115,21 @@
     <string name="profile_exit_yes">Yes</string>
     <string name="profile_exit_no">No</string>
 
+    <string name="profile_delete_title">Deleting an account</string>
+    <string name="profile_delete_text_title">The account cannot be restored</string>
+    <string name="profile_delete_text_main">Your account and all the boards you have created will be deleted, and you will be removed from all the boards of other users to which you were previously connected</string>
+    <string name="profile_delete_password_text">To delete your account, enter your current password.</string>
+    <string name="profile_delete_button_delete">Delete an account</string>
+    <string name="profile_delete_button_cancel">Cancel</string>
+
+    <string name="profile_delete_dialog_title">Deleting an account</string>
+    <string name="profile_delete_dialog_text">Are you sure you want to delete your account? This action is irreversible!</string>
+    <string name="profile_delete_dialog_button_cancel">Cancel</string>
+    <string name="profile_delete_dialog_button_delete">Delete my account</string>
+
+    <string name="profile_delete_dialog_wait">Deleting the account…</string>
+    <string name="profile_delete_success">Account has been successfully deleted!</string>
+
 
 
     <string name="board_title">Boards</string>
@@ -132,7 +147,6 @@
     <string name="board_dialog_connect_error_unknown">Error when connecting the user to the board</string>
     <string name="board_dialog_create_title">New board</string>
     <string name="board_dialog_create_hint">Enter a name</string>
-    <string name="board_dialog_create_text">Create</string>
     <string name="board_dialog_create_error">Enter a name</string>
     <string name="board_time_minute1">" minutes ago"</string>
     <string name="board_time_minute2">" minutes ago"</string>
@@ -166,13 +180,81 @@
     <string name="board_settings_edit">Edit</string>
     <string name="board_settings_timer_title">Timer</string>
     <string name="board_settings_choose_image">Choose image</string>
-    <string name="board_settings_edit_name_title">Change the name</string>
-    <string name="board_settings_edit_name_layout">Name</string>
-    <string name="board_settings_edit_name_button">Change</string>
     <string name="board_settings_edit_name_error">Enter the name</string>
-    <string name="board_settings_qr_dilog">Scan QR-code in app</string>
+    <string name="board_settings_qr_dialog">Scan QR-code in app</string>
 
 
+
+    <string name="workspace_button_add_item">Add item</string>
+    <string name="workspace_dialog_add_item_title">New item</string>
+    <string name="workspace_dialog_delete_item_title">Deleting an item</string>
+    <string name="workspace_dialog_delete_item_text">Are you sure you want to delete this item? This action is irreversible!</string>
+    <string name="workspace_dialog_edit_item_title">Change the name</string>
+
+    <string name="workspace_button_add_card">Add card</string>
+    <string name="workspace_dialog_add_card_title">New card</string>
+
+
+
+    <string name="users_activity_title">Members</string>
+
+    <string name="users_activity_list_admin">Admin</string>
+    <string name="users_activity_list_owner">Owner</string>
+    <string name="users_activity_list_member">Member</string>
+
+    <string name="users_activity_dialog_role_title">Choosing a role</string>
+    <string name="users_activity_dialog_role_admin">Admin</string>
+    <string name="users_activity_dialog_role_admin_text">It has the same features as a member, as well as the ability to add, edit, and delete items and cards</string>
+    <string name="users_activity_dialog_role_member">Member</string>
+    <string name="users_activity_dialog_role_member_text">It allows you to add, edit, and delete tasks and attachments</string>
+
+    <string name="users_activity_dialog_title">Disconnect</string>
+    <string name="users_activity_dialog_text">Are you sure you want to remove the user from this board?"</string>
+    <string name="users_activity_dialog_button">Disconnect</string>
+
+
+
+    <string name="card_activity_dialog_users">Users</string>
+
+    <string name="card_activity_description">Description</string>
+    <string name="card_activity_description_button">Change</string>
+    <string name="card_activity_description_dialog_title">Change the description</string>
+    <string name="card_activity_description_dialog_hint">Description</string>
+
+    <string name="card_activity_checklist">Tasks</string>
+    <string name="card_activity_checklist_button">Add a task</string>
+    <string name="card_activity_checklist_dialog_add_title">New task</string>
+    <string name="card_activity_checklist_dialog_delete_title">Deleting a task</string>
+    <string name="card_activity_checklist_dialog_delete_text">Are you sure you want to delete the task? This action is irreversible!</string>
+    <string name="card_activity_checklist_dialog_date_title">Change the date</string>
+    <string name="card_activity_checklist_dialog_date_edit">Change</string>
+    <string name="card_activity_checklist_dialog_date_delete">Delete</string>
+
+    <string name="card_activity_attachments">Attachments</string>
+    <string name="card_activity_attachments_button">Add an attachment</string>
+    <string name="card_activity_attachments_item_type_photo">Photo</string>
+    <string name="card_activity_attachments_item_type_video">Video</string>
+    <string name="card_activity_attachments_item_type_file">File</string>
+    <string name="card_activity_attachments_item_download">Download</string>
+    <string name="card_activity_attachments_item_download_text">The download is in progress…</string>
+    <string name="card_activity_attachments_dialog_delete_title">Deleting an attachment</string>
+    <string name="card_activity_attachments_dialog_delete_text">Are you sure you want to delete this attachment? This action is irreversible!</string>
+    <string name="card_activity_attachments_dialog_add_title">New attachment</string>
+    <string name="card_activity_attachments_dialog_add_choose">Choose file</string>
+    <string name="card_activity_attachments_dialog_add_button">Add</string>
+
+    <string name="card_activity_delete_button">Delete a card</string>
+    <string name="card_activity_dialog_delete_title">Deleting a card</string>
+    <string name="card_activity_dialog_delete_text">Are you sure you want to delete this card? This action is irreversible!</string>
+
+
+
+    <!-- Диалоги удаления и изменения -->
+    <string name="dialog_edit_title">Change the name</string>
+    <string name="dialog_edit_hint">Name</string>
+    <string name="dialog_edit_error">Enter the name</string>
+    <string name="dialog_edit_button_create">Create</string>
+    <string name="dialog_edit_button_change">Change</string>
 
     <string name="dialog_delete_cancel">Cancel</string>
     <string name="dialog_delete_accept">Delete</string>

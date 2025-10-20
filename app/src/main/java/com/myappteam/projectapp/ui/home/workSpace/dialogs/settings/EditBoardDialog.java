@@ -60,11 +60,7 @@ public class EditBoardDialog extends DialogFragment {
         ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
         Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
 
-        title.setText(getString(R.string.board_settings_edit_name_title));
-
         editText.setText(name);
-
-        buttonEdit.setText(getString(R.string.board_settings_edit_name_button));
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {

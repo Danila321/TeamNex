@@ -33,7 +33,7 @@ public class DeleteBoardDialog extends DialogFragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_text, null);
+        View dialogView = inflater.inflate(R.layout.dialog_delete, null);
         builder.setView(dialogView);
 
         TextView title = dialogView.findViewById(R.id.TextDialogTitle);

@@ -126,14 +126,10 @@ public class HomeFragment extends Fragment {
                 items.clear();
 
                 for (DataSnapshot boardSnapshot : dataSnapshot.getChildren()) {
-                    //Получаем роль юзера
-                    String userRole = boardSnapshot.child("users").child(userId).getValue(String.class);
-                    if (userRole != null && (userRole.equals("owner") || userRole.equals("admin") || userRole.equals("user"))) {
-                        // Добавляем доску в список
-                        Board board = boardSnapshot.getValue(Board.class);
-                        if (board != null) {
-                            items.add(board);
-                        }
+                    // Если юзер есть в доске, то добавляем доску в список
+                    Board board = boardSnapshot.getValue(Board.class);
+                    if (board != null && boardSnapshot.child("users").hasChild(userId)) {
+                        items.add(board);
                     }
                 }
 

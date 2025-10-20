@@ -178,7 +178,10 @@ public class ProfileActivity extends BaseActivity {
             textViewLogout.setOnClickListener(v -> showSignOutDialog());
 
             //Настраиваем кнопку удаления аккаунта
-            textViewDeleteAccount.setOnClickListener(view -> showDeleteAccountDialog());
+            textViewDeleteAccount.setOnClickListener(v -> {
+                Intent intent = new Intent(ProfileActivity.this, ProfileDeleteActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
@@ -195,14 +198,6 @@ public class ProfileActivity extends BaseActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 })
-                .show();
-    }
-
-    void showDeleteAccountDialog() {
-        new MaterialAlertDialogBuilder(ProfileActivity.this)
-                .setTitle("Удаление аккаунта")
-                .setMessage("В разработке...")
-                .setPositiveButton("Ок", (dialog, which) -> dialog.cancel())
                 .show();
     }
 }

@@ -61,12 +61,14 @@ public class AddCardDialog extends DialogFragment {
 
         close.setOnClickListener(v -> dismiss());
 
-        titleText.setText("Новая карточка");
+        titleText.setText(getString(R.string.workspace_dialog_add_card_title));
+
+        button.setText(getString(R.string.dialog_edit_button_create));
 
         button.setOnClickListener(view -> {
             String text = String.valueOf(editText.getText()).trim();
             if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
+                editTextLayout.setError(getString(R.string.dialog_edit_error));
             } else {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String ID = UUID.randomUUID().toString();

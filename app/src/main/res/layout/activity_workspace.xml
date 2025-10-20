@@ -84,7 +84,7 @@
         android:layout_marginBottom="4dp"
         android:drawableLeft="@drawable/plus_small"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="Добавить пункт"
+        android:text="@string/workspace_button_add_item"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

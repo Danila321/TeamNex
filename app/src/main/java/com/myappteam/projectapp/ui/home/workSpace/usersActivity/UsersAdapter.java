@@ -107,24 +107,24 @@ public class UsersAdapter extends ArrayAdapter<UserRole> {
 
             if (isOwner) {
                 if (role.equals("owner")) {
-                    roleText.setText("Владелец");
+                    roleText.setText(context.getString(R.string.users_activity_list_owner));
                     roleText.setTextColor(ContextCompat.getColor(context, R.color.black));
                     roleLayout.setElevation(0);
                     roleLayout.setClickable(false);
                     roleImage.setVisibility(View.GONE);
                     delete.setVisibility(View.GONE);
                 } else if (role.equals("admin")) {
-                    roleText.setText("Админ");
+                    roleText.setText(context.getString(R.string.users_activity_list_admin));
                 } else {
-                    roleText.setText("Участник");
+                    roleText.setText(context.getString(R.string.users_activity_list_member));
                 }
             } else {
                 if (role.equals("owner")) {
-                    roleText.setText("Владелец");
+                    roleText.setText(context.getString(R.string.users_activity_list_owner));
                 } else if (role.equals("admin")) {
-                    roleText.setText("Админ");
+                    roleText.setText(context.getString(R.string.users_activity_list_admin));
                 } else {
-                    roleText.setText("Участник");
+                    roleText.setText(context.getString(R.string.users_activity_list_member));
                 }
                 roleText.setTextColor(ContextCompat.getColor(context, R.color.black));
                 roleLayout.setElevation(0);

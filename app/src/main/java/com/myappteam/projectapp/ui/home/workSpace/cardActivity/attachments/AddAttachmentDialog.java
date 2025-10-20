@@ -110,12 +110,15 @@ public class AddAttachmentDialog extends DialogFragment {
         button.setOnClickListener(v -> {
             String text = String.valueOf(editText.getText()).trim();
             if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
-            } else if (fileUri == null) {
-                editText.setError("Выберите файл");
+                editTextLayout.setError(getString(R.string.dialog_edit_error));
             } else {
-                uploadFile(fileUri, text);
-                dismiss();
+                editTextLayout.setErrorEnabled(false);
+                if (fileUri == null) {
+                    editTextLayout.setError("Выберите файл");
+                } else {
+                    uploadFile(fileUri, text);
+                    dismiss();
+                }
             }
         });
 

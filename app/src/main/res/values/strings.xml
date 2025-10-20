@@ -115,6 +115,20 @@
     <string name="profile_exit_yes">Да</string>
     <string name="profile_exit_no">Нет</string>
 
+    <string name="profile_delete_title">Удаление аккаунта</string>
+    <string name="profile_delete_text_title">Аккаунт невозможно будет восстановить</string>
+    <string name="profile_delete_text_main">Будет удален ваш аккаунт и все созданные вами доски, а также вы будете удалены из всех досок других пользователей, к которым вы были ранее подключены</string>
+    <string name="profile_delete_password_text">Для удаления аккаунта введите ваш текущий пароль</string>
+    <string name="profile_delete_button_delete">Удалить аккаунт</string>
+    <string name="profile_delete_button_cancel">Отмена</string>
+
+    <string name="profile_delete_dialog_title">Удаление аккаунта</string>
+    <string name="profile_delete_dialog_text">Вы точно уверены что хотите удалить аккаунт? Это действие является безвозвратным!</string>
+    <string name="profile_delete_dialog_button_cancel">Отмена</string>
+    <string name="profile_delete_dialog_button_delete">Удалить мой аккаунт</string>
+
+    <string name="profile_delete_dialog_wait">Удаляем аккаунт…</string>
+    <string name="profile_delete_success">Аккаунт успешно удален!</string>
 
 
     <string name="board_title">Доски</string>
@@ -132,7 +146,6 @@
     <string name="board_dialog_connect_error_unknown">Ошибка при подключении пользователя к доске</string>
     <string name="board_dialog_create_title">Новая доска</string>
     <string name="board_dialog_create_hint">Введите название</string>
-    <string name="board_dialog_create_text">Создать</string>
     <string name="board_dialog_create_error">Введите название</string>
     <string name="board_time_minute1">" минуту назад"</string>
     <string name="board_time_minute2">" минуты назад"</string>
@@ -143,7 +156,6 @@
     <string name="board_time_day1">" день назад"</string>
     <string name="board_time_day2">" дня назад"</string>
     <string name="board_time_day3">" дней назад"</string>
-
 
 
     <string name="board_settings_title">Настройки</string>
@@ -166,21 +178,83 @@
     <string name="board_settings_edit">Изменить</string>
     <string name="board_settings_timer_title">Таймер</string>
     <string name="board_settings_choose_image">Выберите изображение</string>
-    <string name="board_settings_edit_name_title">Изменить название</string>
-    <string name="board_settings_edit_name_layout">Название</string>
-    <string name="board_settings_edit_name_button">Изменить</string>
     <string name="board_settings_edit_name_error">Введите название</string>
-    <string name="board_settings_qr_dilog">Отсканируйте QR-код в приложении</string>
+    <string name="board_settings_qr_dialog">Отсканируйте QR-код в приложении</string>
 
 
+    <string name="workspace_button_add_item">Добавить пункт</string>
+    <string name="workspace_dialog_add_item_title">Новый пункт</string>
+    <string name="workspace_dialog_delete_item_title">Удаление пункта</string>
+    <string name="workspace_dialog_delete_item_text">Вы уверены что хотите удалить пункт? Это действие является безвозвратным!</string>
+    <string name="workspace_dialog_edit_item_title">Изменить навзвание</string>
+
+    <string name="workspace_button_add_card">Добавить карточку</string>
+    <string name="workspace_dialog_add_card_title">Новая карточка</string>
+
+
+    <string name="users_activity_title">Участники</string>
+
+    <string name="users_activity_list_admin">Админ</string>
+    <string name="users_activity_list_owner">Владелец</string>
+    <string name="users_activity_list_member">Участник</string>
+
+    <string name="users_activity_dialog_role_title">Выбор роли</string>
+    <string name="users_activity_dialog_role_admin">Администратор</string>
+    <string name="users_activity_dialog_role_admin_text">Имеет те же возможности, что и участник, а также: возможность добавлять, редактировать и удалять пункты и карточки</string>
+    <string name="users_activity_dialog_role_member">Участник</string>
+    <string name="users_activity_dialog_role_member_text">Имеет возможность добавлять, редактировать и удалять задачи и вложения</string>
+
+    <string name="users_activity_dialog_title">Отключение</string>
+    <string name="users_activity_dialog_text">Вы уверены что хотите отключить пользователя от этой доски?"</string>
+    <string name="users_activity_dialog_button">Отключить</string>
+
+
+    <string name="card_activity_dialog_users">Пользователи</string>
+
+    <string name="card_activity_description">Описание</string>
+    <string name="card_activity_description_button">Изменить</string>
+    <string name="card_activity_description_dialog_title">Изменить описание</string>
+    <string name="card_activity_description_dialog_hint">Описание</string>
+
+    <string name="card_activity_checklist">Задачи</string>
+    <string name="card_activity_checklist_button">Добавить задачу</string>
+    <string name="card_activity_checklist_dialog_add_title">Добавить задачу</string>
+    <string name="card_activity_checklist_dialog_delete_title">Удаление задачи</string>
+    <string name="card_activity_checklist_dialog_delete_text">Вы уверены что хотите удалить задачу? Это действие является безвозвратным!</string>
+    <string name="card_activity_checklist_dialog_date_title">Изменить дату</string>
+    <string name="card_activity_checklist_dialog_date_edit">Изменить</string>
+    <string name="card_activity_checklist_dialog_date_delete">Удалить</string>
+
+    <string name="card_activity_attachments">Вложения</string>
+    <string name="card_activity_attachments_button">Добавить вложение</string>
+    <string name="card_activity_attachments_item_type_photo">Фото</string>
+    <string name="card_activity_attachments_item_type_video">Видео</string>
+    <string name="card_activity_attachments_item_type_file">Файл</string>
+    <string name="card_activity_attachments_item_download">Скачать</string>
+    <string name="card_activity_attachments_item_download_text">Идет загрузка…</string>
+    <string name="card_activity_attachments_dialog_delete_title">Удаление вложения</string>
+    <string name="card_activity_attachments_dialog_delete_text">Вы уверены что хотите удалить это вложение? Это действие является безвозвратным!</string>
+    <string name="card_activity_attachments_dialog_add_title">Новое вложение</string>
+    <string name="card_activity_attachments_dialog_add_choose">Выберите файл</string>
+    <string name="card_activity_attachments_dialog_add_button">Добавить</string>
+
+    <string name="card_activity_delete_button">Удалить карточку</string>
+    <string name="card_activity_dialog_delete_title">Удаление карточки</string>
+    <string name="card_activity_dialog_delete_text">Вы уверены что хотите удалить данную карточку? Это действие является безвозвратным!</string>
+
+
+    <!-- Диалоги удаления и изменения -->
+    <string name="dialog_edit_title">Изменить название</string>
+    <string name="dialog_edit_hint">Название</string>
+    <string name="dialog_edit_error">Введите название</string>
+    <string name="dialog_edit_button_create">Создать</string>
+    <string name="dialog_edit_button_change">Изменить</string>
 
     <string name="dialog_delete_cancel">Отмена</string>
     <string name="dialog_delete_accept">Удалить</string>
 
 
-
     <string name="in_development">В разработке…</string>
-
 
 
     <!--  Ad info  -->

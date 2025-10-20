@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -122,7 +121,7 @@ public class CreateConnectBoardDialog extends DialogFragment {
         } else {
             titleText.setText(R.string.board_dialog_create_title);
             editTextLayout.setHint(R.string.board_dialog_create_hint);
-            button.setText(R.string.board_dialog_create_text);
+            button.setText(R.string.dialog_edit_button_create);
             button.setOnClickListener(view -> {
                 String name = String.valueOf(editText.getText()).trim();
                 if (name.isEmpty()) {

@@ -60,22 +60,18 @@ public class EditDescriptionDialog extends DialogFragment {
         ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
         Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
 
-        title.setText("Изменить описание");
+        title.setText(getString(R.string.card_activity_description_dialog_title));
 
-        editText.setHint("Введите описание");
+        editTextLayout.setHint(getString(R.string.card_activity_description_dialog_hint));
         editText.setText(name);
 
-        buttonEdit.setText("Изменить");
+        buttonEdit.setText(getString(R.string.dialog_edit_button_change));
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {
             String text = String.valueOf(editText.getText()).trim();
-            if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
-            } else {
-                setDescription(text);
-                dismiss();
-            }
+            setDescription(text);
+            dismiss();
         });
 
         return builder.create();

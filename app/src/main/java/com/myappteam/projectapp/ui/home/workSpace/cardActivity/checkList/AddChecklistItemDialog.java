@@ -60,15 +60,15 @@ public class AddChecklistItemDialog extends DialogFragment {
         Button button = dialogView.findViewById(R.id.EditDialogButton);
         ImageButton close = dialogView.findViewById(R.id.EditDialogClose);
 
-        title.setText("Новая задача");
+        title.setText(getString(R.string.card_activity_checklist_dialog_add_title));
 
         close.setOnClickListener(v -> dismiss());
 
-        button.setText("Добавить");
+        button.setText(getString(R.string.dialog_edit_button_create));
         button.setOnClickListener(view -> {
             String text = String.valueOf(editText.getText()).trim();
             if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
+                editTextLayout.setError(getString(R.string.dialog_edit_error));
             } else {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 String ID = UUID.randomUUID().toString();

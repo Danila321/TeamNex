@@ -51,14 +51,14 @@ public class DeleteAttachmentDialog extends DialogFragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_text, null);
+        View dialogView = inflater.inflate(R.layout.dialog_delete, null);
         builder.setView(dialogView);
 
         TextView title = dialogView.findViewById(R.id.TextDialogTitle);
         TextView description = dialogView.findViewById(R.id.TextDialogDescription);
 
-        title.setText("Удаление вложения");
-        description.setText("Вы уверены что хотите удалить\n это вложение?");
+        title.setText(getString(R.string.card_activity_attachments_dialog_delete_title));
+        description.setText(getString(R.string.card_activity_attachments_dialog_delete_text));
 
         Button buttonCancel = dialogView.findViewById(R.id.TextDialogButtonCancel);
         Button buttonDelete = dialogView.findViewById(R.id.TextDialogButtonDelete);

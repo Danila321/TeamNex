@@ -58,17 +58,13 @@ public class EditItemDialog extends DialogFragment {
         ImageButton buttonCancel = dialogView.findViewById(R.id.EditDialogClose);
         Button buttonEdit = dialogView.findViewById(R.id.EditDialogButton);
 
-        title.setText("Изменить название");
-
         editText.setText(name);
-
-        buttonEdit.setText("Изменить");
 
         buttonCancel.setOnClickListener(view -> dismiss());
         buttonEdit.setOnClickListener(view -> {
             String text = String.valueOf(editText.getText()).trim();
             if (text.isEmpty()) {
-                editTextLayout.setError("Введите название");
+                editTextLayout.setError(getString(R.string.dialog_edit_error));
             } else {
                 //Обновляем данные в БД
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
