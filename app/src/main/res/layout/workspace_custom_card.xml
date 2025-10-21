@@ -24,13 +24,14 @@
 
         <TextView
             android:id="@+id/CardNameView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
             android:fontFamily="sans-serif-condensed"
+            android:text="TextView"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/CardEditNameButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,8 +125,8 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/workspace_button_transparent_14dp"
             android:padding="6dp"
-            android:visibility="invisible"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
